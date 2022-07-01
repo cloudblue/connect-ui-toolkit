@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 
-const $module = ({ state = {}, actions = {} }) => {
+export const $module = ({ state = {}, actions = {} }) => {
   return {
     state: reactive(state),
     actions,
@@ -14,7 +14,7 @@ export default () => {
   return {
     /* Required to add new module to a bus */
     add(module) {
-      if (!module.name) return;
+      if (!module.name) throw new Error('Module should have a mandatory "name" property');
 
       $modules[module.name] = $module(module);
     },

@@ -11,29 +11,9 @@ export default (bus, name, component, customs = []) => {
     constructor() {
       super();
 
-      this.$app = null;
-      this.$subscribers = {};
-      this.$state = reactive(fromKeys(component.$attrs || []));
-
-      // Events emitter decorator
-      this.$emit = (name, detail) => {
-        const event = new CustomEvent(name, {
-          bubbles: true,
-          detail,
-        });
-
-        this.dispatchEvent(event);
-      };
-
-      // Events listener decorator
-      this.$catch = (name, handler) => {
-        this.addEventListener(name, (e) => {
-          // Event should only be handled once in this system
-          e.stopPropagation();
-
-          handler(e.detail);
-        });
-      };
+      this.$app = null
+      this.$subscribers = {}
+      this.$state = reactive(fromKeys(component.$attrs || []))
 
       // Parent allows whitelist of events to subscribe
       if (component?.$publishes?.length > 0) {
@@ -48,6 +28,24 @@ export default (bus, name, component, customs = []) => {
           );
         });
       }
+    }
+
+    $catch(name, handler) {
+      this.addEventListener(name, (e) => {
+        // Event should only be handled once in this system
+        e.stopPropagation();
+
+        handler(e.detail);
+      });
+    }
+
+    $emit(name, detail) {
+      const event = new CustomEvent(name, {
+        bubbles: true,
+        detail,
+      });
+
+      this.dispatchEvent(event);
     }
 
     connectedCallback() {
@@ -84,9 +82,7 @@ export default (bus, name, component, customs = []) => {
 
       // Parent listens child
       this.$app.provide('$listen', (name, handler) => {
-        this.$catch(`$dispatch:${name}`, (data) => {
-          handler(data)
-        });
+        this.$catch(`$dispatch:${name}`, handler);
       });
 
       // Initiall attributes set initialization
@@ -102,7 +98,7 @@ export default (bus, name, component, customs = []) => {
 
         this.$app.component('content', {
           template: this.content,
-        })
+        });
       }
 
       // This solution allows to provide styles for custom html container without

@@ -10,9 +10,9 @@ const query = async (method, path, config = {}) => {
   requestConfig.headers['Authorization'] = token;
 
   if (['POST', 'PUT', 'PATCH'].includes(method) && body) {
-    requestConfig.body = typeof requestConfig.body === 'string'
-      ? requestConfig.body
-      : JSON.stringify(requestConfig.body);
+    requestConfig.body = typeof body === 'string'
+      ? body
+      : JSON.stringify(body);
   }
 
   const response = await fetch(`${api}/${path}`, requestConfig);
