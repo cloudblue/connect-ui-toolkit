@@ -1,83 +1,88 @@
-import { clone, has } from './helpers';
+import { clone, has, call } from './helpers';
 
-export default () => {
-  let $id;
-  let $state = {};
-  let $listners = {};
-  let $watchers = {};
 
-  const $assign = (data) => {
-    if (!$state || !data) return;
+export class State {
+  constructor() {
+    this.$id = null;
+    this.$state = {};
+    this.$listeners = {};
+    this.$watchers = {};
+  }
+
+  $assign(data) {
+    if (!this.$state || !data) return;
 
     Object.keys(data).forEach((k) => {
-      if (has(k, data)) $state[k] = data[k];
-      if (has(k, $watchers)) $watchers[k].forEach(fn => fn());
+      if (has(k, this.$state)) this.$state[k] = data[k];
+      if (has(k, this.$watchers)) this.$watchers[k].forEach(call);
     });
 
-    if (has('*', $watchers)) $watchers['*'].forEach(fn => fn());
-  };
+    if (has('*', this.$watchers)) this.$watchers['*'].forEach(call);
+  }
 
-  const $size = () => ({
-    height: document.body.scrollHeight,
-    width: document.body.scrollWidth,
+  $size() {
+    return {
+      height: document.body.scrollHeight,
+      width: document.body.scrollWidth,
+    }
+  }
+}
+
+export const injectorFactory = state => ({
+  watch(a, b) {
+    let fn, name;
+
+    if (typeof a === 'function') {
+      name = '*';
+      fn = a;
+    } else {
+      name = a;
+      fn = b;
+    }
+
+    if (!has(name, state.$watchers)) state.$watchers[name] = [];
+
+    state.$watchers[name].push(() => {
+      fn(name === '*' ? state.$state : state.$state[name]);
+    });
+  },
+
+  commit(data) {
+    state.$assign(data);
+
+    window.top.postMessage({
+      $id: state.$id || null,
+      data: state.$state ? clone(state.$state) : null,
+    }, "*");
+  },
+
+  emit(name, data = true) {
+    window.top.postMessage({
+      $id: state.$id || null,
+      events: {
+        [name]: data,
+      },
+    }, "*");
+  },
+
+  listen(name, cb) {
+    state.$listeners[name] = cb;
+  },
+});
+
+export const $init = (injector, state) => {
+  injector.listen('$init', (data, { $id: id }) => {
+    state.$id = id;
+    state.$state = data;
+
+    injector.emit('$size', state.$size());
+    setInterval(() => injector.emit('$size', state.$size()), 300);
   });
-
-  const injector = {
-    watch: (a, b) => {
-      let fn, name;
-
-      if (typeof a === 'function') {
-        name = '*';
-        fn = a;
-      } else {
-        name = a;
-        fn = b;
-      }
-
-      if (!has(name, $watchers)) $watchers[name] = [];
-
-      $watchers[name].push(() => {
-        fn(name === '*' ? $state : $state[name]);
-      });
-    },
-
-    commit: (data) => {
-      $assign(data);
-
-      window.top.postMessage({
-        $id: $id || null,
-        data: clone($state) || null,
-      }, "*");
-    },
-
-    emit: (name, data = true) => {
-      window.top.postMessage({
-        $id: $id || null,
-        events: {
-          [name]: data,
-        },
-      }, "*");
-    },
-
-    listen: (name, cb) => {
-      $listners[name] = cb;
-    },
-  };
-
-  injector.listen('$init', (data = {}, { $id: id }) => {
-    $id = id;
-    $state = data;
-
-    injector.emit('$size', $size());
-    setInterval(() => injector.emit('$size', $size()), 300);
-  });
-
-  injector.listen('$size', () => injector.emit('$size', $size()));
 
   window.addEventListener('$injector', ({ detail }) => {
     let { type, data } = detail;
 
-    if (type === '$size') data = $size();
+    if (type === '$size') data = state.$size();
 
     injector.emit(type, data);
   });
@@ -89,16 +94,23 @@ export default () => {
 
     if (events) {
       Object.keys(events).forEach((event) => {
-        if ($listners[event]) $listners[event](events[event], $data);
+        if (state.$listeners[event]) state.$listeners[event](events[event], $data);
       });
     } else {
-      if ($id !== id) return;
+      if (id !== state.$id) return;
 
-      $assign(data);
+      state.$assign(data);
     }
   });
 
   injector.emit('$mounted');
+}
+
+export default () => {
+  const state = new State();
+  const injector = injectorFactory(state);
+
+  $init(injector, state);
 
   return injector;
 }
