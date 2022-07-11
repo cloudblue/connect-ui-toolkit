@@ -1,7 +1,6 @@
 const { VueLoaderPlugin } = require('vue-loader');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-const path = require("path");
 const { resolve } = require("path");
 
 module.exports = {
@@ -13,7 +12,7 @@ module.exports = {
   entry: './src/index.js',
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: resolve(__dirname, 'dist'),
     filename: 'index.js',
     library: {
       type: 'module',
@@ -49,9 +48,13 @@ module.exports = {
 
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src/core'),
-      '~modules': path.resolve(__dirname, './src/modules'),
-      '~widgets': path.resolve(__dirname, './src/widgets'),
+      'boiler': resolve(__dirname, './src/core/boiler'),
+      'boiler-plugins': resolve(__dirname, './src/core/boiler-plugins'),
+      'bus': resolve(__dirname, './src/core/bus'),
+      'injector': resolve(__dirname, './src/core/injector'),
+      '@': resolve(__dirname, './src/core'),
+      '~modules': resolve(__dirname, './src/modules'),
+      '~widgets': resolve(__dirname, './src/widgets'),
     },
   },
 

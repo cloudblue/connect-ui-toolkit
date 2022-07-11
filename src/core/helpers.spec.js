@@ -2,6 +2,7 @@ import {
   fromKeys,
   clone,
   has,
+  path,
 } from './helpers';
 
 describe('fromKeys()', () => {
@@ -33,5 +34,29 @@ describe('has', () => {
 
   it('should check if object has an own property of key', () => {
     expect(has('prop1', { prop: undefined })).toBeFalsy();
+  });
+});
+
+describe('path', () => {
+  it('should return value of given path', () => {
+    expect(path(['a', 'b', 'c'], { a: { b: { c: 'ABC' } } })).toBe('ABC')
+  });
+
+  it('should return value of given path even for arrays', () => {
+    expect(path(['a', 0, 'c'], { a: [{ c: 'ABC' }] })).toBe('ABC')
+  });
+
+  it('should return undefined for unexisting path', () => {
+    expect(path(['a', 'b', 'c'], { a: { c: { b: 'ABC' } } })).toBeUndefined()
+  });
+
+  it('should return self for not an object', () => {
+    // (Yes it`s weird. Don`t use it this way)
+    expect(path(['a', 'b', 'c'], 'ABC')).toBe('ABC');
+  });
+
+  it('should return self if some nested path resolves into not an object', () => {
+    // (This explains previous part a little bit - A little less strict as ramda once)
+    expect(path(['a', 'b', 0], { a: { b: 'ABC' } })).toBe('ABC');
   });
 });

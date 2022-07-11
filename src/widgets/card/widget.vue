@@ -1,8 +1,8 @@
 <template lang="pug">
 .card
   .card__header
-    p.card__title(v-if="$state.title") {{ $state.title }}
-    p.card__subtitle(v-if="$state.subtitle") {{ $state.subtitle }}
+    p.card__title(v-if="title") {{ title }}
+    p.card__subtitle(v-if="subtitle") {{ subtitle }}
 
   .card__content
     content
@@ -10,8 +10,10 @@
 
 <script>
 export default {
-  inject: ['$state'],
-  $attrs: ['title', 'subtitle'],
+  props: {
+    title: String,
+    subtitle: String,
+  },
 }
 </script>
 

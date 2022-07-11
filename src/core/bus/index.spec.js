@@ -1,4 +1,4 @@
-import bus, { $module } from './bus';
+import bus, { $module } from '.';
 import vue from 'vue';
 
 jest.mock('vue', () => ({
@@ -96,6 +96,24 @@ describe('bus', () => {
         $bus.dispatch('test', 'toggle');
 
         expect($bus.watch('test', '*')).toEqual({ foo: 'BAR', bar: 'FOO' });
+      });
+    });
+
+    describe('#listen', () => {
+      it('should put subscribers for event ', () => {
+        let cb1 = jest.fn();
+        $bus.listen('test', 'foo', cb1);
+        $bus.commit('test', 'foo', 'bar');
+        expect(cb1).toHaveBeenCalledWith('bar');
+      });
+
+      it('should add new subscribers for existing group', () => {
+        let cb1 = jest.fn();
+        let cb2 = jest.fn();
+        $bus.listen('test', 'foo', cb1);
+        $bus.listen('test', 'foo', cb2);
+        $bus.commit('test', 'foo', 'bar');
+        expect(cb2).toHaveBeenCalledWith('bar');
       });
     });
   });

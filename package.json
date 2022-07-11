@@ -9,7 +9,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "vue": "^3.2.33"
+    "vue": "^3.2.33",
+    "object-hash": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
