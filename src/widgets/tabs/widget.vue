@@ -5,11 +5,11 @@
 
 <script>
 export default {
-  inject: ['$listen', '$publish'],
-  $publishes: ['open-pad'],
+  inject: ['$boiler'],
 
   created() {
-    this.$listen('click-tab', ({ tab }) => this.$publish('open-pad', { pad: tab }));
+    this.$boiler.publishes('open-pad');
+    this.$boiler.listen('click-tab', ({ tab }) => this.$boiler.publish('open-pad', { pad: tab }));
   },
 }
 </script>

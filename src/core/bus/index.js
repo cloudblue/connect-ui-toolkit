@@ -1,4 +1,5 @@
 import { reactive } from 'vue';
+import { has, path } from '@/helpers';
 
 export const $module = ({ state = {}, actions = {} }) => {
   return {
@@ -10,6 +11,7 @@ export const $module = ({ state = {}, actions = {} }) => {
 export default () => {
   /* No direct access to modules from outside! */
   const $modules = {};
+  const $subscribers = {};
 
   return {
     /* Required to add new module to a bus */
@@ -32,6 +34,7 @@ export default () => {
     /* This is why instead of direct assignment in components is better to use this mutation */
     commit(module, property, value) {
       $modules[module].state[property] = value;
+      (path([module, property], $subscribers) || []).forEach(cb => cb(value));
     },
 
     /* This one is for triggering actions */
@@ -40,6 +43,14 @@ export default () => {
     /* 'commit' and 'dispatch' interface as it is done in vuex */
     dispatch(module, action, data) {
       return $modules[module].actions[action].call($modules[module], data, $modules);
+    },
+
+    /* For those who don't have vue reactivity */
+    listen(module, prop, cb) {
+      if (!has(module, $subscribers)) $subscribers[module] = {};
+      if (!has(prop, $subscribers[module])) $subscribers[module][prop] = [];
+
+      $subscribers[module][prop].push(cb);
     },
   };
 };

@@ -5,11 +5,15 @@
 
 <script>
 export default {
-  inject: ['$state', '$subscribe', '$injector'],
-  $attrs: ['pad', 'default'],
+  inject: ['$boiler', '$injector'],
+
+  props: {
+    pad: String,
+    default: Boolean,
+  },
 
   computed: {
-    opened: vm => vm.requested ? vm.requested === vm.$state.pad : typeof vm.$state.default === 'string',
+    opened: vm => vm.requested ? vm.requested === vm.pad : vm.default,
   },
 
   data() {
@@ -19,7 +23,7 @@ export default {
   },
 
   created() {
-    this.$subscribe('open-pad', ({ pad }) => (this.requested = pad));
+    this.$boiler.subscribe('open-pad', ({ pad }) => (this.requested = pad));
   },
 
   watch: {

@@ -5,29 +5,15 @@
 
 <script>
 export default {
-  $attrs: ['tab', 'default'],
+  inject: ['$boiler'],
 
-  $style: (el) => {
-    const isFirstChild = el.matches('*:first-child');
-
-    return {
-      display: 'inline-flex',
-      flexDirection: 'row',
-      position: 'relative',
-      alignItems: 'center',
-      marginLeft: isFirstChild ? 0 : '1.6em',
-      lineHeight: '3.2em',
-      whiteSpace: 'nowrap',
-      color: '#212121',
-      cursor: 'pointer',
-      fontWeight: '500',
-    }
+  props: {
+    tab: String,
+    default: Boolean,
   },
 
-  inject: ['$state', '$dispatch', '$subscribe'],
-
   computed: {
-    active: vm => vm.requested ? vm.requested === vm.$state.tab : typeof vm.$state.default === 'string',
+    active: vm => vm.requested ? vm.requested === vm.tab : typeof vm.default === 'string',
   },
 
   data() {
@@ -37,13 +23,31 @@ export default {
   },
 
   created() {
-    this.$subscribe('open-pad', ({ pad }) => (this.requested = pad));
-    if (this.$state.default) this.open();
+    this.$boiler.subscribe('open-pad', ({ pad }) => (this.requested = pad));
+
+    if (this.default) this.open();
+
+    this.$boiler.style((el) => {
+      const isFirstChild = el.matches('*:first-child');
+
+      return {
+        display: 'inline-flex',
+        flexDirection: 'row',
+        position: 'relative',
+        alignItems: 'center',
+        marginLeft: isFirstChild ? 0 : '1.6em',
+        lineHeight: '3.2em',
+        whiteSpace: 'nowrap',
+        color: '#212121',
+        cursor: 'pointer',
+        fontWeight: '500',
+      };
+    });
   },
 
   methods: {
     open() {
-      this.$dispatch('click-tab', { tab: this.$state.tab });
+      this.$boiler.dispatch('click-tab', { tab: this.tab });
     },
   },
 }
