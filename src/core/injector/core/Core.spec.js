@@ -85,12 +85,14 @@ describe('Core', () => {
 
   describe('#size', () => {
     it('should return document size in proper format', () => {
-      jest.spyOn(global.document.body, 'scrollHeight', 'get').mockReturnValue(100)
-      jest.spyOn(global.document.body, 'scrollWidth', 'get').mockReturnValue(300)
+      jest.spyOn(global.document.documentElement, 'scrollHeight', 'get').mockReturnValue(100)
+      jest.spyOn(global.document.documentElement, 'scrollWidth', 'get').mockReturnValue(300)
+      jest.spyOn(global.document.documentElement, 'offsetHeight', 'get').mockReturnValue(200)
+      jest.spyOn(global.document.documentElement, 'offsetWidth', 'get').mockReturnValue(200)
 
       expect(core.size()).toEqual({
         width: 300,
-        height: 100,
+        height: 200,
       });
     });
   });

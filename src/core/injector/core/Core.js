@@ -24,8 +24,8 @@ export default class {
 
   size() {
     return {
-      height: document.body.scrollHeight,
-      width: document.body.scrollWidth,
+      height: Math.max(document.documentElement.offsetHeight, document.documentElement.scrollHeight),
+      width: Math.max(document.documentElement.offsetWidth, document.documentElement.scrollWidth),
     };
   }
 }
