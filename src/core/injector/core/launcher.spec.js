@@ -8,7 +8,12 @@ describe('$init', () => {
 
   beforeEach(() => {
     global.window.addEventListener = jest.fn();
+    global.window.name = 'XXX';
     global.setInterval = jest.fn();
+    global.crypto = {
+      getRandomValues: jest.fn(() => ['abc']),
+    };
+
 
     injector = {
       listen: jest.fn(),
@@ -49,7 +54,7 @@ describe('$init', () => {
 
     it('should emit "$size" event', () => {
       handler({}, {});
-      expect(injector.emit.mock.calls[1]).toEqual(['$size', 'SIZE']);
+      expect(injector.emit.mock.calls[2]).toEqual(['$size', 'SIZE']);
     });
 
     it('should get sizes from $size method', () => {
@@ -87,13 +92,13 @@ describe('$init', () => {
     it('should emit proper listener event', () => {
       handler({ detail: { type: 'event_name', data: { foo: 'bar' } } });
 
-      expect(injector.emit.mock.calls[1]).toEqual(['event_name', { foo: 'bar' }]);
+      expect(injector.emit.mock.calls[2]).toEqual(['event_name', { foo: 'bar' }]);
     });
 
     it('should fill size for $size type', () => {
       handler({ detail: { type: '$size' } });
 
-      expect(injector.emit.mock.calls[1]).toEqual(['$size', 'SIZE']);
+      expect(injector.emit.mock.calls[2]).toEqual(['$size', 'SIZE']);
     });
   });
 

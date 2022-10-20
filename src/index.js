@@ -14,7 +14,7 @@ export const Tab = tab;
 export const Pad = pad;
 export const Card = card;
 
-export default (widgets) => {
+export default (widgets = {}, options = {}) => {
   const boiler = createBoiler();
   boiler.plugin(boilerVuePlugin);
   boiler.store(busVuePlugin($bus()));
@@ -22,5 +22,5 @@ export default (widgets) => {
 
   for (const widget in widgets) boiler.mount(widget, widgets[widget]);
 
-  return $injector();
+  return $injector(options);
 };
