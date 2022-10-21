@@ -33,6 +33,6 @@ describe('createInjector', () => {
   });
 
   it('should launch an injector', () => {
-    expect(launcher).toHaveBeenCalledWith('INJECTOR', { core: 'CORE' });
+    expect(launcher).toHaveBeenCalledWith('INJECTOR', { core: 'CORE' }, {});
   });
 });
