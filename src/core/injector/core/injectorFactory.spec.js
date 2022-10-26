@@ -13,6 +13,26 @@ describe('injectorFactory', () => {
       expect(cb).toHaveBeenCalledWith('bar')
     });
 
+    it('should add immediate callback call', () => {
+      const core = { watchers: {}, state: { foo: 'bar' } };
+      const injector = injectorFactory(core);
+      const cb = jest.fn();
+
+      injector.watch('foo', cb, { immediate: true });
+
+      expect(cb).toHaveBeenCalledWith('bar');
+    });
+
+    it('should add immediate callback call with "*" key', () => {
+      const core = { watchers: {}, state: { foo: 'bar' } };
+      const injector = injectorFactory(core);
+      const cb = jest.fn();
+
+      injector.watch('*', cb, { immediate: true });
+
+      expect(cb).toHaveBeenCalledWith({ foo: 'bar' });
+    });
+
     it('should extend existing watcher for passed property with a callback', () => {
       const core = {
         watchers: { foo: [() => {}]},
