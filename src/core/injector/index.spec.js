@@ -16,7 +16,7 @@ jest.mock('./core/injectorFactory', () => ({
 
 jest.mock('./core/launcher', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn(() => Promise.resolve()),
 }));
 
 describe('createInjector', () => {
@@ -34,5 +34,15 @@ describe('createInjector', () => {
 
   it('should launch an injector', () => {
     expect(launcher).toHaveBeenCalledWith('INJECTOR', { core: 'CORE' }, {});
+  });
+});
+
+describe('createInjector on launcher error', () => {
+  beforeEach(() => {
+    launcher.mockImplementation(() => Promise.reject(new Error('ERROR')));
+  });
+
+  it('should throw an error', () => {
+    expect(createInjector()).rejects.toThrow('ERROR');
   });
 });

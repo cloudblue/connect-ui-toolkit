@@ -4,7 +4,7 @@ import {
 } from "@/helpers";
 
 export default core => ({
-  watch(a, b) {
+  watch(a, b, {immediate} = {}) {
     let fn, name;
 
     if (typeof a === 'function') {
@@ -20,6 +20,10 @@ export default core => ({
     core.watchers[name].push(() => {
       fn(name === '*' ? core.state : core.state[name]);
     });
+
+    if (immediate) {
+      fn(name === '*' ? core.state : core.state[name]);
+    }
   },
 
   commit(data) {
