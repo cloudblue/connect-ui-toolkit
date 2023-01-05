@@ -55,15 +55,15 @@ jobs:
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    chromatic:
-      name: Publish to Chromatic
-      needs: [sonar]
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v1
-        - name: Install dependencies
-          run: yarn
-        - name: Publish to Chromatic
-          uses: chromaui/action@v1
-          with:
-            projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+  chromatic:
+    name: Publish to Chromatic
+    needs: [sonar]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: yarn
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
