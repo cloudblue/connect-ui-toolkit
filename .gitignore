@@ -16,6 +16,9 @@ coverage
 /cypress/videos/
 /cypress/screenshots/
 
+/storybook-static
+yarn.lock
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
