@@ -11,8 +11,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "vue": "^3.2.33",
-    "object-hash": "^3.0.0"
+    "object-hash": "^3.0.0",
+    "vue": "^3.2.33"
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
@@ -31,6 +31,7 @@
     "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.5",
     "babel-plugin-dynamic-import-node": "^2.3.3",
+    "chromatic": "^6.14.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.5.0",
     "eslint-plugin-storybook": "^0.6.8",
