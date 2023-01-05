@@ -13,7 +13,7 @@ export const create = (boiler, component, storeInstaller) => {
   const customs = [...(boiler?.settings?.customs || []), 'content'];
   const state = reactive(boiler.getState());
   const app = createApp({
-    template: '<widget v-bind="state"></widget>',
+    template: `<widget v-bind="state">${boiler.content}</widget>`,
     computed: { state: () => state },
   });
 
@@ -21,7 +21,6 @@ export const create = (boiler, component, storeInstaller) => {
   app.config.unwrapInjectedRef = true;
   app.config.compilerOptions.isCustomElement = t => customs.includes(t);
   app.component('widget', component);
-  app.component('content', { template: boiler.content });
   app.provide('$boiler', boiler);
   app.provide('$injector', (type, data) => rootEmit('$injector', { type, data }));
 

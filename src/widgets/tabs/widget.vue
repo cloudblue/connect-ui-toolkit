@@ -1,6 +1,6 @@
 <template lang="pug">
 .tabs-container
-  content
+  slot
 </template>
 
 <script>

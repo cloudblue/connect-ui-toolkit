@@ -4,12 +4,13 @@ module.exports = {
   "ignorePatterns": ['*.config.js', '*.spec.js', 'tasks/*', 'dist/*'],
   "extends": [
     "plugin:vue/vue3-essential",
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:storybook/recommended"
   ],
   "env": {
-    "vue/setup-compiler-macros": true,
+    "vue/setup-compiler-macros": true
   },
   "rules": {
     "vue/multi-word-component-names": "off"
   }
-}
+};
