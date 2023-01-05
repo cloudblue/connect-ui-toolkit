@@ -5,7 +5,7 @@
     p.card__subtitle(v-if="subtitle") {{ subtitle }}
 
   .card__content
-    content
+    slot
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template lang="pug">
 .tab(:class="{ active: active }" @click="open()")
-  content
+  slot
 </template>
 
 <script>

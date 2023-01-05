@@ -122,7 +122,7 @@ describe('create', () => {
 
     it('should bind state to a newly created app', () => {
       expect(createApp).toHaveBeenCalledWith({
-        template: '<widget v-bind="state"></widget>',
+        template: '<widget v-bind=\"state\"><foo>bar</foo></widget>',
         computed: { state: expect.any(Function) },
       });
     });
@@ -157,9 +157,6 @@ describe('create', () => {
       expect(app.component).toHaveBeenCalledWith('widget', 'COMPONENT');
     });
 
-    it('should add system "content" component', () => {
-      expect(app.component).toHaveBeenCalledWith('content', { template: '<foo>bar</foo>' });
-    });
   });
 
   describe('Providing tools to an app', () => {

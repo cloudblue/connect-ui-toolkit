@@ -1,6 +1,6 @@
 <template lang="pug">
 .pad(v-show="opened")
-  content
+  slot
 </template>
 
 <script>

@@ -38,6 +38,7 @@ module.exports = {
     '<rootDir>/dist/',
     '<rootDir>/helpers/',
     '<rootDir>/node_modules/',
+    '<rootDir>/src/stories/',
   ],
 
   testEnvironment: 'jsdom',
