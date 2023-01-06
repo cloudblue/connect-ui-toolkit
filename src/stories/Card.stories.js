@@ -16,8 +16,9 @@ const Template = (args) => ({
   template: '<c-card :title="title" :subtitle="subtitle">{{ content }}</c-card>',
 });
 
-export const Default = Template.bind({});
-Default.args = {
+export const Component = Template.bind({});
+
+Component.args = {
   title: 'Card Title',
   subtitle: 'Card Subtitle',
   content: 'Card Content',
