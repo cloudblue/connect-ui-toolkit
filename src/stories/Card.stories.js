@@ -1,4 +1,4 @@
-import cCard from '../widgets/card/widget.vue';
+import cCard from '../widgets/card/component.vue';
 
 export default {
   title: 'Components/Card',
