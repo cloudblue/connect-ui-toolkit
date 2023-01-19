@@ -75,6 +75,38 @@ describe('createBoiler', () => {
     });
   });
 
+  it('should merge the props of the component with the props of the "extends" property', () => {
+    boiler.plugin('SOME_PLUGIN');
+    boiler.store('STORE');
+    boiler.mount('test-elem', {
+      extends: {
+        props: {
+          foo: 'FOO',
+        },
+      },
+      props: {
+        bar: 'BAR',
+      },  
+    });
+
+    expect(customElements.define).toHaveBeenCalledWith('test-elem', {
+      $plugin: 'SOME_PLUGIN',
+      component: {
+        props: {
+          foo: 'FOO',
+          bar: 'BAR',
+        },
+        extends: {
+          props: {
+            foo: 'FOO',
+          },
+        },
+      },
+      $store: 'STORE',
+      $settings: {},
+    });
+  });
+
   it('should add custom element properly', () => {
     boiler.plugin('SOME_PLUGIN');
     boiler.store('STORE');

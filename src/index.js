@@ -7,7 +7,7 @@ import busVuePlugin from './core/boiler-plugins/bus-vue-plugin';
 import tabs from './widgets/tabs/widget.vue';
 import tab from './widgets/tab/widget.vue';
 import pad from './widgets/pad/widget.vue';
-import card from './widgets/card/widget.vue'
+import card from './widgets/card/widget.vue';
 
 export const Tabs = tabs;
 export const Tab = tab;

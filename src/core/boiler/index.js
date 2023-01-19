@@ -14,9 +14,14 @@ export default () => {
     mount(name, component) {
       if (!$plugin) throw new Error('To mount a component we need a plugin');
 
+     const widget = component;
+     if (widget.extends) {
+      widget.props = {...widget.props, ...widget.extends.props};
+     }
+
       customElements.define(name, widgetFactory(
         $plugin,
-        component,
+        widget,
         $store,
         $settings
       ));
