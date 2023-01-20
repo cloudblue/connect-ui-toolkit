@@ -19,6 +19,9 @@ coverage
 /storybook-static
 yarn.lock
 
+# Distribution / packaging
+/dist
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
