@@ -18,6 +18,8 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm install
+      - name: Build
+        run: npm run build
       - name: Testing
         run: npm test
       - name: Publish NPM package
