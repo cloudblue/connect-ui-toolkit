@@ -4,7 +4,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const { resolve } = require("path");
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   experiments: {
     outputModule: true,
   },
