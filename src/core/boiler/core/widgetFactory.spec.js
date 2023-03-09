@@ -1,7 +1,5 @@
 import widgetFactory from './widgetFactory';
 
-import boilerInterface from './boilerInterface';
-
 import {
   $updateAttribute,
 } from './helpers';
@@ -21,6 +19,7 @@ jest.mock('./helpers', () => ({
 describe('widgetFactory', () => {
   let Widget;
   let shadow;
+  let boilerContentPlaceholder;
   let widget;
   let plugin;
   let pluginWatch;
@@ -31,10 +30,12 @@ describe('widgetFactory', () => {
   let settings;
 
   beforeEach(() => {
+    boilerContentPlaceholder = {
+      replaceWith: jest.fn(),
+    };
+
     shadow = {
-      querySelector: jest.fn(() => ({
-        replaceWith: jest.fn(),
-      })),
+      querySelector: jest.fn(() => boilerContentPlaceholder),
       appendChild: jest.fn(),
       getElementById: jest.fn(() => null),
     };
@@ -228,6 +229,94 @@ describe('widgetFactory', () => {
         }
 
         expect(err).toBeUndefined();
+      });
+    });
+
+    describe('patch styles', () => {
+      let styleElement;
+
+      beforeEach(() => {
+        styleElement = {
+          cloneNode: jest.fn(() => 'foo'),
+        };
+
+        global.document.querySelectorAll = jest.fn(() => [styleElement]);
+        widget.connectedCallback();
+      });
+
+      it('should pick all "style" nodes', () => {
+        expect(document.querySelectorAll).toHaveBeenCalledWith('style');
+      });
+
+      it('should clone "style" nodes', () => {
+        expect(styleElement.cloneNode).toHaveBeenCalledWith(true);
+      });
+
+      it('should paste copied node to shadow DOM zone', () => {
+        expect(widget.$shadow.appendChild.mock.calls[0][0]).toBe('foo');
+      });
+    });
+
+    describe('place container', () => {
+      let styleElement;
+
+      beforeEach(() => {
+        styleElement = {
+          cloneNode: jest.fn(() => 'foo'),
+        };
+
+        global.document.querySelectorAll = jest.fn(() => [styleElement]);
+        widget.connectedCallback();
+      });
+
+      it('should paste copied node to shadow DOM zone', () => {
+        widget.$container = {
+          appendChild: jest.fn(),
+        };
+
+        widget.$slot = 'foo';
+
+        widget.connectedCallback();
+
+        expect(widget.$container.appendChild).toHaveBeenCalledWith('foo');
+      });
+
+      it('should place container node', () => {
+        widget.$container = {
+          foo: 'bar',
+          appendChild: jest.fn(),
+        };
+
+        widget.connectedCallback();
+
+        expect(widget.$shadow.appendChild.mock.calls[3][0]).toEqual(
+          expect.objectContaining({ foo: 'bar' }),
+        );
+      });
+    });
+
+    describe('restore slot of deleted', () => {
+      beforeEach(() => {
+        widget.$container = { appendChild: jest.fn() };
+        widget.$slot = 'foo';
+      });
+
+      it('should replace "boliler-content" element with a slot', () => {
+        widget.connectedCallback();
+        expect(boilerContentPlaceholder.replaceWith).toHaveBeenCalledWith('foo');
+      });
+
+      it('should do nothing if slot is still there', () => {
+        shadow.getElementById = jest.fn(() => 'foo');
+        widget.connectedCallback();
+        expect(boilerContentPlaceholder.replaceWith).not.toHaveBeenCalled();
+      });
+
+
+      it('should do nothing if placeholder is not there', () => {
+        shadow.querySelector = jest.fn(() => null);
+        widget.connectedCallback();
+        expect(boilerContentPlaceholder.replaceWith).not.toHaveBeenCalled();
       });
     });
   });
