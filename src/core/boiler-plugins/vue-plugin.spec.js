@@ -95,10 +95,10 @@ describe('create', () => {
     it.each([
       [{ customs: ['foo', 'bar'] }, 'foo', true],
       [{ customs: ['foo', 'bar'] }, 'bar', true],
-      [{ customs: ['foo', 'bar'] }, 'content', true],
+      [{ customs: ['foo', 'bar'] }, 'boiler-content', true],
       [{ customs: ['foo'] }, 'bar', false],
-      [{}, 'content', true],
-      [null, 'content', true],
+      [{}, 'boiler-content', true],
+      [null, 'boiler-content', true],
     ])('for %j customs %j should be %j', (settings, tag, res) => {
       boiler.settings = settings;
       call();
@@ -122,7 +122,7 @@ describe('create', () => {
 
     it('should bind state to a newly created app', () => {
       expect(createApp).toHaveBeenCalledWith({
-        template: '<widget v-bind=\"state\"><foo>bar</foo></widget>',
+        template: '<widget v-bind=\"state\"><boiler-content></boiler-content></widget>',
         computed: { state: expect.any(Function) },
       });
     });

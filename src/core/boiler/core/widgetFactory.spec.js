@@ -15,10 +15,12 @@ jest.mock('./boilerInterface', () => ({
 jest.mock('./helpers', () => ({
   noop: jest.fn(),
   $updateAttribute: jest.fn(),
+  hex: jest.fn(() => 'aaaaaaaa'),
 }))
 
 describe('widgetFactory', () => {
   let Widget;
+  let shadow;
   let widget;
   let plugin;
   let pluginWatch;
@@ -29,7 +31,19 @@ describe('widgetFactory', () => {
   let settings;
 
   beforeEach(() => {
-    global.HTMLElement = class {};
+    shadow = {
+      querySelector: jest.fn(() => ({
+        replaceWith: jest.fn(),
+      })),
+      appendChild: jest.fn(),
+      getElementById: jest.fn(() => null),
+    };
+
+    global.HTMLElement = class {
+      constructor() {
+        this.attachShadow = jest.fn(() => shadow);
+      }
+    };
 
     pluginWatch = jest.fn();
     pluginMount = jest.fn();

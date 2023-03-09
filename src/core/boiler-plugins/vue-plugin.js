@@ -10,10 +10,10 @@ export const observe = component => {
 }
 
 export const create = (boiler, component, storeInstaller) => {
-  const customs = [...(boiler?.settings?.customs || []), 'content'];
+  const customs = [...(boiler?.settings?.customs || []), 'boiler-content'];
   const state = reactive(boiler.getState());
   const app = createApp({
-    template: `<widget v-bind="state">${boiler.content}</widget>`,
+    template: `<widget v-bind="state"><boiler-content></boiler-content></widget>`,
     computed: { state: () => state },
   });
 
@@ -26,7 +26,7 @@ export const create = (boiler, component, storeInstaller) => {
 
   return {
     watch: (prop, newVal) => (state[prop] = newVal),
-    mount: () => app.mount(boiler.element),
+    mount: (el) => app.mount(el),
     unmount: () => app.unmount(),
   }
 }

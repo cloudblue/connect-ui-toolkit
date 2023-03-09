@@ -1,6 +1,7 @@
 import {
   $updateAttribute,
   noop,
+  hex,
 } from './helpers';
 
 import boilerInterface from './boilerInterface';
@@ -9,8 +10,18 @@ export default (plugin, component, storeInstaller, settings) => class Widget ext
   constructor() {
     super();
 
+    this.$id = hex(8);
     this.$app = null;
     this.$settings = settings;
+
+    // We need shadow dom to use slot's mechanics for element contents
+    // In fact it allows us to have content that is operated by an external app
+    // in own lifecycle but is displayed inside our app
+    this.$shadow = this.attachShadow({ mode: 'open' });
+    this.$container = document.createElement('container');
+    this.$container.setAttribute('id', `app_${this.$id}`);
+    this.$slot = document.createElement('slot');
+    this.$slot.setAttribute('id', `slot_${this.$id}`);
 
     const {
       watch = noop,
@@ -48,7 +59,30 @@ export default (plugin, component, storeInstaller, settings) => class Widget ext
       handler(e.detail);
     });
 
-    this.$app = this.mount();
+    // Ugly-ugly solution to make Shadow DOM transparent in terms of styling
+    // If you have ANY more appropriate idea - please contact me
+    const styles = document.querySelectorAll('style');
+    styles.forEach((el) => {
+      this.$shadow.appendChild(el.cloneNode(true));
+    });
+
+    // Default slot positioning -
+    // covers situation when mount doesn't wipe out content nodes
+    this.$container.appendChild(this.$slot);
+    this.$shadow.appendChild(this.$container);
+
+    // Mount an app -
+    // Very often wipes out content and intercepts control of content
+    this.$app = this.mount(this.$container);
+
+    // For such cases - when slot was wiped out
+    // we recreate it on demand on requested place.
+    // To be more specific - replace an element 'boiler-content' placed inside app template
+    if (!this.$shadow.getElementById(`slot_${this.$id}`)) {
+      const placeholder = this.$shadow.querySelector('boiler-content');
+      if (!placeholder) return;
+      placeholder.replaceWith(this.$slot);
+    }
   }
 
   disconnectedCallback() {
