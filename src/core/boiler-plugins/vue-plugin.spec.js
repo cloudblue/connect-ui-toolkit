@@ -95,10 +95,10 @@ describe('create', () => {
     it.each([
       [{ customs: ['foo', 'bar'] }, 'foo', true],
       [{ customs: ['foo', 'bar'] }, 'bar', true],
-      [{ customs: ['foo', 'bar'] }, 'content', true],
+      [{ customs: ['foo', 'bar'] }, 'boiler-content', true],
       [{ customs: ['foo'] }, 'bar', false],
-      [{}, 'content', true],
-      [null, 'content', true],
+      [{}, 'boiler-content', true],
+      [null, 'boiler-content', true],
     ])('for %j customs %j should be %j', (settings, tag, res) => {
       boiler.settings = settings;
       call();
@@ -122,7 +122,7 @@ describe('create', () => {
 
     it('should bind state to a newly created app', () => {
       expect(createApp).toHaveBeenCalledWith({
-        template: '<widget v-bind=\"state\"><foo>bar</foo></widget>',
+        template: '<widget v-bind=\"state\"><boiler-content></boiler-content></widget>',
         computed: { state: expect.any(Function) },
       });
     });
@@ -199,6 +199,23 @@ describe('create', () => {
       const app = result.mount();
       result.unmount();
       expect(app.unmount).toHaveBeenCalled();
+    });
+  });
+
+  describe('css', () => {
+    it.each([
+      [undefined, undefined, ''],
+      ['foo', undefined, 'foo'],
+      [undefined, 'bar', 'bar'],
+      ['foo', 'bar', 'foobar'],
+    ])('When styles %j and extended %j should return %j', (style, extend, expected) => {
+      component = {};
+      if (style) component.styles = [style];
+      if (extend) component.extends = { styles: [extend] };
+
+      call();
+
+      expect(result.css()).toEqual(expected);
     });
   });
 });

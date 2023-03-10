@@ -38,3 +38,5 @@ export const $emit = (el, name, input) => {
   const event = new CustomEvent(name, { bubbles: true, detail: { input } });
   el.dispatchEvent(event);
 }
+
+export const hex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
