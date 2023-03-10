@@ -237,23 +237,31 @@ describe('widgetFactory', () => {
 
       beforeEach(() => {
         styleElement = {
-          cloneNode: jest.fn(() => 'foo'),
+          foo: 'bar',
+          append: jest.fn(),
+          setAttribute: jest.fn(),
+          appendChild: jest.fn(),
         };
 
-        global.document.querySelectorAll = jest.fn(() => [styleElement]);
+        global.document.createElement = jest.fn(() => styleElement);
+        widget.css = jest.fn(() => 'foo');
         widget.connectedCallback();
       });
 
-      it('should pick all "style" nodes', () => {
-        expect(document.querySelectorAll).toHaveBeenCalledWith('style');
+      it('should create style node', () => {
+        expect(document.createElement).toHaveBeenCalledWith('style');
       });
 
-      it('should clone "style" nodes', () => {
-        expect(styleElement.cloneNode).toHaveBeenCalledWith(true);
+      it('should take given styles', () => {
+        expect(widget.css).toHaveBeenCalled();
       });
 
-      it('should paste copied node to shadow DOM zone', () => {
-        expect(widget.$shadow.appendChild.mock.calls[0][0]).toBe('foo');
+      it('should place given css to "style" node', () => {
+        expect(styleElement.append).toHaveBeenCalledWith('foo');
+      });
+
+      it('should paste created style node to shadow', () => {
+        expect(widget.$shadow.appendChild.mock.calls[0][0]).toEqual(expect.objectContaining({ foo: 'bar' }));
       });
     });
 

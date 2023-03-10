@@ -28,6 +28,15 @@ export const create = (boiler, component, storeInstaller) => {
     watch: (prop, newVal) => (state[prop] = newVal),
     mount: (el) => app.mount(el),
     unmount: () => app.unmount(),
+    css: () => {
+      // This function gathers css for a component
+      // In vue case we gather inline css from a component itself and ones from components it extends
+      let styles = '';
+      if (Array.isArray(component?.styles)) styles += component.styles.join('');
+      if (Array.isArray(component?.extends?.styles)) styles += component.extends.styles.join('');
+
+      return styles;
+    },
   }
 }
 

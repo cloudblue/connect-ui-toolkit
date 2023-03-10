@@ -201,4 +201,21 @@ describe('create', () => {
       expect(app.unmount).toHaveBeenCalled();
     });
   });
+
+  describe('css', () => {
+    it.each([
+      [undefined, undefined, ''],
+      ['foo', undefined, 'foo'],
+      [undefined, 'bar', 'bar'],
+      ['foo', 'bar', 'foobar'],
+    ])('When styles %j and extended %j should return %j', (style, extend, expected) => {
+      component = {};
+      if (style) component.styles = [style];
+      if (extend) component.extends = { styles: [extend] };
+
+      call();
+
+      expect(result.css()).toEqual(expected);
+    });
+  });
 });

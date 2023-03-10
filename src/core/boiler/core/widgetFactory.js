@@ -27,11 +27,13 @@ export default (plugin, component, storeInstaller, settings) => class Widget ext
       watch = noop,
       mount = noop,
       unmount = noop,
+      css = noop,
     } = plugin.create(boilerInterface(this, component, plugin), component, storeInstaller);
 
     this.mount = mount;
     this.unmount = unmount;
     this.watch = watch;
+    this.css = css;
   }
 
   connectedCallback() {
@@ -59,12 +61,12 @@ export default (plugin, component, storeInstaller, settings) => class Widget ext
       handler(e.detail);
     });
 
-    // Ugly-ugly solution to make Shadow DOM transparent in terms of styling
-    // If you have ANY more appropriate idea - please contact me
-    const styles = document.querySelectorAll('style');
-    styles.forEach((el) => {
-      this.$shadow.appendChild(el.cloneNode(true));
-    });
+    // Solution to configure styles of shadow zone properly
+    // css function should return a css string that will stylize this particular zone
+    // plugin is responsible for supplying this - so logic therein may be very custom
+    const style = document.createElement('style');
+    style.append(this.css());
+    this.$shadow.appendChild(style);
 
     // Default slot positioning -
     // covers situation when mount doesn't wipe out content nodes
