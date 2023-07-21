@@ -4,7 +4,8 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const { resolve } = require("path");
 
 module.exports = {
-  mode: 'production',
+  mode: process.env.NODE_ENV,
+
   experiments: {
     outputModule: true,
   },
@@ -79,8 +80,10 @@ module.exports = {
       "Access-Control-Allow-Origin": "*",
     },
 
+    static: ['dist'],
+
     historyApiFallback: {
-      index: '/',
+      rewrites: [{ from: /./, to: '/index.js' }],
     },
   },
-}
+};
