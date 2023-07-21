@@ -13,11 +13,10 @@ module.exports = {
   },
 
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/core/$1',
-    '^~modules$': '<rootDir>/src/modules',
-    '^~modules/(.*)$': '<rootDir>/src/modules/$1',
     '^~widgets$': '<rootDir>./src/widgets',
     '^~widgets/(.*)$': '<rootDir>./src/widgets$1',
+    '^~core': '<rootDir>./src/core',
+    '^~core/(.*)$': '<rootDir>./src/core',
   },
 
   clearMocks: true,

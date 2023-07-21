@@ -28,6 +28,9 @@ module.exports = {
           loader: 'vue-loader',
           options: {
             customElement: true,
+            compilerOptions: {
+              isCustomElement: tag => tag.startsWith('ui-'),
+            },
           },
         },
       },
@@ -54,12 +57,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      'boiler': resolve(__dirname, './src/core/boiler'),
-      'boiler-plugins': resolve(__dirname, './src/core/boiler-plugins'),
-      'bus': resolve(__dirname, './src/core/bus'),
-      'injector': resolve(__dirname, './src/core/injector'),
-      '@': resolve(__dirname, './src/core'),
-      '~modules': resolve(__dirname, './src/modules'),
+      '~core': resolve(__dirname, './src/core'),
       '~widgets': resolve(__dirname, './src/widgets'),
     },
   },

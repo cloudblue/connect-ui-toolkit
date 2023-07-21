@@ -1,14 +1,21 @@
-import { reactive } from 'vue';
-import { has, path } from '@/helpers';
+import {
+  reactive,
+} from 'vue';
+
+import {
+  has,
+  path,
+} from '~core/helpers';
+
 
 export const $module = ({ state = {}, actions = {} }) => {
   return {
     state: reactive(state),
     actions,
   };
-}
+};
 
-export default () => {
+export const createStore = () => {
   /* No direct access to modules from outside! */
   const $modules = {};
   const $subscribers = {};
@@ -16,7 +23,7 @@ export default () => {
   return {
     /* Required to add new module to a bus */
     add(module) {
-      if (!module.name) throw new Error('Module should have a mandatory "name" property');
+      if (!module.name) throw new Error('Module must have a "name" property');
 
       $modules[module.name] = $module(module);
     },
@@ -54,3 +61,15 @@ export default () => {
     },
   };
 };
+
+const store = createStore();
+
+export const storeMixin = {
+  computed: {
+    $store() {
+      return store;
+    },
+  },
+};
+
+export default store;
