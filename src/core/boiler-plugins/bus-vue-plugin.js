@@ -1,1 +1,0 @@
-export default bus => app => app.provide('$bus', bus);
