@@ -1,19 +1,18 @@
 <template lang="pug">
-.tab(:class="{ active: active }" @click="open()")
+.tab(:class="{ active: selected }" @click="open")
   slot
+
 </template>
 
 <script>
 export default {
-  inject: ['$boiler'],
-
   props: {
+    active: Boolean,
     tab: String,
-    default: Boolean,
   },
 
   computed: {
-    active: vm => vm.requested ? vm.requested === vm.tab : typeof vm.default === 'string',
+    selected: vm => vm.requested ? vm.requested === vm.tab : vm.active,
   },
 
   data() {
@@ -22,39 +21,34 @@ export default {
     };
   },
 
-  created() {
-    this.$boiler.subscribe('open-pad', ({ pad }) => (this.requested = pad));
-
-    if (this.default) this.open();
-
-    this.$boiler.style((el) => {
-      const isFirstChild = el.matches('*:first-child');
-
-      return {
-        display: 'inline-flex',
-        flexDirection: 'row',
-        position: 'relative',
-        alignItems: 'center',
-        marginLeft: isFirstChild ? 0 : '1.6em',
-        lineHeight: '3.2em',
-        whiteSpace: 'nowrap',
-        color: '#212121',
-        cursor: 'pointer',
-        fontWeight: '500',
-      };
-    });
-  },
-
   methods: {
     open() {
-      this.$boiler.dispatch('click-tab', { tab: this.tab });
+      this.$bus.emit('click-tab', this.tab);
     },
   },
-}
+
+  created() {
+    this.$bus.on('click-tab', tab => (this.requested = tab));
+  },
+
+  mounted() {
+    if (this.active) this.open();
+  },
+};
+
 </script>
 
 <style lang="stylus" scoped>
 .tab {
+  display: inline-flex;
+  flexDirection: row;
+  position: relative;
+  alignItems: center;
+  margin-right: 1.6em;
+  line-height: 3.2em;
+  white-space: nowrap;
+  color: #212121;
+  cursor: pointer;
   font-weight: 500;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   letter-spacing: .5px;
