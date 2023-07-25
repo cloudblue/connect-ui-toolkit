@@ -11,14 +11,14 @@ export default {
     active: Boolean,
   },
 
-  computed: {
-    opened: vm => vm.requested ? vm.requested === vm.pad : vm.active,
-  },
-
   data() {
     return {
       requested: null,
     };
+  },
+
+  computed: {
+    opened: vm => vm.requested ? vm.requested === vm.pad : vm.active,
   },
 
   created() {

@@ -11,14 +11,14 @@ export default {
     tab: String,
   },
 
-  computed: {
-    selected: vm => vm.requested ? vm.requested === vm.tab : vm.active,
-  },
-
   data() {
     return {
       requested: null,
     };
+  },
+
+  computed: {
+    selected: vm => vm.requested ? vm.requested === vm.tab : vm.active,
   },
 
   methods: {
@@ -28,11 +28,8 @@ export default {
   },
 
   created() {
-    this.$bus.on('click-tab', tab => (this.requested = tab));
-  },
-
-  mounted() {
     if (this.active) this.open();
+    this.$bus.on('click-tab', tab => (this.requested = tab));
   },
 };
 

@@ -1,58 +1,67 @@
-import pad from './widget';
+import Pad from './widget';
 
 describe('Pad widget', () => {
   let context;
+  let result;
 
-  describe('#computed', () => {
-    describe('opened', () => {
+  describe('#data', () => {
+    it('returns the initial data', () => {
+      result = Pad.data();
+
+      expect(result).toEqual({ requested: null });
+    });
+  });
+
+  describe('computed', () => {
+    describe('#opened', () => {
       it.each([
-        ['foo', 'foo', false, true],
-        ['foo', 'foo', true, true],
-        ['foo', 'bar', false, false],
-        ['foo', 'bar', true, false],
-        [null, 'foo', true, true],
-        [null, 'foo', false, false],
-      ])('For requested = %j and pad = %j with default = %j expected to be %j', ($req, $pad, $def, $res) => {
-        expect(pad.computed.opened({
-          requested: $req,
-          pad: $pad,
-          default: $def,
-        })).toBe($res);
+        // expected, requested, pad, active
+        [true, 'foo', 'foo', false],
+        [true, 'foo', 'foo', true],
+        [false, 'foo', 'bar', false],
+        [false, 'foo', 'bar', true],
+        [false, '', 'bar', false],
+        [true, '', 'bar', true],
+      ])(
+        'returns %s if requested=%s, pad=%s, active=%s',
+        (expected, requested, pad, active) => {
+          context = { requested, pad, active };
+
+          result = Pad.computed.opened(context);
+
+          expect(result).toEqual(expected);
+        },
+      );
+    });
+  });
+
+  describe('lifecycle hooks', () => {
+    describe('#created', () => {
+      beforeEach(() => {
+        context = {
+          requested: null,
+          $bus: { on: jest.fn() },
+        };
+
+        Pad.created.call(context);
+      });
+
+      it('should call $bus.on', () => {
+        expect(context.$bus.on).toHaveBeenCalledWith('click-tab', expect.any(Function));
+      });
+
+      it('should provide a callback, that will set requested to the value of the given tab', () => {
+        const handler = context.$bus.on.mock.calls[0][1];
+
+        handler('foo');
+
+        expect(context.requested).toBe('foo');
       });
     });
   });
 
-  describe('#data()', () => {
-    it('should return initial set', () => {
-      expect(pad.data()).toEqual({ requested: null });
-    });
-  });
-
-  describe('#created()', () => {
-    beforeEach(() => {
-      context = {
-        requested: null,
-        $boiler: {
-          subscribe: jest.fn(),
-        },
-      };
-
-      pad.created.call(context);
-    });
-
-    it('should call $boiler.subscribe', () => {
-      expect(context.$boiler.subscribe).toHaveBeenCalledWith('open-pad', expect.any(Function));
-    });
-
-    it('should provide a callback, that will set #requested with provided pad id', () => {
-      const handler = context.$boiler.subscribe.mock.calls[0][1];
-      handler({ pad: 'foo' });
-      expect(context.requested).toBe('foo');
-    });
-  });
-
-  describe('#watch', () => {
-    describe('#opened()', () => {
+  describe('watch', () => {
+    describe('#opened', () => {
       beforeEach(() => {
         context = {
           $nextTick: jest.fn(),
@@ -61,17 +70,20 @@ describe('Pad widget', () => {
       });
 
       it('should call $nextTick when value passed', async () => {
-        await pad.watch.opened.call(context,true);
+        await Pad.watch.opened.call(context,true);
+
         expect(context.$nextTick).toHaveBeenCalled();
       });
 
       it('should emit $injector "$size"', async () => {
-        await pad.watch.opened.call(context,true);
+        await Pad.watch.opened.call(context,true);
+
         expect(context.$injector).toHaveBeenCalledWith('$size');
       });
 
       it('should do nothing when value is falsy', async () => {
-        await pad.watch.opened.call(context,false);
+        await Pad.watch.opened.call(context,false);
+
         expect(context.$nextTick).not.toHaveBeenCalled();
       });
     });

@@ -1,19 +1,9 @@
 import {
-  fromKeys,
   clone,
   has,
   path,
 } from './helpers';
 
-describe('fromKeys()', () => {
-  it('should create object from list of keys', () => {
-    expect(fromKeys(['a', 'b', 'c'])).toEqual({
-      a: null,
-      b: null,
-      c: null,
-    });
-  });
-});
 
 describe('clone', () => {
   it('should create top-level copy of an object', () => {
