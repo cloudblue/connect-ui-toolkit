@@ -3,10 +3,10 @@
   "version": "26.1.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "node tasks/start.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "start": "NODE_ENV=development node tasks/start.js",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
