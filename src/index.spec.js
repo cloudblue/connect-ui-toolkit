@@ -1,79 +1,35 @@
-import createApp from '.';
+import createApp from './index';
+import injector from '~core/injector';
+import registerWidget from '~core/registerWidget';
 
-import createBoiler from './core/boiler';
-import busVuePlugin from './core/boiler-plugins/bus-vue-plugin';
 
-let mockBoiler;
-
-jest.mock('./core/bus', () => ({
+jest.mock('~core/injector', () => ({
   __esModule: true,
-  default: jest.fn(() => 'BUS'),
+  default: jest.fn(() => 'app'),
 }));
 
-jest.mock('./core/injector', () => ({
+jest.mock('~core/registerWidget', () => ({
   __esModule: true,
-  default: jest.fn(() => 'INJECTOR'),
+  default: jest.fn(),
 }));
 
-jest.mock('./core/boiler', () => ({
-  __esModule: true,
-  default: jest.fn(() => mockBoiler),
-}));
 
-jest.mock('./core/boiler-plugins/vue-plugin', () => ({
-  __esModule: true,
-  default: 'PLUGIN',
-}));
+describe('#createApp function', () => {
+  it('calls registerWidget with every widget passed', () => {
+    createApp({ foo: 'Foo' });
 
-jest.mock('./core/boiler-plugins/bus-vue-plugin', () => ({
-  __esModule: true,
-  default: jest.fn(() => 'STORE'),
-}));
-
-describe('createApp', () => {
-  beforeEach(() => {
-    mockBoiler = {
-      plugin: jest.fn(),
-      store: jest.fn(),
-      setup: jest.fn(),
-      mount: jest.fn(),
-    };
+    expect(registerWidget).toHaveBeenCalledWith('foo', 'Foo');
   });
 
-  it('should create boiler app', () => {
-    createApp({});
-    expect(createBoiler).toHaveBeenCalled();
+  it('calls the injector with the options', () => {
+    createApp({}, { foo: 'bar' });
+
+    expect(injector).toHaveBeenCalledWith({ foo: 'bar' });
   });
 
-  it('should setup plugin', () => {
-    createApp({});
-    expect(mockBoiler.plugin).toHaveBeenCalledWith('PLUGIN');
-  });
+  it('returns the result of the injector call', () => {
+    const result = createApp();
 
-  it('should setup busVuePlugin with a bus', () => {
-    createApp({});
-    expect(busVuePlugin).toHaveBeenCalledWith('BUS');
-  });
-
-  it('should boiler.store with busVuePlugin', () => {
-    createApp({});
-    expect(mockBoiler.store).toHaveBeenCalledWith('STORE');
-  });
-
-  it('should provide setup', () => {
-    createApp({ foo: 'bar', fuz: 'buz' });
-    expect(mockBoiler.setup).toHaveBeenCalledWith({ customs: ['foo', 'fuz'] });
-  });
-
-  it.each([
-    ['foo', 'bar'],
-    ['fuz', 'buz'],
-  ])('boiler.mount should be called for %j with %j', (tag, component) => {
-    createApp({ foo: 'bar', fuz: 'buz' });
-    expect(mockBoiler.mount).toHaveBeenCalledWith(tag, component);
-  });
-
-  it('should return an $injector as a result', () => {
-    expect( createApp({ foo: 'bar', fuz: 'buz' })).toBe('INJECTOR');
+    expect(result).toEqual('app');
   });
 });

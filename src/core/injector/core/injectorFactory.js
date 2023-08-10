@@ -1,7 +1,7 @@
 import {
   clone,
   has,
-} from "@/helpers";
+} from '~core/helpers';
 
 export default core => ({
   watch(a, b, {immediate} = {}) {

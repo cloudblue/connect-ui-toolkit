@@ -1,19 +1,14 @@
 <template lang="pug">
-.pad(v-show="opened")
+.pad(v-if="opened")
   slot
+
 </template>
 
 <script>
 export default {
-  inject: ['$boiler', '$injector'],
-
   props: {
     pad: String,
-    default: Boolean,
-  },
-
-  computed: {
-    opened: vm => vm.requested ? vm.requested === vm.pad : vm.default,
+    active: Boolean,
   },
 
   data() {
@@ -22,19 +17,24 @@ export default {
     };
   },
 
+  computed: {
+    opened: vm => vm.requested ? vm.requested === vm.pad : vm.active,
+  },
+
   created() {
-    this.$boiler.subscribe('open-pad', ({ pad }) => (this.requested = pad));
+    this.$bus.on('click-tab', tab => (this.requested = tab));
   },
 
   watch: {
     async opened(v) {
       if (v) {
         await this.$nextTick();
-        this.$injector('$size')
+        this.$injector('$size');
       }
     },
   },
-}
+};
+
 </script>
 
 <style lang="stylus" scoped>

@@ -1,7 +1,7 @@
 import {
   call,
   has,
-} from "@/helpers";
+} from '~core/helpers';
 
 export default class {
   constructor() {

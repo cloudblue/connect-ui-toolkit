@@ -3,19 +3,17 @@ const getId = () => ([1e7]+-1e3+-4e3+-8e3+-1e11)
     .toString(16));
 
 export default (injector, core, options = {}) => new Promise((resolve) => {
-
   core.id = window.name || `slot_${getId()}`;
   injector.emit('$created');
 
   injector.listen('$init', (data) => {
     core.state = data;
 
-
     if (!options?.disableAutoResizing) {
       injector.emit('$size', core.size());
       setInterval(() => injector.emit('$size', core.size()), 300);
     }
-    
+
     resolve();
   });
 

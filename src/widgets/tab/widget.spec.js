@@ -1,144 +1,98 @@
-import tab from './widget';
+import Tab from './widget';
 
 
 describe('Tab', () => {
   let context;
+  let result;
 
-  describe('#computed', () => {
-    describe('#active', () => {
+  describe('#data', () => {
+    it('returns the initial data', () => {
+      result = Tab.data();
+
+      expect(result).toEqual({ requested: null });
+    });
+  });
+
+  describe('computed', () => {
+    describe('#selected', () => {
       it.each([
-        ['foo', 'foo', null, true],
-        ['foo', 'foo', 'foo', true],
-        ['foo', 'bar', null, false],
-        ['foo', 'bar', 'bar', false],
-        [null, 'foo', null, false],
-        [null, 'foo', 'bar', true],
-      ])('For requested = %j and pad = %j with default = %j expected to be %j', ($req, $tab, $def, $res) => {
-        expect(tab.computed.active({
-          requested: $req,
-          tab: $tab,
-          default: $def,
-        })).toBe($res);
-      });
-    });
-  });
+        // expected, requested, tab, active
+        [true, 'foo', 'foo', false],
+        [true, 'foo', 'foo', true],
+        [false, 'foo', 'bar', false],
+        [false, 'foo', 'bar', true],
+        [false, '', 'bar', false],
+        [true, '', 'bar', true],
+      ])(
+        'returns %s if requested=%s, tab=%s, active=%s',
+        (expected, requested, tab, active) => {
+          context = { requested, tab, active };
 
-  describe('#data()', () => {
-    it('should return initial set', () => {
-      expect(tab.data()).toEqual({ requested: null });
-    });
-  });
+          result = Tab.computed.selected(context);
 
-  describe('#created()', () => {
-    let created;
-
-    beforeEach(() => {
-      context = {
-        default: true,
-        open: jest.fn(),
-        $boiler: {
-          subscribe: jest.fn(),
-          style: jest.fn(),
+          expect(result).toEqual(expected);
         },
-      };
-
-      created = () => tab.created.call(context);
+      );
     });
+  });
 
-    it('should subscribe for "open-pad" event', () => {
-      created();
-      expect(context.$boiler.subscribe).toHaveBeenCalledWith('open-pad', expect.any(Function));
-    });
-
-    it('should set #requested with passed pad in handler', () => {
-      created();
-      const handler = context.$boiler.subscribe.mock.calls[0][1];
-      handler({ pad: 'foo' });
-      expect(context.requested).toBe('foo');
-    });
-
-    it('should call #open() when is default', () => {
-      created();
-      expect(context.open).toHaveBeenCalled();
-    });
-
-    it('should not call #open() when is not default', () => {
-      context.default = false;
-      created();
-      expect(context.open).not.toHaveBeenCalled();
-    });
-
-    describe('#style', () => {
-      let handler;
-      let element;
-      let isFirstChild;
-
+  describe('lifecycle hooks', () => {
+    describe('#created', () => {
       beforeEach(() => {
-        isFirstChild = true;
-        created();
-        handler = context.$boiler.style.mock.calls[0][0];
-        element = {
-          matches: jest.fn(() => isFirstChild),
+        context = {
+          active: false,
+          requested: null,
+          $bus: { on: jest.fn() },
+          open: jest.fn(),
         };
       });
 
-      it('should call $boiler.style', () => {
-        expect(context.$boiler.style).toHaveBeenCalledWith(expect.any(Function));
+      it('should call $bus.on', () => {
+        Tab.created.call(context);
+
+        expect(context.$bus.on).toHaveBeenCalledWith('click-tab', expect.any(Function));
       });
 
-      it('handler should check if element matches selector', () => {
-        handler(element);
-        expect(element.matches).toHaveBeenCalledWith('*:first-child');
+      it('should provide a callback, that will set requested to the value of the given tab', () => {
+        Tab.created.call(context);
+        const handler = context.$bus.on.mock.calls[0][1];
+
+        handler('foo');
+
+        expect(context.requested).toBe('foo');
       });
 
-      it('should return styles for first child', () => {
-        expect(handler(element)).toEqual({
-          display: 'inline-flex',
-          flexDirection: 'row',
-          position: 'relative',
-          alignItems: 'center',
-          marginLeft: 0,
-          lineHeight: '3.2em',
-          whiteSpace: 'nowrap',
-          color: '#212121',
-          cursor: 'pointer',
-          fontWeight: '500',
-        });
-      });
+      it('should call open if active=true', () => {
+        context.active = true;
 
-      it('should return styles for not first child', () => {
-        isFirstChild = false;
-        expect(handler(element)).toEqual({
-          display: 'inline-flex',
-          flexDirection: 'row',
-          position: 'relative',
-          alignItems: 'center',
-          marginLeft: '1.6em',
-          lineHeight: '3.2em',
-          whiteSpace: 'nowrap',
-          color: '#212121',
-          cursor: 'pointer',
-          fontWeight: '500',
-        });
-      });
+        Tab.created.call(context);
+
+        expect(context.open).toHaveBeenCalled();
+      })
+
+      it('should not call open if active=false', () => {
+        context.active = false;
+
+        Tab.created.call(context);
+
+        expect(context.open).not.toHaveBeenCalled();
+      })
     });
   });
 
-  describe('#methods', () => {
-    describe('#open()', () => {
-      it('should call #$boiler.dispatch', () => {
+  describe('methods', () => {
+    describe('#open', () => {
+      it('should call $bus.emit', () => {
         context = {
           tab: 'foo',
-          $boiler: {
-            dispatch: jest.fn(),
+          $bus: {
+            emit: jest.fn(),
           },
         };
 
-        tab.methods.open.call(context);
+        Tab.methods.open.call(context);
 
-        expect(context.$boiler.dispatch).toHaveBeenCalledWith('click-tab', {
-          tab: 'foo',
-        });
+        expect(context.$bus.emit).toHaveBeenCalledWith('click-tab', 'foo');
       });
     });
   });
