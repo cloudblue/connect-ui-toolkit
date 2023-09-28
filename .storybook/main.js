@@ -1,23 +1,29 @@
 const path = require('path');
 
 module.exports = {
-  stories: 
-  ["../src/**/*.stories.@(js|jsx|ts|tsx)",
-  "../src/**/*.stories.mdx",],
+  stories: [
+    "../src/**/*.stories.@(js|jsx|ts|tsx)",
+    "../src/stories/**/*.mdx",
+  ],
+
   staticDirs: ["../public"],
+
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-	"storybook-addon-designs"
+    "@storybook/addon-designs",
   ],
-  framework: "@storybook/vue3",
-  core: {
-    builder: "@storybook/builder-webpack5",
+
+  framework: {
+    name: "@storybook/vue3-webpack5",
+    options: {},
   },
+
   features: {
     interactionsDebugger: true,
   },
+
   webpackFinal: async (config) => {
 
     config.module.rules.push({
@@ -29,7 +35,7 @@ module.exports = {
       ],
       include: path.resolve(__dirname, '../'),
     });
-    
+
     config.module.rules.push(
       {
         test: /\.pug$/,
@@ -40,5 +46,9 @@ module.exports = {
     );
 
     return config;
+  },
+
+  docs: {
+    autodocs: true,
   },
 };

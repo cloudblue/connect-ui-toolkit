@@ -1,19 +1,38 @@
-<template lang="pug">
-.c-card
-  .c-card__header
-    p.c-card__title(v-if="title") {{ title }}
-    p.c-card__subtitle(v-if="subtitle") {{ subtitle }}
+<template>
+  <div class="c-card">
+    <div class="c-card__header">
+      <p
+        v-if="title"
+        class="c-card__title"
+      >
+        {{ title }}
+      </p>
+      <p
+        v-if="subtitle"
+        class="c-card__subtitle"
+      >
+        {{ subtitle }}
+      </p>
+    </div>
 
-  .c-card__content
-    slot
-
+    <div class="c-card__content">
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    title: String,
-    subtitle: String,
+    title: {
+      type: String,
+      default: '',
+    },
+
+    subtitle: {
+      type: String,
+      default: '',
+    },
   },
 };
 

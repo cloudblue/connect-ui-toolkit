@@ -1,13 +1,20 @@
-<template lang="pug">
-.pad(v-if="opened")
-  slot
-
+<template>
+  <div
+    v-if="opened"
+    class="pad"
+  >
+    <slot />
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    pad: String,
+    pad: {
+      type: String,
+      default: '',
+    },
+
     active: Boolean,
   },
 
@@ -21,10 +28,6 @@ export default {
     opened: vm => vm.requested ? vm.requested === vm.pad : vm.active,
   },
 
-  created() {
-    this.$bus.on('click-tab', tab => (this.requested = tab));
-  },
-
   watch: {
     async opened(v) {
       if (v) {
@@ -32,6 +35,10 @@ export default {
         this.$injector('$size');
       }
     },
+  },
+
+  created() {
+    this.$bus.on('click-tab', tab => (this.requested = tab));
   },
 };
 

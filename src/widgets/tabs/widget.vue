@@ -1,23 +1,38 @@
-<template lang="pug">
-.tabs
-  .tabs__container
-    slot
-      .tabs__controls(v-if="tabs.length")
-        .tab(
-          v-for="tab in tabs",
-          :key="tab.value",
-          :class="linkClass(tab)",
-          @click="open(tab)",
-        ) {{ tab.label }}
-
-  .tabs__content(v-if="tabs.length")
-    template(v-for="tab in tabs")
-      .tab__view(
-        v-if="currentTab === tab.value",
-        :key="tab.value",
-      )
-        slot(:name="tab.value")
-
+<template>
+  <div class="tabs">
+    <div class="tabs__container">
+      <slot>
+        <div
+          v-if="tabs.length"
+          class="tabs__controls"
+        >
+          <div
+            v-for="tab in tabs"
+            :key="tab.value"
+            class="tab"
+            :class="linkClass(tab)"
+            @click="open(tab)"
+          >
+            {{ tab.label }}
+          </div>
+        </div>
+      </slot>
+    </div>
+    <div
+      v-if="tabs.length"
+      class="tabs__content"
+    >
+      <template v-for="tab in tabs">
+        <div
+          v-if="currentTab === tab.value"
+          :key="tab.value"
+          class="tab__view"
+        >
+          <slot :name="tab.value" />
+        </div>
+      </template>
+    </div>
+  </div>
 </template>
 
 
@@ -35,6 +50,10 @@ export default {
     },
   },
 
+  mounted() {
+    if (!this.currentTab && this.tabs.length) this.open(this.tabs[0]);
+  },
+
   methods: {
     open(tab) {
       if (tab.disabled || tab.value === this.currentTab) return;
@@ -48,10 +67,6 @@ export default {
         'tab_disabled': tab.disabled,
       };
     },
-  },
-
-  mounted() {
-    if (!this.currentTab && this.tabs.length) this.open(this.tabs[0]);
   },
 };
 
