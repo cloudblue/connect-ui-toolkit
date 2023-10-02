@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   stories: [
-    "../src/**/*.stories.@(js|jsx|ts|tsx)",
+    "../src/**/*.stories.@(js|jsx|ts|tsx|vue)",
     "../src/stories/**/*.mdx",
   ],
 
@@ -12,7 +12,8 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/addon-designs",
+	  "@storybook/addon-designs",
+    "@storybook/vue-addon"
   ],
 
   framework: {
@@ -25,6 +26,25 @@ module.exports = {
   },
 
   webpackFinal: async (config) => {
+    config.module.rules = config.module.rules.map(rule => {
+      if (rule.test.toString().includes('svg')) {
+        const test = rule.test.toString().replace('svg|', '').replace(/\//g, '')
+        return { ...rule, test: new RegExp(test) }
+      } else {
+        return rule
+      }
+    });
+
+    config.module.rules.push(
+      {
+        test: /\.svg/,
+        type: 'asset/source',
+        loader: 'svgo-loader',
+        options: {
+          configFile: require.resolve('../svgo.config.js'),
+        },
+      }
+    );
 
     config.module.rules.push({
       test: /\.styl(us)$/,
