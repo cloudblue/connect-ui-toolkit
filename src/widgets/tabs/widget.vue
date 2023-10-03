@@ -1,5 +1,8 @@
 <template>
-  <div class="tabs">
+  <div
+    class="tabs"
+    :class="{ 'tabs_clean': clean }"
+  >
     <div class="tabs__container">
       <slot>
         <div
@@ -48,6 +51,8 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    clean: Boolean,
   },
 
   mounted() {
@@ -141,6 +146,22 @@ export default {
 
   .tab__view {
     width: 100%;
+  }
+
+  &_clean {
+    margin-top: 0;
+    display: flex;
+    flex: 0 0 auto;
+    align-self: stretch;
+
+    .tabs__controls {
+      height: 100%;
+    }
+
+    .tab {
+      line-height: unset;
+      height: 100%;
+    }
   }
 }
 </style>
