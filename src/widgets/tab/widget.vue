@@ -1,14 +1,21 @@
-<template lang="pug">
-.tab(:class="{ active: selected }" @click="open")
-  slot
-
+<template>
+  <div
+    class="tab"
+    :class="{ active: selected }"
+    @click="open"
+  >
+    <slot />
+  </div>
 </template>
 
 <script>
 export default {
   props: {
     active: Boolean,
-    tab: String,
+    tab: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {
@@ -21,15 +28,15 @@ export default {
     selected: vm => vm.requested ? vm.requested === vm.tab : vm.active,
   },
 
+  created() {
+    if (this.active) this.open();
+    this.$bus.on('click-tab', tab => (this.requested = tab));
+  },
+
   methods: {
     open() {
       this.$bus.emit('click-tab', this.tab);
     },
-  },
-
-  created() {
-    if (this.active) this.open();
-    this.$bus.on('click-tab', tab => (this.requested = tab));
   },
 };
 

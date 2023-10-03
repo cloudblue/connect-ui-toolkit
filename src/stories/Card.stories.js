@@ -8,18 +8,18 @@ export default {
   }
 };
 
-const Template = (args) => ({
-  components: { cCard },
-  setup() {
-    return { ...args };
-  },
-  template: '<c-card :title="title" :subtitle="subtitle">{{ content }}</c-card>',
-});
+export const Component = {
+  render: (args) => ({
+    components: { cCard },
+    setup() {
+      return { args };
+    },
+    template: '<c-card v-bind="args">{{ args.content }}</c-card>',
+  }),
 
-export const Component = Template.bind({});
-
-Component.args = {
-  title: 'Card Title',
-  subtitle: 'Card Subtitle',
-  content: 'Card Content',
+  args: {
+    title: 'Card Title',
+    subtitle: 'Card Subtitle',
+    content: 'Card Content',
+  }
 };
