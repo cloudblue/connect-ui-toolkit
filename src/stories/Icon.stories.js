@@ -1,8 +1,6 @@
 import Icon from '../widgets/icon/widget.vue';
 
-import * as icons from '@cloudblueconnect/material-svg/baseline';
-
-// const icons2 = { googleAssignmentTurnedInBaseline: 'googleAssignmentTurnedInBaseline', googleWifiLockBaseline: 'googleWifiLockBaseline', googleAspectRatioBaseline: 'googleAspectRatioBaseline'};
+import * as icons from '@cloudblueconnect/material-svg';
 
 export default {
   title: 'Components/Icon',
@@ -13,13 +11,8 @@ export default {
   argTypes: {
     iconName: {
       options: Object.keys(icons),
-      // mapping: icons2,
       control: { 
         type: 'select',
-        // labels: {
-        //   googleAssignmentTurnedInBaseline: 'googleAssignmentTurnedInBaseline',
-        //   googleWifiLockBaseline: 'googleWifiLockBaseline',
-        // }
       },
     }
   }
@@ -31,11 +24,11 @@ export const Component = {
     setup() {
       return { args };
     },
-    template: '<icon v-bind="args"><icon>',
+    template: '<icon v-bind="args"></icon>',
   }),
   args: {
-    iconName: 'googleWifiLockBaseline',
-    size: '48px',
+    iconName: 'googleSnowboardingBaseline',
+    size: '32',
     color: '#757575',
   }
 };

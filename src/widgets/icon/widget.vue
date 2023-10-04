@@ -1,46 +1,48 @@
-<template lang="pug">
-span.icon(
-  v-html="icon",
-  :style="styles",
-)
+<!-- eslint-disable vue/no-v-html -->
+<template>
+  <span
+    class="icon"
+    :style="styles"
+    v-html="icon"
+  />
 </template>
 
-<script>
-import * as icons from '@cloudblueconnect/material-svg/baseline';
-
-export default {
-  props: {
+<script setup>
+  import { defineOptions, computed } from 'vue';
+  import * as icons from '@cloudblueconnect/material-svg';
+  defineOptions({
+    name: 'Icon',
+  })
+  const props = defineProps({
     iconName: {
       type: String,
       required: true,
     },
-
-    color: String,
-    size: [Number, String],
-  },
-
-  computed: {
-    styles() {
-      return {
-        color: this.color,
-        height: this.addUnits(this.size),
-        width: this.addUnits(this.size),
-      }
+    color: {
+      type: String,
+      default: '#757575'
     },
-
-    icon() {
-      return icons[this.iconName];
+    size: {
+      type: [Number, String],
+      default: '24',
     }
-  },
-
-  methods: {
-    addUnits(value) {
-      const regex = /^-?\d+$/;
-      if (!regex.test(value)) return value;
-      return `${value}px`;
-    },
-  },
-};
+  })
+  const addUnits = (value) => {
+    const regex = /^-?\d+$/;
+    if (!regex.test(value)) return value;
+    return `${value}px`;
+  }
+  const styles = computed(() => {
+    return {
+      color: props.color,
+      height: addUnits(props.size),
+      width: addUnits(props.size),
+    }
+  })
+ 
+  const icon = computed(() => {
+    return icons[props.iconName];
+  })
 </script>
 
 <style lang="stylus">

@@ -13,7 +13,8 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
 	  "@storybook/addon-designs",
-    "@storybook/vue-addon"
+    "storybook-vue-addon",
+    "storybook-addon-vue-mdx",
   ],
 
   framework: {
@@ -26,15 +27,6 @@ module.exports = {
   },
 
   webpackFinal: async (config) => {
-    config.module.rules = config.module.rules.map(rule => {
-      if (rule.test.toString().includes('svg')) {
-        const test = rule.test.toString().replace('svg|', '').replace(/\//g, '')
-        return { ...rule, test: new RegExp(test) }
-      } else {
-        return rule
-      }
-    });
-
     config.module.rules.push(
       {
         test: /\.svg/,
@@ -55,15 +47,6 @@ module.exports = {
       ],
       include: path.resolve(__dirname, '../'),
     });
-
-    config.module.rules.push(
-      {
-        test: /\.pug$/,
-        use: [
-          { loader: 'pug-plain-loader' }
-        ]
-      }
-    );
 
     return config;
   },
