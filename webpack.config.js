@@ -49,8 +49,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.pug$/,
-        loader: 'pug-plain-loader',
+        test: /\.svg/,
+        type: 'asset/source',
+        loader: 'svgo-loader',
+        options: {
+          configFile: resolve(__dirname, 'svgo.config.js'),
+        },
       },
     ],
   },

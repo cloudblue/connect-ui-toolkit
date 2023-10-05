@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   stories: [
-    "../src/**/*.stories.@(js|jsx|ts|tsx)",
+    "../src/**/*.stories.@(js|jsx|ts|tsx|vue)",
     "../src/stories/**/*.mdx",
   ],
 
@@ -12,7 +12,9 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/addon-designs",
+	  "@storybook/addon-designs",
+    "storybook-vue-addon",
+    "storybook-addon-vue-mdx",
   ],
 
   framework: {
@@ -25,6 +27,16 @@ module.exports = {
   },
 
   webpackFinal: async (config) => {
+    config.module.rules.push(
+      {
+        test: /\.svg/,
+        type: 'asset/source',
+        loader: 'svgo-loader',
+        options: {
+          configFile: require.resolve('../svgo.config.js'),
+        },
+      }
+    );
 
     config.module.rules.push({
       test: /\.styl(us)$/,
@@ -35,15 +47,6 @@ module.exports = {
       ],
       include: path.resolve(__dirname, '../'),
     });
-
-    config.module.rules.push(
-      {
-        test: /\.pug$/,
-        use: [
-          { loader: 'pug-plain-loader' }
-        ]
-      }
-    );
 
     return config;
   },
