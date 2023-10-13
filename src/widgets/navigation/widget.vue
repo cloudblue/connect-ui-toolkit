@@ -23,10 +23,7 @@
       class="navigation-bar__tabs"
       :current-tab="currentTab"
       :tabs.prop="tabs"
-      full-height="full-height"
-      no-border="no-border"
-      no-content="no-content"
-      clean="clean"
+      clean
     />
     <div
       v-else

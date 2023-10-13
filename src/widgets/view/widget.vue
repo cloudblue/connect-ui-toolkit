@@ -49,7 +49,6 @@
   </div>
 </template>
 
-
 <script>
 import navigation from '~widgets/navigation/widget.vue';
 import registerWidget from '~core/registerWidget';

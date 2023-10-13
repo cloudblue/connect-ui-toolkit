@@ -1,5 +1,6 @@
 const path = require('path');
 
+
 module.exports = {
   stories: [
     "../src/**/*.stories.@(js|jsx|ts|tsx|vue)",
@@ -38,6 +39,16 @@ module.exports = {
       }
     );
 
+    // Find Vue webpack rule and update its options to work with custom elements
+    const vueRule = config.module.rules.find(rule => rule.test?.toString() === '/\\.vue$/');
+    vueRule.options = {
+      ...vueRule.options,
+      customElement: true,
+      compilerOptions: {
+        isCustomElement: tag => tag.startsWith('ui-'),
+      },
+    };
+
     config.module.rules.push({
       test: /\.styl(us)$/,
       use: [
@@ -45,7 +56,6 @@ module.exports = {
         'css-loader',
         'stylus-loader',
       ],
-      include: path.resolve(__dirname, '../'),
     });
 
     config.resolve.alias = {
