@@ -6,6 +6,8 @@ import tab from './widgets/tab/widget.vue';
 import pad from './widgets/pad/widget.vue';
 import card from './widgets/card/widget.vue';
 import icon from './widgets/icon/widget.vue';
+import view from './widgets/view/widget.vue';
+import navigation from './widgets/navigation/widget.vue';
 
 import _store from './core/store';
 import _bus from './core/eventBus';
@@ -15,6 +17,8 @@ export const Tab = tab;
 export const Pad = pad;
 export const Card = card;
 export const Icon = icon;
+export const View = view;
+export const Navigation = navigation;
 
 export const bus = _bus;
 export const store = _store;

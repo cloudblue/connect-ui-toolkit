@@ -48,6 +48,12 @@ module.exports = {
       include: path.resolve(__dirname, '../'),
     });
 
+    config.resolve.alias = {
+      'vue': path.resolve(__dirname, '../node_modules/vue/dist/vue.esm-bundler.js'),
+      '~core': path.resolve(__dirname, '../src/core'),
+      '~widgets': path.resolve(__dirname, '../src/widgets'),
+    };
+
     return config;
   },
 

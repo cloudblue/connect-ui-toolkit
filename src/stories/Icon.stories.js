@@ -1,4 +1,4 @@
-import Icon from '../widgets/icon/widget.vue';
+import Icon from '~widgets/icon/widget.vue';
 
 import * as icons from '@cloudblueconnect/material-svg';
 
@@ -11,7 +11,7 @@ export default {
   argTypes: {
     iconName: {
       options: Object.keys(icons),
-      control: { 
+      control: {
         type: 'select',
       },
     }
