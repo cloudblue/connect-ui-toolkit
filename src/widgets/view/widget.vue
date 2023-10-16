@@ -151,9 +151,7 @@ export default {
     &_padded {
       padding: 24px 24px 40px;
     }
-  }
 
-  &__content {
     &:empty {
       display: none;
     }
