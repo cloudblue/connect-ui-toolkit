@@ -8,7 +8,7 @@ export const Component = {
     setup() {
       return { args };
     },
-    template: '<ui-nav v-bind="args" @click-tab="setTab"><div slot="actions"><button>Action Slot</button></div></ui-nav>',
+    template: '<ui-nav v-bind="args" @click-tab="setTab"><div slot="actions"><button>Action Button (slot example)</button></div></ui-nav>',
     methods: {
       setTab({ detail }) {
         this.args.currentTab = detail;

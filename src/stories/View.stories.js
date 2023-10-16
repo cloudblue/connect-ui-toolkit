@@ -11,7 +11,7 @@ export const Component = {
     template: `
       <ui-view v-bind="args">
         <div slot="loader">Loader slot: Loading...</div>
-        <div slot="actions"><button>Action Slot</button></div>
+        <div slot="actions"><button>Action Button (slot example)</button></div>
         <div slot="first"><p>First tab content</p></div>
         <div slot="second"><p>Second tab content</p></div>
       </ui-view>`,
