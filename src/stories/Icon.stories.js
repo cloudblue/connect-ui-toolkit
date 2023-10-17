@@ -1,6 +1,9 @@
-import Icon from '../widgets/icon/widget.vue';
+import Icon from '~widgets/icon/widget.vue';
+import registerWidget from '~core/registerWidget';
 
 import * as icons from '@cloudblueconnect/material-svg';
+
+registerWidget('ui-icon', Icon);
 
 export default {
   title: 'Components/Icon',
@@ -11,7 +14,7 @@ export default {
   argTypes: {
     iconName: {
       options: Object.keys(icons),
-      control: { 
+      control: {
         type: 'select',
       },
     }
@@ -20,11 +23,10 @@ export default {
 
 export const Component = {
   render: (args) => ({
-    components: { Icon },
     setup() {
       return { args };
     },
-    template: '<icon v-bind="args"></icon>',
+    template: '<ui-icon v-bind="args"></ui-icon>',
   }),
   args: {
     iconName: 'googleSnowboardingBaseline',

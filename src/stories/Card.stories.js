@@ -1,4 +1,7 @@
-import cCard from '../widgets/card/widget.vue';
+import cCard from '~widgets/card/widget.vue';
+import registerWidget from '~core/registerWidget';
+
+registerWidget('ui-card', cCard);
 
 export default {
   title: 'Components/Card',
@@ -10,11 +13,10 @@ export default {
 
 export const Component = {
   render: (args) => ({
-    components: { cCard },
     setup() {
       return { args };
     },
-    template: '<c-card v-bind="args">{{ args.content }}</c-card>',
+    template: '<ui-card v-bind="args">{{ args.content }}</ui-card>',
   }),
 
   args: {
