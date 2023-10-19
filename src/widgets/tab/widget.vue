@@ -45,9 +45,9 @@ export default {
 <style lang="stylus" scoped>
 .tab {
   display: inline-flex;
-  flexDirection: row;
+  flex-direction: row;
   position: relative;
-  alignItems: center;
+  align-items: center;
   margin-right: 1.6em;
   line-height: 3.2em;
   white-space: nowrap;
