@@ -9,6 +9,7 @@ import icon from './widgets/icon/widget.vue';
 import view from './widgets/view/widget.vue';
 import navigation from './widgets/navigation/widget.vue';
 import status from './widgets/status/widget.vue';
+import textfield from './widgets/textfield/widget.vue';
 
 import _store from './core/store';
 import _bus from './core/eventBus';
@@ -21,6 +22,7 @@ export const Icon = icon;
 export const View = view;
 export const Navigation = navigation;
 export const Status = status;
+export const Textfield = textfield;
 
 export const bus = _bus;
 export const store = _store;
