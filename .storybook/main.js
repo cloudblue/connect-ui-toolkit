@@ -1,4 +1,5 @@
 const path = require('path');
+const {resolve} = require("path");
 
 
 module.exports = {
@@ -62,6 +63,7 @@ module.exports = {
       'vue': path.resolve(__dirname, '../node_modules/vue/dist/vue.esm-bundler.js'),
       '~core': path.resolve(__dirname, '../src/core'),
       '~widgets': path.resolve(__dirname, '../src/widgets'),
+      '~constants': resolve(__dirname, '../src/constants'),
     };
 
     return config;

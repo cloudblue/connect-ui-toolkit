@@ -14,6 +14,9 @@ import table from './widgets/table/widget.vue';
 
 import _store from './core/store';
 import _bus from './core/eventBus';
+import {
+  connectPortalRoutesDict,
+} from './constants/portal-routes';
 
 export const Tabs = tabs;
 export const Tab = tab;
@@ -28,6 +31,8 @@ export const Table = table;
 
 export const bus = _bus;
 export const store = _store;
+
+export const connectPortalRoutes = connectPortalRoutesDict;
 
 export default (widgets = {}, options = {}) => {
   for (const widget in widgets) registerWidget(widget, widgets[widget]);

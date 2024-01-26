@@ -1,4 +1,12 @@
 import injectorFactory from './injectorFactory';
+import {
+  processRoute
+} from '~core/router';
+
+
+jest.mock('~core/router', () => ({
+  processRoute: jest.fn().mockReturnValue('processRouteMockedReturnValue'),
+}));
 
 describe('injectorFactory', () => {
   describe('#watch()', () => {
@@ -159,6 +167,28 @@ describe('injectorFactory', () => {
       core.listeners.foo();
 
       expect(cb).toHaveBeenCalled();
+    });
+  });
+
+  describe('#navigateTo', () => {
+    let injector;
+    let injectorEmitSpy;
+
+    beforeEach(() => {
+      injector = injectorFactory({});
+      injectorEmitSpy = jest.spyOn(injector, 'emit');
+    });
+
+    it('calls processRoute with the given arguments', () => {
+      injector.navigateTo('foo', 'bar');
+
+      expect(processRoute).toHaveBeenCalledWith('foo', 'bar');
+    });
+
+    it('calls injector.emit with the result of calling processRoute', () => {
+      injector.navigateTo('foo', 'bar');
+
+      expect(injectorEmitSpy).toHaveBeenCalledWith('navigate-to', 'processRouteMockedReturnValue');
     });
   });
 });

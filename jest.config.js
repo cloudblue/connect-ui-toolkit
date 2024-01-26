@@ -18,6 +18,7 @@ module.exports = {
   moduleNameMapper: {
     '^~widgets/(.*)$': '<rootDir>./src/widgets/$1',
     '^~core/(.*)$': '<rootDir>./src/core/$1',
+    '^~constants/(.*)$': '<rootDir>./src/constants/$1',
     // This replaces import of files from @cloudblueconnect/material-svg in .spec.js files to optimize the run time of all unit tests
     '^.+\\.svg$': '<rootDir>/test/helpers/svgMock.js',
   },
