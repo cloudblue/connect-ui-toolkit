@@ -63,6 +63,7 @@ module.exports = {
     alias: {
       '~core': resolve(__dirname, './src/core'),
       '~widgets': resolve(__dirname, './src/widgets'),
+      '~constants': resolve(__dirname, './src/constants'),
     },
   },
 
