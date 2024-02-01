@@ -1,11 +1,10 @@
 const path = require('path');
-const {resolve} = require("path");
 
 
 module.exports = {
   stories: [
-    "../src/**/*.stories.@(js|jsx|ts|tsx|vue)",
-    "../src/stories/**/*.mdx",
+    "../components/src/**/*.stories.@(js|jsx|ts|tsx|vue)",
+    "../components/src/stories/**/*.mdx",
   ],
 
   staticDirs: ["../public"],
@@ -35,7 +34,7 @@ module.exports = {
         type: 'asset/source',
         loader: 'svgo-loader',
         options: {
-          configFile: require.resolve('../svgo.config.js'),
+          configFile: require.resolve('../components/svgo.config.js'),
         },
       }
     );
@@ -61,9 +60,9 @@ module.exports = {
 
     config.resolve.alias = {
       'vue': path.resolve(__dirname, '../node_modules/vue/dist/vue.esm-bundler.js'),
-      '~core': path.resolve(__dirname, '../src/core'),
-      '~widgets': path.resolve(__dirname, '../src/widgets'),
-      '~constants': resolve(__dirname, '../src/constants'),
+      '~core': path.resolve(__dirname, '../components/src/core'),
+      '~widgets': path.resolve(__dirname, '../components/src/widgets'),
+      '~constants': path.resolve(__dirname, '../components/src/constants'),
     };
 
     return config;

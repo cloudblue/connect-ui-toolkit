@@ -1,7 +1,7 @@
 /* eslint-env node */
 module.exports = {
   root: true,
-  ignorePatterns: ['*.config.js', '*.spec.js', 'tasks/*', 'dist/*'],
+  ignorePatterns: ['*.config.js', '*.spec.js', 'dist/*'],
   extends: [
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
