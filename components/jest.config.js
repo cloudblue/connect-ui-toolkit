@@ -38,13 +38,6 @@ module.exports = {
 
   coverageDirectory: '<rootDir>/test/coverage/',
 
-  coveragePathIgnorePatterns: [
-    // '<rootDir>/dist/',
-    // '<rootDir>/helpers/',
-    // '<rootDir>/node_modules/',
-    // '<rootDir>/src/stories/',
-  ],
-
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
