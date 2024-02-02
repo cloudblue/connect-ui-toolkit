@@ -3,6 +3,7 @@
   <button
     :disabled="disabled"
     :style="style"
+    @click="onClick"
   >
     <slot>
       {{ text }}
@@ -12,6 +13,8 @@
 
 <script setup>
 import { computed } from 'vue'
+
+const emit = defineEmits(['clicked']);
 
  const props = defineProps({
   text: {
@@ -30,12 +33,17 @@ import { computed } from 'vue'
     type: String,
     default: '#FFF',
   },
-})
+});
 
 const style = computed(() => `
   background-color: ${props.backgroundColor};
   color: ${props.color};
 `);
+
+const onClick = () => {
+  if (!props.disabled) emit('clicked');
+};
+
 </script>
 
 <style lang="stylus">
@@ -50,7 +58,15 @@ button {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
   &:hover {
+    opacity: 0.8;
+  }
+
+  &:disabled {
+    background-color: #f2f2f2 !important;
+    color: #BDBDBD !important;
     opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
   }
 }
 </style>

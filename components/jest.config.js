@@ -1,4 +1,5 @@
 module.exports = {
+  rootDir: __dirname,
   moduleFileExtensions: [
     'js',
     'json',
@@ -37,16 +38,10 @@ module.exports = {
 
   coverageDirectory: '<rootDir>/test/coverage/',
 
-  coveragePathIgnorePatterns: [
-    '<rootDir>/dist/',
-    '<rootDir>/helpers/',
-    '<rootDir>/node_modules/',
-    '<rootDir>/src/stories/',
-  ],
-
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
+    customExportConditions: ["node", "node-addons"],
   },
 
   coverageProvider: 'v8',
