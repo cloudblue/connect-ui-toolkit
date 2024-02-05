@@ -1,7 +1,7 @@
+const path = require('node:path');
 const { VueLoaderPlugin } = require('vue-loader');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-const { resolve } = require("path");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -10,10 +10,10 @@ module.exports = {
     outputModule: true,
   },
 
-  entry: resolve(__dirname, 'src/index.js'),
+  entry: path.resolve(__dirname, './src/index.js'),
 
   output: {
-    path: resolve(__dirname, '..', 'dist'),
+    path: path.resolve(__dirname, '..', 'dist'),
     filename: 'index.js',
     library: {
       type: 'module',
@@ -37,7 +37,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('app'), resolve('test')],
+        include: [path.resolve('app'), path.resolve('test')],
         exclude: /node_modules/,
       },
       {
@@ -53,7 +53,7 @@ module.exports = {
         type: 'asset/source',
         loader: 'svgo-loader',
         options: {
-          configFile: resolve(__dirname, 'svgo.config.js'),
+          configFile: path.resolve(__dirname, 'svgo.config.js'),
         },
       },
     ],
@@ -61,9 +61,9 @@ module.exports = {
 
   resolve: {
     alias: {
-      '~core': resolve(__dirname, './src/core'),
-      '~widgets': resolve(__dirname, './src/widgets'),
-      '~constants': resolve(__dirname, './src/constants'),
+      '~core': path.resolve(__dirname, './src/core'),
+      '~widgets': path.resolve(__dirname, './src/widgets'),
+      '~constants': path.resolve(__dirname, './src/constants'),
     },
   },
 
@@ -74,19 +74,4 @@ module.exports = {
       extensions: ['js', 'vue'],
     }),
   ],
-  devServer: {
-    hot: true,
-
-    allowedHosts: 'all',
-
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-
-    static: ['dist'],
-
-    historyApiFallback: {
-      rewrites: [{ from: /./, to: '/index.js' }],
-    },
-  },
 };

@@ -44,26 +44,31 @@ describe('$init', () => {
 
     it('handler should set proper id to state', () => {
       handler({}, { $id: 'XXX' });
+
       expect(core.id).toBe('XXX');
     });
 
     it('should handler should set passed data to state', () => {
       handler({ foo: 'BAR' }, {});
+
       expect(core.state).toEqual({ foo: 'BAR' });
     });
 
     it('should emit "$size" event', () => {
       handler({}, {});
+
       expect(injector.emit.mock.calls[2]).toEqual(['$size', 'SIZE']);
     });
 
     it('should get sizes from $size method', () => {
       handler({}, {});
+
       expect(core.size).toHaveBeenCalled();
     });
 
     it('should set interval', () => {
       handler({}, {});
+
       expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 300);
     });
 
@@ -71,6 +76,7 @@ describe('$init', () => {
       handler({}, {});
       injector.emit.mock.calls = [];
       setInterval.mock.calls[0][0]();
+
       expect(injector.emit).toHaveBeenCalledWith('$size', 'SIZE');
     });
   });

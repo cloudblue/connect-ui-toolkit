@@ -59,7 +59,7 @@ describe('Icon', () => {
         expect(result).toEqual('12px');
       });
 
-      it('shouldn\`t add px if size prop is passed as String with "px"', () => {
+      it('shouldn\'t add px if size prop is passed as String with "px"', () => {
         const component = Icon.setup(
           {size:  '12px'},
           {expose: () => 'mock reqired for composition api'}
