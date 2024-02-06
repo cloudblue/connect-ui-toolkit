@@ -41,6 +41,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
+    customExportConditions: ["node", "node-addons"],
   },
 
   coverageProvider: 'v8',

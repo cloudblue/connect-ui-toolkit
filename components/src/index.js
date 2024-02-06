@@ -11,6 +11,7 @@ import navigation from './widgets/navigation/widget.vue';
 import status from './widgets/status/widget.vue';
 import textfield from './widgets/textfield/widget.vue';
 import table from './widgets/table/widget.vue';
+import button from './widgets/button/widget.vue';
 
 import _store from './core/store';
 import _bus from './core/eventBus';
@@ -28,6 +29,7 @@ export const Navigation = navigation;
 export const Status = status;
 export const Textfield = textfield;
 export const Table = table;
+export const Button = button;
 
 export const bus = _bus;
 export const store = _store;
