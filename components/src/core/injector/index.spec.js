@@ -42,7 +42,16 @@ describe('createInjector on launcher error', () => {
     launcher.mockImplementation(() => Promise.reject(new Error('ERROR')));
   });
 
-  it('should throw an error', () => {
-    expect(createInjector()).rejects.toThrow('ERROR');
+  it('should throw an error', async () => {
+    let error;
+
+    try {
+      await createInjector();
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toEqual('ERROR');
   });
 });

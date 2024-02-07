@@ -2,13 +2,17 @@
   "name": "@cloudblueconnect/connect-ui-toolkit",
   "version": "30.1.0",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./tools": "./dist/tools"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./webpack.config.js",
-    "start": "NODE_ENV=development node ./components/tasks/start.js",
-    "lint": "eslint ./components/src --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "test": "NODE_ENV=test jest --config ./components/jest.config.js",
+    "build:core": "NODE_ENV=production webpack --config ./components/webpack.config.js",
+    "build:tools": "NODE_ENV=production webpack --config ./tools/webpack.config.js",
+    "start": "NODE_ENV=development webpack serve",
+    "start:https": "npm run start -- --server-type https",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "test": "jest --config ./jest.config.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -20,6 +24,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.23.10",
+    "@babel/preset-env": "^7.23.9",
     "@storybook/addon-actions": "^7.6.12",
     "@storybook/addon-designs": "^7.0.9",
     "@storybook/addon-essentials": "^7.6.12",
@@ -41,6 +46,8 @@
     "chromatic": "^9.1.0",
     "css-loader": "^6.10.0",
     "eslint": "^8.56.0",
+    "eslint-plugin-jest": "^27.6.3",
+    "eslint-plugin-jest-formatting": "^3.1.0",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-vue": "^9.21.1",
     "eslint-webpack-plugin": "^4.0.1",
@@ -56,6 +63,7 @@
     "stylus": "^0.62.0",
     "stylus-loader": "^8.1.0",
     "svgo-loader": "^4.0.0",
+    "vue-eslint-parser": "^9.4.2",
     "vue-loader": "^17.4.2",
     "vue-style-loader": "^4.1.3",
     "webpack": "^5.90.0",

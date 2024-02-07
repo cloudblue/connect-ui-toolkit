@@ -12,7 +12,7 @@
   import * as icons from '@cloudblueconnect/material-svg';
   defineOptions({
     name: 'Icon',
-  })
+  });
   const props = defineProps({
     iconName: {
       type: String,
@@ -26,7 +26,7 @@
       type: [Number, String],
       default: '24',
     }
-  })
+  });
   const addUnits = (value) => {
     const regex = /^-?\d+$/;
     if (!regex.test(value)) return value;
@@ -39,7 +39,7 @@
       width: addUnits(props.size),
     }
   })
- 
+
   const icon = computed(() => {
     return icons[props.iconName];
   })

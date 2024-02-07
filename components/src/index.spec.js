@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 import createApp from './index';
 import injector from '~core/injector';
 import registerWidget from '~core/registerWidget';

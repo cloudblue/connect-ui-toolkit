@@ -1,7 +1,14 @@
-/* eslint-env node */
 module.exports = {
   root: true,
-  ignorePatterns: ['*.config.js', '*.spec.js', 'dist/*'],
+
+  // Ignore every file but the patterns specified after '/*'
+  ignorePatterns: [
+    '/*',
+    '!/components', // all files inside /components
+    '!/tools', // all files inside /tools
+    '!/*.js', // all JS files in root dir
+  ],
+
   extends: [
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
@@ -9,12 +16,36 @@ module.exports = {
   ],
 
   plugins: ['vue'],
-
-  env: {
-    'vue/setup-compiler-macros': true,
-  },
+  parser: 'vue-eslint-parser',
 
   rules: {
     'vue/multi-word-component-names': 'off',
   },
+
+  overrides: [
+    // Config for unit tests
+    {
+      files: ['*.spec.js'],
+      plugins: ['jest'],
+      extends: [
+        'plugin:jest/recommended',
+        'plugin:jest-formatting/strict',
+      ],
+      env: {
+        jest: true,
+        'jest/globals': true,
+      },
+      globals: {
+        global: 'writable',
+      },
+    },
+
+    // Config for files that run in node env (config files, etc)
+    {
+      files: ['*.config.js', '.eslintrc.js'],
+      env: {
+        node: true,
+      },
+    },
+  ],
 };
