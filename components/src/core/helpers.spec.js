@@ -18,11 +18,11 @@ describe('clone', () => {
 });
 
 describe('has', () => {
-  it('should check if object has an own property of key', () => {
+  it('returns true if the object has the property', () => {
     expect(has('prop', { prop: undefined })).toBeTruthy();
   });
 
-  it('should check if object has an own property of key', () => {
+  it('returns false if the object does not have the property', () => {
     expect(has('prop1', { prop: undefined })).toBeFalsy();
   });
 });

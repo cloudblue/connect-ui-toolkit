@@ -1,5 +1,8 @@
+/** @type {import('jest').Config} */
 module.exports = {
   rootDir: __dirname,
+  displayName: 'components',
+
   moduleFileExtensions: [
     'js',
     'json',
@@ -26,25 +29,19 @@ module.exports = {
 
   clearMocks: true,
 
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{js,vue}',
+  ],
+
   testMatch: [
     '<rootDir>/(**/*\\.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))',
   ],
-
-  collectCoverage: true,
-
-  collectCoverageFrom: [
-    'src/**/*.{js,vue}',
-  ],
-
-  coverageDirectory: '<rootDir>/test/coverage/',
 
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
     customExportConditions: ["node", "node-addons"],
   },
-
-  coverageProvider: 'v8',
 
   globals: {
     'vue-jest': {
