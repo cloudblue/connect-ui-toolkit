@@ -1,42 +1,26 @@
-import $injector from './core/injector';
-import registerWidget from './core/registerWidget';
+import $injector from '~core/injector';
+import registerWidget from '~core/registerWidget';
 
-import tabs from './widgets/tabs/widget.vue';
-import tab from './widgets/tab/widget.vue';
-import pad from './widgets/pad/widget.vue';
-import card from './widgets/card/widget.vue';
-import icon from './widgets/icon/widget.vue';
-import view from './widgets/view/widget.vue';
-import navigation from './widgets/navigation/widget.vue';
-import status from './widgets/status/widget.vue';
-import textfield from './widgets/textfield/widget.vue';
-import table from './widgets/table/widget.vue';
-import button from './widgets/button/widget.vue';
-import complexTable from './widgets/complexTable/widget.vue';
 
-import _store from './core/store';
-import _bus from './core/eventBus';
-import {
-  connectPortalRoutesDict,
-} from './constants/portal-routes';
+export { default as Tabs } from '~widgets/tabs/widget.vue';
+export { default as Tab } from '~widgets/tab/widget.vue';
+export { default as Pad } from '~widgets/pad/widget.vue';
+export { default as Card } from '~widgets/card/widget.vue';
+export { default as Icon } from '~widgets/icon/widget.vue';
+export { default as View } from '~widgets/view/widget.vue';
+export { default as Navigation } from '~widgets/navigation/widget.vue';
+export { default as Status } from '~widgets/status/widget.vue';
+export { default as Textfield } from '~widgets/textfield/widget.vue';
+export { default as Table } from '~widgets/table/widget.vue';
+export { default as ComplexTable } from './widgets/complexTable/widget.vue';
+export { default as Button } from '~widgets/button/widget.vue';
 
-export const Tabs = tabs;
-export const Tab = tab;
-export const Pad = pad;
-export const Card = card;
-export const Icon = icon;
-export const View = view;
-export const Navigation = navigation;
-export const Status = status;
-export const Textfield = textfield;
-export const Table = table;
-export const Button = button;
-export const ComplexTable = complexTable;
+export { default as store } from '~core/store';
+export { default as bus } from '~core/eventBus';
 
-export const bus = _bus;
-export const store = _store;
-
-export const connectPortalRoutes = connectPortalRoutesDict;
+export {
+  connectPortalRoutesDict as connectPortalRoutes,
+} from '~constants/portal-routes';
 
 export default (widgets = {}, options = {}) => {
   for (const widget in widgets) registerWidget(widget, widgets[widget]);

@@ -1,4 +1,4 @@
-import { fastApiTableAdapterComposable } from './vue-composable';
+import { useFastApiTableAdapter } from './vue-composable';
 import { fastApiTableAdapter } from './adapter';
 
 
@@ -23,13 +23,13 @@ jest.mock('./adapter', () => ({
   }),
 }));
 
-describe('#fastApiTableAdapterComposable', () => {
+describe('#useFastApiTableAdapter', () => {
   let composable;
   let adapter;
 
   describe('#constructor', () => {
     beforeEach(() => {
-      composable = fastApiTableAdapterComposable('/foo');
+      composable = useFastApiTableAdapter('/foo');
     });
 
     it('creates a new fastApiTableAdapter', () => {
@@ -52,7 +52,7 @@ describe('#fastApiTableAdapterComposable', () => {
 
   describe('methods', () => {
     beforeEach(() => {
-      composable = fastApiTableAdapterComposable('/foo', 10);
+      composable = useFastApiTableAdapter('/foo', 10);
       adapter = composable._adapter;
     });
 

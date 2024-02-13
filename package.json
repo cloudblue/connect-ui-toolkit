@@ -3,13 +3,13 @@
   "version": "30.1.0",
   "exports": {
     ".": "./dist/index.js",
-    "./tools": "./dist/tools"
+    "./tools/*": "./dist/tools/*"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./webpack.config.js",
     "build:core": "NODE_ENV=production webpack --config ./components/webpack.config.js",
     "build:tools": "NODE_ENV=production webpack --config ./tools/webpack.config.js",
-    "start": "NODE_ENV=development webpack serve",
+    "start": "NODE_ENV=development webpack serve --config ./webpack-dev.config.js",
     "start:https": "npm run start -- --server-type https",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "test": "jest --config ./jest.config.js",

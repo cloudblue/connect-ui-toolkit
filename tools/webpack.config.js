@@ -9,9 +9,13 @@ module.exports = {
   },
 
   entry: {
-    fastApi: {
-      import: path.resolve(__dirname, 'api/fastApi/index.js'),
-      filename: 'tools/[name].js',
+    fastApiAdapter: {
+      import: path.resolve(__dirname, 'api/fastApi/adapter.js'),
+      filename: 'tools/fastApi/index.js',
+    },
+    fastApiAdapterVue: {
+      import: path.resolve(__dirname, 'api/fastApi/vue-composable.js'),
+      filename: 'tools/fastApi/vue.js',
     },
   },
 
@@ -30,5 +34,9 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+
+  externals: {
+    vue: 'vue',
   },
 };
