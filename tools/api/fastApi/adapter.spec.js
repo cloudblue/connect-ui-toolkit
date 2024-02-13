@@ -111,47 +111,100 @@ describe('#fastApiTableAdapter', () => {
     });
 
     describe('#next', () => {
-      beforeEach(async () => {
-        fetchResponse.contentRangeTotal = 1;
-        fetchResponse.items = ['foo'];
+      describe('if there is a next page', () => {
+        beforeEach(async () => {
+          fetchResponse.contentRangeTotal = 11;
+          fetchResponse.items = ['foo'];
 
-        result = await adapter.next();
+          await adapter.load();
+          result = await adapter.next();
+        });
+
+        it('increases the current page and performs a request', () => {
+          expect(fetch).toHaveBeenCalledTimes(2);
+          expect(fetch).toHaveBeenCalledWith('/foo?limit=10&offset=10');
+        });
+
+        it('returns the result of calling load', () => {
+          expect(result).toEqual({
+            page: 2,
+            total: 11,
+            items: ['foo'],
+          });
+        });
       });
 
-      it('increases the current page and performs a request', () => {
-        expect(fetch).toHaveBeenCalledWith('/foo?limit=10&offset=10');
-      });
+      describe('if there is NOT a next page', () => {
+        beforeEach(async () => {
+          fetchResponse.contentRangeTotal = 10;
+          fetchResponse.items = ['foo'];
 
-      it('returns the result of calling load', () => {
-        expect(result).toEqual({
-          page: 2,
-          total: 1,
-          items: ['foo'],
+          await adapter.load();
+          result = await adapter.next();
+        });
+
+        it('does not perform a request', () => {
+          expect(fetch).toHaveBeenCalledTimes(1);
+        });
+
+        it('returns the current state', () => {
+          expect(result).toEqual({
+            page: 1,
+            total: 10,
+            items: ['foo'],
+          });
         });
       });
     });
 
     describe('#previous', () => {
-      beforeEach(async () => {
-        fetchResponse.contentRangeTotal = 1;
-        fetchResponse.items = ['bar'];
+      describe('if there is a previous page', () => {
+        beforeEach(async () => {
+          fetchResponse.contentRangeTotal = 33;
+          fetchResponse.items = ['bar'];
 
-        // Increase page to 3
-        await adapter.next();
-        await adapter.next();
+          // Increase page to 3
+          await adapter.load();
+          await adapter.next();
+          await adapter.next();
 
-        result = await adapter.previous();
+          result = await adapter.previous();
+        });
+
+        it('decreases the current page and performs a request', () => {
+          expect(fetch).toHaveBeenCalledWith('/foo?limit=10&offset=20');
+        });
+
+        it('returns the result of calling load', () => {
+          expect(result).toEqual({
+            page: 2,
+            total: 33,
+            items: ['bar'],
+          });
+        });
       });
 
-      it('decreases the current page and performs a request', () => {
-        expect(fetch).toHaveBeenCalledWith('/foo?limit=10&offset=20');
-      });
+      describe('if there is NOT a previous page', () => {
+        beforeEach(async () => {
+          fetchResponse.contentRangeTotal = 33;
+          fetchResponse.items = ['bar'];
 
-      it('returns the result of calling load', () => {
-        expect(result).toEqual({
-          page: 2,
-          total: 1,
-          items: ['bar'],
+          // Do not increase page
+          await adapter.load();
+
+          result = await adapter.previous();
+        });
+
+        it('does not performs a request', () => {
+          expect(fetch).toHaveBeenCalledTimes(1);
+        });
+
+        it('returns the current state', () => {
+          expect(result).toEqual({
+            page: 1,
+            total: 33,
+            items: ['bar'],
+          });
         });
       });
     });
