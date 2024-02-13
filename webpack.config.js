@@ -4,19 +4,7 @@ const componentsConfig = require('./components/webpack.config');
 const toolsConfig = require('./tools/webpack.config');
 
 
-const devServerConfig = {
-  devServer: {
-    compress: true,
-    port: process.env.PORT || 3003,
-    allowedHosts: 'all',
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  },
-};
-
 module.exports = [
-  devServerConfig,
   componentsConfig,
   toolsConfig,
 ];

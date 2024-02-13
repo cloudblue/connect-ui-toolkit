@@ -54,18 +54,22 @@ export const fastApiTableAdapter = (endpoint, rowsPerPage = 10) => {
   };
 
   /**
-   * @returns {Promise<{total: number, page: number, items: *[]}>}
+   * @returns {{total: number, page: number, items: *[]}|Promise<{total: number, page: number, items: *[]}>}
    */
   const next = () => {
+    if (state.page >= Math.ceil(state.total / limit)) return state;
+
     state.page++;
 
     return load();
   };
 
   /**
-   * @returns {Promise<{total: number, page: number, items: *[]}>}
+   * @returns {{total: number, page: number, items: *[]}|Promise<{total: number, page: number, items: *[]}>}
    */
   const previous = () => {
+    if (state.page <= 1) return state;
+
     state.page--;
 
     return load();

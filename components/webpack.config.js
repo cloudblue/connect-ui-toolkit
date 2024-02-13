@@ -10,7 +10,7 @@ module.exports = {
     outputModule: true,
   },
 
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: path.resolve(__dirname, 'src/index.js'),
 
   output: {
     path: path.resolve(__dirname, '..', 'dist'),
@@ -37,7 +37,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [path.resolve('app'), path.resolve('test')],
+        include: [path.resolve(__dirname, 'src'), path.resolve('test')],
         exclude: /node_modules/,
       },
       {
@@ -61,9 +61,9 @@ module.exports = {
 
   resolve: {
     alias: {
-      '~core': path.resolve(__dirname, './src/core'),
-      '~widgets': path.resolve(__dirname, './src/widgets'),
-      '~constants': path.resolve(__dirname, './src/constants'),
+      '~core': path.resolve(__dirname, 'src/core'),
+      '~widgets': path.resolve(__dirname, 'src/widgets'),
+      '~constants': path.resolve(__dirname, 'src/constants'),
     },
   },
 

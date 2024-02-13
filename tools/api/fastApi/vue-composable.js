@@ -11,7 +11,7 @@ import { fastApiTableAdapter } from './adapter';
  *
  * @returns {{next: ((function(): Promise<void>)|*), filter: ((function(*): Promise<void>)|*), total: Ref<UnwrapRef<number>>, load: ((function(): Promise<void>)|*), previous: ((function(): Promise<void>)|*), setRowsPerPage: ((function(*): Promise<void>)|*), page: Ref<UnwrapRef<number>>, loading: Ref<UnwrapRef<boolean>>, items: Ref<UnwrapRef<[]>>}}
  */
-export const fastApiTableAdapterComposable = (endpoint, rowsPerPage = 10) => {
+export const useFastApiTableAdapter = (endpoint, rowsPerPage = 10) => {
   const adapter = fastApiTableAdapter(endpoint, rowsPerPage);
 
   const items = ref(adapter.items);
