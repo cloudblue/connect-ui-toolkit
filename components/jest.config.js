@@ -45,4 +45,12 @@ module.exports = {
   },
 
   coverageProvider: 'v8',
+
+  globals: {
+    'vue-jest': {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith('ui-'),
+      },
+    },
+  },
 };

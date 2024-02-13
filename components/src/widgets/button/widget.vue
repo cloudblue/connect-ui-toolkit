@@ -33,11 +33,21 @@ const emit = defineEmits(['clicked']);
     type: String,
     default: '#FFF',
   },
+  height: {
+    type: String,
+    default: 'auto',
+  },
+  width: {
+    type: String,
+    default: 'auto',
+  },
 });
 
 const style = computed(() => `
   background-color: ${props.backgroundColor};
   color: ${props.color};
+  height: ${props.height};
+  width: ${props.width};
 `);
 
 const onClick = () => {
