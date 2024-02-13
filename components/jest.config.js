@@ -42,4 +42,12 @@ module.exports = {
     url: 'http://localhost/',
     customExportConditions: ["node", "node-addons"],
   },
+
+  globals: {
+    'vue-jest': {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith('ui-'),
+      },
+    },
+  },
 };

@@ -15,6 +15,8 @@ describe('Button widget', () => {
         expect(result).toEqual(`
   background-color: #2C98F0;
   color: #FFF;
+  height: auto;
+  width: auto;
 `);
       });
     });
