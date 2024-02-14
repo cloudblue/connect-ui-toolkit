@@ -11,7 +11,8 @@
     "build:tools": "NODE_ENV=production webpack --config ./tools/webpack.config.js",
     "start": "NODE_ENV=development webpack serve --config ./webpack-dev.config.js",
     "start:https": "npm run start -- --server-type https",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --ignore-path .gitignore",
+    "lint:fix": "npm run lint -- --fix",
     "test": "jest --config ./jest.config.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
