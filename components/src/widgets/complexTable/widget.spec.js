@@ -160,7 +160,7 @@ describe('ComplexTable widget', () => {
 
         await nextTick()
 
-        expect(wrapper.emitted('itemsLoaded'))
+        expect(wrapper.emitted().itemsLoaded).toBeTruthy();
       });
     });
   });

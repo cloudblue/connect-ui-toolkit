@@ -17,6 +17,15 @@ module.exports = {
       import: path.resolve(__dirname, 'api/fastApi/vue-composable.js'),
       filename: 'tools/fastApi/vue.js',
     },
+    createViteConfig: {
+      import: path.resolve(__dirname, 'build/vite/index.js'),
+      // export as .mjs until the toolkit package is defined as ES module
+      filename: 'tools/build/vite.mjs',
+    },
+    toolkitVuePlugin: {
+      import: path.resolve(__dirname, 'vue/toolkit.js'),
+      filename: 'tools/vue/toolkitPlugin.js',
+    },
   },
 
   output: {
@@ -36,7 +45,10 @@ module.exports = {
     ],
   },
 
-  externals: {
-    vue: 'vue',
-  },
+  externals: [
+    {
+      vue: 'vue',
+    },
+    /node:\w*/,
+  ],
 };
