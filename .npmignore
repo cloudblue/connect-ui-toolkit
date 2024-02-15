@@ -1,0 +1,12 @@
+# Ignore everything
+*
+
+# Except
+
+# Distribution files
+!/dist/**/*
+
+# License file, package.json and readme
+!LICENSE
+!package.json
+!README.md
