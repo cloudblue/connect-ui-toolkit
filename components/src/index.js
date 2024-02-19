@@ -14,6 +14,7 @@ export { default as Textfield } from '~widgets/textfield/widget.vue';
 export { default as Table } from '~widgets/table/widget.vue';
 export { default as ComplexTable } from './widgets/complexTable/widget.vue';
 export { default as Button } from '~widgets/button/widget.vue';
+export { default as Menu } from '~widgets/menu/widget.vue';
 
 export { default as store } from '~core/store';
 export { default as bus } from '~core/eventBus';

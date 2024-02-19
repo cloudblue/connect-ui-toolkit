@@ -61,6 +61,8 @@ export default {
 </script>
 
 <style lang="stylus">
+@import '../../assets/styles/common.styl';
+
 .text-field {
   font-family: 'Roboto';
   font-size: 14px;
@@ -68,7 +70,7 @@ export default {
   font-weight: 400;
   display: flex;
   flex-flow: column nowrap;
-  color: #212121;
+  color: base-text-color;
 
   label {
     font-weight 500;
