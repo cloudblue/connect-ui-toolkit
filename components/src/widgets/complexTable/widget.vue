@@ -1,5 +1,8 @@
 <template>
-  <ui-table :headers="props.headers">
+  <ui-table
+    :headers="props.headers"
+    :fixed="fixed"
+  >
     <slot />
   </ui-table>
   <div class="buttons-container">
@@ -62,7 +65,11 @@ const props = defineProps({
   totalItems: {
     type: Number,
     default: 1,
-  }
+  },
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const totalPages = computed(() => Math.ceil(props.totalItems / ITEMS_PER_PAGE))
