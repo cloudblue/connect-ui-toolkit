@@ -205,8 +205,8 @@ const routes = {
     name: 'reports.details',
     requires: 'id',
   },
-  reportsRequestDetails: {
-    name: 'reports.requests.details',
+  reportsScheduleDetails: {
+    name: 'reports.schedules.details',
     requires: 'id',
   },
 
