@@ -1,11 +1,12 @@
 <template>
   <div class="table">
-    <table>
+    <table :class="{ fixed: fixed }">
       <thead v-if="headers.length">
         <tr>
           <th
             v-for="header in headers"
             :key="header.name"
+            :style="{ width: header.width }"
           >
             <div>{{ header.text }}</div>
             <div class="splitpane" />
@@ -26,6 +27,10 @@ defineProps({
     required: true,
     default: () => [],
   },
+  fixed: {
+    type: Boolean,
+    default: false,
+  }
 })
 </script>
 
@@ -35,6 +40,10 @@ table {
   border-spacing: 0;
   width: 100%;
   max-width: 100%;
+
+  &.fixed {
+    table-layout: fixed;
+  }
 
   thead {
     border-top: 1px solid #e0e0e0;
