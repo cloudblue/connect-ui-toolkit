@@ -9,12 +9,18 @@ export const Component = {
       return { args };
     },
     template: `
-      <ui-view v-bind="args">
+      <ui-view v-bind="args" @go-back="goBack">
         <div slot="loader">Loader slot: Loading...</div>
         <div slot="actions"><button>Action Button (slot example)</button></div>
         <div slot="first"><p>First tab content</p></div>
         <div slot="second"><p>Second tab content</p></div>
-      </ui-view>`,
+      </ui-view>
+    `,
+    methods: {
+      goBack() {
+        alert('The back button was clicked!');
+      },
+    },
   }),
 
   args: {
@@ -27,6 +33,7 @@ export const Component = {
       { value: 'first', label: 'First tab' },
       { value: 'second', label: 'Second tab' },
     ],
+    showBackButton: false,
   },
 };
 
@@ -45,5 +52,6 @@ export default {
       control: 'object',
     },
     currentTab: 'text',
+    showBackButton: 'boolean',
   },
 };

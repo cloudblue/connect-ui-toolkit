@@ -1,5 +1,16 @@
 <template>
   <div class="navigation-bar">
+    <button
+      v-if="showBackButton"
+      class="navigation-bar__back-button"
+      @click="$emit('go-back')"
+    >
+      <ui-icon
+        color="#666666"
+        icon-name="googleArrowBackBaseline"
+        size="24"
+      />
+    </button>
     <div
       v-if="assistiveTitle"
       class="navigation-bar__page-title-holder"
@@ -42,9 +53,11 @@
 
 <script>
 import tabs from '~widgets/tabs/widget.vue';
+import icon from '~widgets/icon/widget.vue';
 import registerWidget from '~core/registerWidget';
 
 registerWidget('ui-tabs', tabs);
+registerWidget('ui-icon', icon);
 
 export default {
   props: {
@@ -67,7 +80,14 @@ export default {
       type: String,
       default: '',
     },
+
+    showBackButton: {
+      type: Boolean,
+      default: false,
+    },
   },
+
+  emits: ['go-back'],
 };
 </script>
 
@@ -128,6 +148,25 @@ export default {
     display: flex;
     align-items: center;
     flex: 0 0 auto;
+  }
+
+  &__back-button {
+    height: 36px;
+    width: 36px;
+    margin: 0 24px 0 -8px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    outline: none;
+    border-radius: 2px;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
   }
 }
 
