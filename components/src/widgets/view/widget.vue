@@ -12,9 +12,11 @@
         class="c-view__navigation"
         :assistive-title="assistiveTitle"
         :current-tab="activeTab"
+        :show-back-button="showBackButton ? '' : null"
         :title="title"
         .tabs="tabs"
         @click-tab="setCurrentTab"
+        @go-back="$emit('go-back')"
       >
         <slot name="tabs" />
         <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
@@ -80,7 +82,14 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    showBackButton: {
+      type: Boolean,
+      default: false,
+    },
   },
+
+  emits: ['go-back'],
 
   data: () => ({
     activeTab: '',
