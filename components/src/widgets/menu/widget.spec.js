@@ -48,11 +48,11 @@ describe('Menu component', () => {
   describe('onMounted', () => {
     it('adds up event listener on component mount', () => {
       const addEventListenerSpy = jest.spyOn(document, 'addEventListener');
-  
+
       mount(Menu);
 
       expect(addEventListenerSpy).toHaveBeenCalledWith('click', expect.any(Function));
-  
+
       addEventListenerSpy.mockRestore();
     });
   });
@@ -60,13 +60,58 @@ describe('Menu component', () => {
   describe('onUnmounted', () => {
     it('cleans up event listener on component unmount', async () => {
       const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
-  
+
       const wrapper = mount(Menu);
       await wrapper.unmount();
-  
+
       expect(removeEventListenerSpy).toHaveBeenCalledWith('click', expect.any(Function));
-  
+
       removeEventListenerSpy.mockRestore();
     });
-  })
+  });
+
+  describe('alignment class', () => {
+    it('sets the "menu-content_align-right" class if align=right', async () => {
+      const wrapper = mount(Menu, {
+        props: {
+          align: 'right',
+        },
+      });
+
+      // Open menu
+      await wrapper.find('.menu-trigger').trigger('click');
+
+      expect(wrapper.find('.menu-content_align-right').exists()).toEqual(true);
+    });
+
+    it('sets the "menu-content_align-left" class if align=left', async () => {
+      const wrapper = mount(Menu, {
+        props: {
+          align: 'left',
+        },
+      });
+
+      // Open menu
+      await wrapper.find('.menu-trigger').trigger('click');
+
+      expect(wrapper.find('.menu-content_align-left').exists()).toEqual(true);
+    });
+  });
+
+  describe('align prop validator', () => {
+    it.each([
+      // expected, value
+      [true, 'left'],
+      [true, 'right'],
+      [false, 'center'],
+      [false, 'foo'],
+    ])(
+      'returns %s if the prop value is %s',
+      (expected, value) => {
+        const result = Menu.props.align.validator(value);
+
+        expect(result).toEqual(expected);
+      },
+    );
+  });
 });

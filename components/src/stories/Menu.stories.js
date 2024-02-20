@@ -10,16 +10,22 @@ export const Component = {
     setup() {
       return {args};
     },
-    template: `<ui-menu>
-    <ui-button 
-      slot="trigger" 
-      text="open menu" 
-    />
-    <div style="padding:8px 16px; width:300px; border:1px solid black;" slot="content">
-      <p>item</p>
-    </div>
-  </ui-menu>`
+    template: `
+      <ui-menu v-bind="args">
+        <ui-button 
+          slot="trigger" 
+          text="open menu" 
+        />
+        <div style="padding:8px 16px; width:300px; border:1px solid black;" slot="content">
+          <p>item</p>
+        </div>
+      </ui-menu>
+    `
   }),
+
+  args: {
+    align: 'left',
+  },
 };
 
 export default {
@@ -27,5 +33,14 @@ export default {
   component: Menu,
   parameters: {
     layout: 'centered',
+  },
+
+  argTypes: {
+    align: {
+      options: ['right', 'left'],
+      control: {
+        type: 'select',
+      },
+    },
   },
 };
