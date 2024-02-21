@@ -127,7 +127,7 @@ export default {
   flex: 1 1 100%;
   display: grid;
 
-  grid-template-rows: auto auto;
+  grid-template-rows: min-content auto;
   grid-template-columns: 1fr;
   grid-template-areas: "n" "c";
 
