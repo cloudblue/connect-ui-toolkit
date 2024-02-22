@@ -1,6 +1,30 @@
 import launch from './launcher';
 
 
+const resizeObserverCtorSpy = jest.fn();
+const resizeObserverObserveSpy = jest.fn();
+const resizeObserverEntriesStub = [
+  {
+    contentRect: {
+      height: 400,
+      width: 800,
+    },
+  },
+];
+const ResizeObserverMock = function ResizeObserverMock(callback) {
+  resizeObserverCtorSpy(callback);
+
+  callback(resizeObserverEntriesStub);
+
+  return {
+    observe: resizeObserverObserveSpy,
+  };
+};
+Object.defineProperty(global, 'ResizeObserver', {
+  writable: true,
+  value: ResizeObserverMock,
+});
+
 describe('$init', () => {
   let injector;
   let core;
@@ -9,7 +33,6 @@ describe('$init', () => {
   beforeEach(() => {
     global.window.addEventListener = jest.fn();
     global.window.name = 'XXX';
-    global.setInterval = jest.fn();
     global.crypto = {
       getRandomValues: jest.fn(() => ['abc']),
     };
@@ -57,27 +80,22 @@ describe('$init', () => {
     it('should emit "$size" event', () => {
       handler({}, {});
 
-      expect(injector.emit.mock.calls[2]).toEqual(['$size', 'SIZE']);
+      expect(injector.emit.mock.calls[2]).toEqual(['$size', {
+        height: 400,
+        width: 800,
+      }]);
     });
 
-    it('should get sizes from $size method', () => {
+    it('should create a ResizeObserver instance', () => {
       handler({}, {});
 
-      expect(core.size).toHaveBeenCalled();
+      expect(resizeObserverCtorSpy).toHaveBeenCalledWith(expect.any(Function));
     });
 
-    it('should set interval', () => {
+    it('should call the resize observer\'s observe method with the document body', () => {
       handler({}, {});
 
-      expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 300);
-    });
-
-    it('should set interval for sizing', () => {
-      handler({}, {});
-      injector.emit.mock.calls = [];
-      setInterval.mock.calls[0][0]();
-
-      expect(injector.emit).toHaveBeenCalledWith('$size', 'SIZE');
+      expect(resizeObserverObserveSpy).toHaveBeenCalledWith(document.body);
     });
   });
 
@@ -104,7 +122,10 @@ describe('$init', () => {
     it('should fill size for $size type', () => {
       handler({ detail: { type: '$size' } });
 
-      expect(injector.emit.mock.calls[2]).toEqual(['$size', 'SIZE']);
+      expect(injector.emit.mock.calls[2]).toEqual(['$size', {
+        height: 0,
+        width: 0,
+      }]);
     });
   });
 

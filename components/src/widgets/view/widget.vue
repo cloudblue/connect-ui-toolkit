@@ -149,6 +149,7 @@ export default {
   &__content-holder {
     position: relative;
     grid-area: c;
+    overflow: scroll;
   }
 
   &__content {

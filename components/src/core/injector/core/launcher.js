@@ -10,8 +10,12 @@ export default (injector, core, options = {}) => new Promise((resolve) => {
     core.state = data;
 
     if (!options?.disableAutoResizing) {
-      injector.emit('$size', core.size());
-      setInterval(() => injector.emit('$size', core.size()), 300);
+      const resizeObserver = new ResizeObserver((entries) => {
+        const [{ contentRect }] = entries;
+        injector.emit('$size', { height: contentRect.height, width: contentRect.width });
+      });
+
+      resizeObserver.observe(document.body);
     }
 
     resolve();
@@ -20,7 +24,10 @@ export default (injector, core, options = {}) => new Promise((resolve) => {
   window.addEventListener('$injector', ({ detail }) => {
     let { type, data } = detail;
 
-    if (type === '$size') data = core.size();
+    if (type === '$size') {
+      const { height, width } = document.body.getBoundingClientRect();
+      data = { height, width };
+    }
 
     injector.emit(type, data);
   });
