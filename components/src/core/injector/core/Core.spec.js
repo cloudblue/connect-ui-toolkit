@@ -82,18 +82,4 @@ describe('Core', () => {
       expect(core.watchers['*'][0]).toHaveBeenCalled();
     });
   });
-
-  describe('#size', () => {
-    it('should return document size in proper format', () => {
-      jest.spyOn(global.document.documentElement, 'scrollHeight', 'get').mockReturnValue(100)
-      jest.spyOn(global.document.documentElement, 'scrollWidth', 'get').mockReturnValue(300)
-      jest.spyOn(global.document.documentElement, 'offsetHeight', 'get').mockReturnValue(200)
-      jest.spyOn(global.document.documentElement, 'offsetWidth', 'get').mockReturnValue(200)
-
-      expect(core.size()).toEqual({
-        width: 300,
-        height: 200,
-      });
-    });
-  });
 });

@@ -21,11 +21,4 @@ export default class {
 
     if (has('*', this.watchers)) this.watchers['*'].forEach(call);
   }
-
-  size() {
-    return {
-      height: Math.max(document.documentElement.offsetHeight, document.documentElement.scrollHeight),
-      width: Math.max(document.documentElement.offsetWidth, document.documentElement.scrollWidth),
-    };
-  }
 }
