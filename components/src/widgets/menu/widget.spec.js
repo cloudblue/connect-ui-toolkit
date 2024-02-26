@@ -4,6 +4,7 @@ import Menu from './widget';
 describe('Menu component', () => {
   describe('methods', () => {
     describe('#toggle', () => {
+
       it('toggles menu to true when clicking', () => {
         const wrapper = mount(Menu);
         wrapper.vm.showMenu = false;
@@ -23,24 +24,44 @@ describe('Menu component', () => {
 
     describe('#handleClickOutside', () => {
 
-      it('hides menu content when clicked outside menu', () => {
-        const event = { target: 'another value'};
+      it('closes menu when clicked outside menu bounds', async () => {
+        const event = { composedPath: jest.fn().mockReturnValue(['slot', 'button']) };
         const wrapper = mount(Menu);
-        wrapper.vm.menu = { contains: jest.fn().mockReturnValue(false) };
+        wrapper.vm.menu = 'div';
         wrapper.vm.showMenu = true;
-        wrapper.vm.handleClickOutside(event);
+        await wrapper.vm.handleClickOutside(event);
 
         expect(wrapper.vm.showMenu).toBe(false);
       });
 
-      it('does not hide menu content when clicked inside menu', () => {
-        const event = { target: 'some value'};
+      it('does not close menu when clicked inside menu bounds', async () => {
+        const event = { composedPath: jest.fn().mockReturnValue(['slot', 'button']) };
         const wrapper = mount(Menu);
-        wrapper.vm.menu = { contains: jest.fn().mockReturnValue(true) };
+        wrapper.vm.menu = 'button';
         wrapper.vm.showMenu = true;
-        wrapper.vm.handleClickOutside(event);
+        await wrapper.vm.handleClickOutside(event);
 
         expect(wrapper.vm.showMenu).toBe(true);
+      });
+    });
+
+    describe('#onClickInside', () => {
+      it.each([
+        // expected, closeOnClickInside
+        [false, true],
+        [true, false],
+      ])(
+        'should set showMenu.value=%s when closeOnClickInside=%s',
+        (expected, closeOnClickInside) => {
+          const wrapper = mount(Menu, {
+            props: {
+              closeOnClickInside,
+            },
+          });
+          wrapper.vm.showMenu = true;
+          wrapper.vm.onClickInside();
+
+        expect(wrapper.vm.showMenu).toEqual(expected);
       });
     });
   });
