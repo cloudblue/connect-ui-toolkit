@@ -11,9 +11,12 @@ export const Component = {
     },
     template: '<ui-textfield v-bind="args"></ui-textfield>',
   }),
-  
+
   args: {
     label: 'Label text',
+    value: '',
+    placeholder: 'Placeholder text',
+    suffix: '',
   },
 };
 
@@ -25,5 +28,8 @@ export default {
   },
   argTypes: {
     label: 'text',
+    value: 'text',
+    placeholder: 'text',
+    suffix: 'text',
   },
 };
