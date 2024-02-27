@@ -87,6 +87,50 @@ describe('ComplexTable widget', () => {
         expect(result).toEqual(false);
       });
     });
+
+    describe('#filterableHeaders', () => {
+      it('returns the subarray of filterable headers', () => {
+        const wrapper = mount(ComplexTable, {
+          propsData: {
+            totalItems: 35,
+            items: ['hh'],
+            headers: [
+              {value: 'name', text: 'Name', filterable: true},
+              {value: 'lastName', text: 'Lastname', filterable: true},
+              {value: 'age', text: 'Age'},
+            ],
+          },
+        })
+
+        result = wrapper.vm.filterableHeaders;
+
+        expect(result).toEqual([{"filterable": true, "text": "Name", "value": "name"}, {"filterable": true, "text": "Lastname", "value": "lastName"}]);
+      });
+    });
+
+    describe('#cleanFiltersApplied', () => {
+      it('returns a list of filters applied with value', () => {
+        const wrapper = mount(ComplexTable, {
+          propsData: {
+            totalItems: 35,
+            items: ['hh'],
+            headers: [
+              {value: 'name', text: 'Name', filterable: true},
+              {value: 'lastName', text: 'Lastname', filterable: true},
+              {value: 'age', text: 'Age'},
+            ],
+          },
+        })
+
+        wrapper.get('ui-button').trigger('click')
+        const filterableItems = wrapper.findAll('.filter-item ui-textfield')
+        filterableItems[0].trigger('input', { detail: ['my name'] })
+
+        result = wrapper.vm.cleanFiltersApplied;
+
+        expect(result).toEqual({ name: 'my name' });
+      });
+    });
   });
 
   describe('methods', () => {
@@ -121,6 +165,34 @@ describe('ComplexTable widget', () => {
         result = wrapper.vm.nextClicked();
 
         expect(wrapper.emitted('nextClicked')).toBeTruthy()
+      });
+    });
+
+    describe('#applyFilters', () => {
+      it('emits filtersApplied event', () => {
+        const wrapper = mount(ComplexTable, {
+          propsData: {
+            totalItems: 35,
+            items: ['hh'],
+            headers: [
+              {value: 'name', text: 'Name', filterable: true},
+              {value: 'lastName', text: 'Lastname', filterable: true},
+              {value: 'age', text: 'Age'},
+            ],
+          },
+        })
+
+        wrapper.get('ui-button').trigger('click')
+        const filterableItems = wrapper.findAll('.filter-item ui-textfield')
+        filterableItems[0].trigger('input', { detail: ['my name'] })
+
+        result = wrapper.vm.applyFilters();
+
+        expect(wrapper.emitted('filtersApplied')).toEqual([[
+          {
+            name: 'my name',
+          }
+        ]])
       });
     });
 
