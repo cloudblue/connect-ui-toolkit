@@ -5,7 +5,7 @@
   >
     <div
       class="menu-trigger"
-      @click.stop="toggle"
+      @click="toggle"
     >
       <slot name="trigger" />
     </div>
@@ -15,7 +15,7 @@
         v-if="showMenu"
         class="menu-content"
         :class="alignmentClass"
-        @click.stop
+        @click.stop="onClickInside"
       >
         <slot name="content" />
       </div>
@@ -34,6 +34,10 @@ const props = defineProps({
       return ['left', 'right'].includes(value);
     },
   },
+  closeOnClickInside: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const showMenu = ref(false);
@@ -49,9 +53,14 @@ const toggle = () => {
 };
 
 const handleClickOutside = (event) => {
-  if (menu.value && !menu.value.contains(event.target)) {
+  const isClickWithinMenuBounds = event.composedPath().some(el => el === menu.value);
+  if (!isClickWithinMenuBounds) {
     showMenu.value = false;
   }
+};
+
+const onClickInside = () => {
+  if (props.closeOnClickInside) showMenu.value = false;
 };
 
 onMounted(() => {
