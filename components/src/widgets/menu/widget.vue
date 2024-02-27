@@ -14,7 +14,7 @@
       <div
         v-if="showMenu"
         class="menu-content"
-        :class="alignmentClass"
+        :class="[alignmentClass, fullWidthClass]"
         @click.stop="onClickInside"
       >
         <slot name="content" />
@@ -38,6 +38,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  fullWidth: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const showMenu = ref(false);
@@ -47,6 +51,8 @@ const alignmentClass = computed(() => (props.align === 'left'
   ? 'menu-content_align-left'
   : 'menu-content_align-right'
 ));
+
+const fullWidthClass = computed(() => (props.fullWidth ? 'menu-content_full-width' : ''));
 
 const toggle = () => {
   showMenu.value = !showMenu.value;
@@ -80,12 +86,18 @@ onUnmounted(() => {
 .menu-content {
   position: absolute;
   top: 0;
+  width: max-content;
 
   &_align-right {
     right: 0;
   }
+
   &_align-left {
     left: 0;
+  }
+
+  &_full-width {
+    width: 100%;
   }
 }
 </style>
