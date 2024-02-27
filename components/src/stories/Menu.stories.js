@@ -16,8 +16,8 @@ export const Component = {
           slot="trigger" 
           text="open menu" 
         />
-        <div style="padding:8px 16px; width:300px; border:1px solid black;" slot="content">
-          <p>item</p>
+        <div style="padding:8px 16px; border:1px solid black;" slot="content">
+          <p>Lorem ipsum dolor sit amet</p>
         </div>
       </ui-menu>
     `
@@ -25,6 +25,8 @@ export const Component = {
 
   args: {
     align: 'left',
+    closeOnClickInside: false,
+    fullWidth: false,
   },
 };
 
@@ -36,6 +38,8 @@ export default {
   },
 
   argTypes: {
+    closeOnClickInside: 'boolean',
+    fullWidth: 'boolean',
     align: {
       options: ['right', 'left'],
       control: {

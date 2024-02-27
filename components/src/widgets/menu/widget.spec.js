@@ -119,6 +119,34 @@ describe('Menu component', () => {
     });
   });
 
+  describe('fullWidth class', () => {
+    it('adds the "menu-content_full-width" class if fullWidth is true', async () => {
+      const wrapper = mount(Menu, {
+        props: {
+          fullWidth: true,
+        },
+      });
+
+      // Open menu
+      await wrapper.find('.menu-trigger').trigger('click');
+
+      expect(wrapper.find('.menu-content_full-width').exists()).toEqual(true);
+    });
+
+    it('does not add the "menu-content_full-width" class fullWidth is false', async () => {
+      const wrapper = mount(Menu, {
+        props: {
+          fullWidth: false,
+        },
+      });
+
+      // Open menu
+      await wrapper.find('.menu-trigger').trigger('click');
+
+      expect(wrapper.find('.menu-content_full-width').exists()).toEqual(false);
+    });
+  });
+
   describe('align prop validator', () => {
     it.each([
       // expected, value
