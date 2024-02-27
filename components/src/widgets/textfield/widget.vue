@@ -1,10 +1,7 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
-    :class="[
-      {'text-field_focused': focused},
-      'text-field',
-    ]"
+    class="text-field"
+    :class="{ 'text-field_focused': isFocused }"
     @focusin="setFocus"
     @focusout="removeFocus"
   >
@@ -13,51 +10,66 @@
       <div class="text-field__body">
         <input
           v-model="localValue"
-          name="textfield"
           class="text-field__input"
+          :class="{ 'text-field__input_right': suffix }"
+          :placeholder="placeholder"
+          name="textfield"
           type="text"
-          @input="onInput"
+          @input.stop
         >
+        <span
+          v-if="suffix"
+          class="text-field__suffix"
+        >{{ suffix }}</span>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    label: {
-      type: String,
-      default: '',
-    },
+<script setup>
+import { ref, watch } from 'vue';
+
+const props = defineProps({
+  value: {
+    type: String,
+    default: '',
   },
-  emits: ['input'],
-  data() {
-    return {
-      focused: false,
-      localValue: '',
-    }
+  label: {
+    type: String,
+    default: '',
   },
-
-  methods: {
-    onInput(e) {
-      e.stopPropagation();
-      this.$emit('input', this.localValue );
-    },
-
-    removeFocus() {
-      if (this.focused) {
-        this.focused = false;
-      }
-    },
-
-    setFocus() {
-      if (this.focused) return;
-
-      this.focused = true;
-    },
+  placeholder: {
+    type: String,
+    default: '',
   },
-}
+  suffix: {
+    type: String,
+    default: '',
+  },
+});
+
+const localValue = ref('');
+
+const isFocused = ref(false);
+const emit = defineEmits(['input']);
+
+const removeFocus = () => (isFocused.value = false);
+const setFocus = () => (isFocused.value = true);
+
+watch(
+  () => props.value,
+  newValue => {
+    localValue.value = newValue;
+  },
+  { immediate: true },
+);
+
+watch(
+  localValue,
+  (newValue) => {
+    emit('input', newValue);
+  },
+);
 </script>
 
 <style lang="stylus">
@@ -75,12 +87,6 @@ export default {
   label {
     font-weight 500;
     font-size: 14px;
-  }
-
-  &___r {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
   }
 
   &__body {
@@ -115,6 +121,10 @@ export default {
     outline: none;
     border-style: none;
     background-color: transparent;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #212121;
 
     &:hover,
     &:focus {
@@ -135,7 +145,17 @@ export default {
     .text-field_disabled & {
       color: #BDBDBD;
     }
+
+    &_right {
+      text-align: right;
+    }
+  }
+
+  &__suffix {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #707070;
   }
 }
 </style>
-
