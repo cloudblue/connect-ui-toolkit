@@ -1,18 +1,23 @@
 <template>
   <div class="c-card">
     <div class="c-card__header">
-      <p
-        v-if="title"
-        class="c-card__title"
-      >
-        {{ title }}
-      </p>
-      <p
-        v-if="subtitle"
-        class="c-card__subtitle"
-      >
-        {{ subtitle }}
-      </p>
+      <div class="c-card__title-container">
+        <p
+          v-if="title"
+          class="c-card__title"
+        >
+          {{ title }}
+        </p>
+        <p
+          v-if="subtitle"
+          class="c-card__subtitle"
+        >
+          {{ subtitle }}
+        </p>
+      </div>
+      <div class="c-card__actions">
+        <slot name="actions"/>
+      </div>
     </div>
 
     <div class="c-card__content">
@@ -51,7 +56,11 @@ export default {
   color: inherit;
 
   &__header{
+    display: flex;
     margin-bottom: 26px;
+    align-items: start;
+    flex-grow: 1;
+    justify-content: space-between;
   }
 
   &__title {
@@ -67,5 +76,8 @@ export default {
     margin: 0;
   }
 
+  &__title-container {
+    display: inline-block !important;
+  }
 }
 </style>
