@@ -16,7 +16,15 @@ export const Component = {
     setup() {
       return { args };
     },
-    template: '<ui-card v-bind="args">{{ args.content }}</ui-card>',
+    template: `
+    <ui-card v-bind="args" style="width: 400px">
+      <div slot="default">
+        {{ args.content }}
+      </div>
+      <div slot="actions">
+        <button>Action!</button>
+      </div>
+    </ui-card>`,
   }),
 
   args: {
