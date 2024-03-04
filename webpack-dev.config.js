@@ -11,6 +11,9 @@ const devServerConfig = {
       "Access-Control-Allow-Origin": "*",
     },
     static: false,
+    client: {
+      overlay: false,
+    }
   },
 };
 

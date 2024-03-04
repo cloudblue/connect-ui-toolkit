@@ -1,5 +1,5 @@
 <template>
-  <ui-menu>
+  <ui-menu :closeOnClickInside="false">
     <ui-button
       slot="trigger"
       :disabled="filterableHeaders.length === 0"

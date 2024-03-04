@@ -12,7 +12,7 @@
         class="c-view__navigation"
         :assistive-title="assistiveTitle"
         :current-tab="activeTab"
-        :show-back-button="showBackButton ? '' : null"
+        :showBackButton="showBackButton"
         :title="title"
         .tabs="tabs"
         @click-tab="setCurrentTab"
