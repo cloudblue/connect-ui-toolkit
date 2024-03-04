@@ -16,7 +16,7 @@
         </p>
       </div>
       <div class="c-card__actions">
-        <slot name="actions"/>
+        <slot name="actions" />
       </div>
     </div>
 
