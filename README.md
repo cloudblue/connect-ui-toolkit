@@ -7,7 +7,7 @@
 
 ---
 
-Build your Connect Extension UI easily with our UI Toolkit. Feel free to use any frontend library 
+Build your Connect Extension UI easily with our UI Toolkit. Feel free to use any frontend library
 or framework you prefer!
 
 ## Installation

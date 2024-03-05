@@ -24,11 +24,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Lint
         run: npm run lint
       - name: Check formatting with Prettier
-        run: npm prettier:check:ci
+        run: npm run format:check
       - name: Testing
         run: npm test
   sonar:
@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: 20
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Testing
         run: npm test
       - uses: SonarSource/sonarcloud-github-action@master
