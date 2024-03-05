@@ -49,7 +49,6 @@ export default {
 .c-card {
   border: 1px solid border-color;
   border-radius: 8px;
-  overflow: hidden;
   padding: 18px 24px 24px 24px;
   display: block;
   text-decoration: inherit;
