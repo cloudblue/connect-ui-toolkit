@@ -2,19 +2,19 @@ name: Build and Test
 
 on:
   push:
-    branches: "*"
+    branches: '*'
     tags:
       - '*'
 
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '18', '20' ]
+        node: ['18', '20']
     name: Node ${{ matrix.node }}
     steps:
       - name: Checkout
@@ -27,6 +27,8 @@ jobs:
         run: npm install
       - name: Lint
         run: npm run lint
+      - name: Check formatting with Prettier
+        run: npm prettier:check:ci
       - name: Testing
         run: npm test
   sonar:
