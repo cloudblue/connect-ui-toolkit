@@ -2,7 +2,6 @@ const path = require('node:path');
 const { VueLoaderPlugin } = require('vue-loader');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-
 module.exports = {
   mode: process.env.NODE_ENV,
 
@@ -29,7 +28,7 @@ module.exports = {
           options: {
             customElement: true,
             compilerOptions: {
-              isCustomElement: tag => tag.startsWith('ui-'),
+              isCustomElement: (tag) => tag.startsWith('ui-'),
             },
           },
         },
@@ -42,11 +41,7 @@ module.exports = {
       },
       {
         test: /\.styl(us)?$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'stylus-loader',
-        ],
+        use: ['vue-style-loader', 'css-loader', 'stylus-loader'],
       },
       {
         test: /\.svg/,

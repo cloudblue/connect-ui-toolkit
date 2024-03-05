@@ -260,15 +260,19 @@ const routes = {
   },
 };
 
-export const connectPortalRoutesDict = Object.freeze(Object.keys(routes).reduce((acc, curr) => {
-  acc[curr] = Symbol(curr);
+export const connectPortalRoutesDict = Object.freeze(
+  Object.keys(routes).reduce((acc, curr) => {
+    acc[curr] = Symbol(curr);
 
-  return acc;
-}, {}));
+    return acc;
+  }, {}),
+);
 
 // Transform all route keys to Symbol and freeze resulting object
-export const connectPortalRoutes = Object.freeze(Object.entries(routes).reduce((acc, [key, value]) => {
-  acc[connectPortalRoutesDict[key]] = value;
+export const connectPortalRoutes = Object.freeze(
+  Object.entries(routes).reduce((acc, [key, value]) => {
+    acc[connectPortalRoutesDict[key]] = value;
 
-  return acc;
-}, {}));
+    return acc;
+  }, {}),
+);

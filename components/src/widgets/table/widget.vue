@@ -30,8 +30,8 @@ defineProps({
   fixed: {
     type: Boolean,
     default: false,
-  }
-})
+  },
+});
 </script>
 
 <style lang="stylus" scoped>
@@ -96,6 +96,4 @@ table {
     }
   }
 }
-
 </style>
-

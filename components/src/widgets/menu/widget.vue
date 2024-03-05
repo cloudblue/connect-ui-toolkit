@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, computed } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue';
 
 const props = defineProps({
   align: {
@@ -47,10 +47,9 @@ const props = defineProps({
 const showMenu = ref(false);
 const menu = ref(null);
 
-const alignmentClass = computed(() => (props.align === 'left'
-  ? 'menu-content_align-left'
-  : 'menu-content_align-right'
-));
+const alignmentClass = computed(() =>
+  props.align === 'left' ? 'menu-content_align-left' : 'menu-content_align-right',
+);
 
 const fullWidthClass = computed(() => (props.fullWidth ? 'menu-content_full-width' : ''));
 
@@ -59,7 +58,7 @@ const toggle = () => {
 };
 
 const handleClickOutside = (event) => {
-  const isClickWithinMenuBounds = event.composedPath().some(el => el === menu.value);
+  const isClickWithinMenuBounds = event.composedPath().some((el) => el === menu.value);
   if (!isClickWithinMenuBounds) {
     showMenu.value = false;
   }
@@ -70,11 +69,11 @@ const onClickInside = () => {
 };
 
 onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
+  document.addEventListener('click', handleClickOutside);
 });
 
 onUnmounted(() => {
-  document.removeEventListener("click", handleClickOutside);
+  document.removeEventListener('click', handleClickOutside);
 });
 </script>
 

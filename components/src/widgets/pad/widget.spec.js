@@ -22,16 +22,13 @@ describe('Pad widget', () => {
         [false, 'foo', 'bar', true],
         [false, '', 'bar', false],
         [true, '', 'bar', true],
-      ])(
-        'returns %s if requested=%s, pad=%s, active=%s',
-        (expected, requested, pad, active) => {
-          context = { requested, pad, active };
+      ])('returns %s if requested=%s, pad=%s, active=%s', (expected, requested, pad, active) => {
+        context = { requested, pad, active };
 
-          result = Pad.computed.opened(context);
+        result = Pad.computed.opened(context);
 
-          expect(result).toEqual(expected);
-        },
-      );
+        expect(result).toEqual(expected);
+      });
     });
   });
 
@@ -70,19 +67,19 @@ describe('Pad widget', () => {
       });
 
       it('should call $nextTick when value passed', async () => {
-        await Pad.watch.opened.call(context,true);
+        await Pad.watch.opened.call(context, true);
 
         expect(context.$nextTick).toHaveBeenCalled();
       });
 
       it('should emit $injector "$size"', async () => {
-        await Pad.watch.opened.call(context,true);
+        await Pad.watch.opened.call(context, true);
 
         expect(context.$injector).toHaveBeenCalledWith('$size');
       });
 
       it('should do nothing when value is falsy', async () => {
-        await Pad.watch.opened.call(context,false);
+        await Pad.watch.opened.call(context, false);
 
         expect(context.$nextTick).not.toHaveBeenCalled();
       });

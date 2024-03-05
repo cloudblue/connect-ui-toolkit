@@ -1,7 +1,4 @@
-import {
-  call,
-  has,
-} from '~core/helpers';
+import { call, has } from '~core/helpers';
 
 export default class {
   constructor() {

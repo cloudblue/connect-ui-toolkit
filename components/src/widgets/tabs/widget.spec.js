@@ -1,6 +1,5 @@
 import Tabs from './widget.vue';
 
-
 const customEventConstructorSpy = jest.fn();
 Object.defineProperty(global, 'CustomEvent', {
   writable: true,
@@ -63,8 +62,8 @@ describe('Tabs', () => {
         result = Tabs.methods.linkClass.call(context, { value: 'bar', disabled: true });
 
         expect(result).toEqual({
-          'tab_active': false,
-          'tab_disabled': true,
+          tab_active: false,
+          tab_disabled: true,
         });
       });
 
@@ -72,8 +71,8 @@ describe('Tabs', () => {
         result = Tabs.methods.linkClass.call(context, { value: 'foo', disabled: false });
 
         expect(result).toEqual({
-          'tab_active': true,
-          'tab_disabled': false,
+          tab_active: true,
+          tab_disabled: false,
         });
       });
     });

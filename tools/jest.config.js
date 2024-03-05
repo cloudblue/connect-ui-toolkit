@@ -5,13 +5,9 @@ module.exports = {
 
   clearMocks: true,
 
-  collectCoverageFrom: [
-    '<rootDir>/**/*.js',
-  ],
+  collectCoverageFrom: ['<rootDir>/**/*.js'],
 
-  testMatch: [
-    '<rootDir>/(**/*\\.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))',
-  ],
+  testMatch: ['<rootDir>/(**/*\\.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'],
 
   transform: {
     '^.+\\.js$': 'babel-jest',

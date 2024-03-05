@@ -3,7 +3,6 @@ import { resolve } from 'node:path';
 
 import { defineExtensionConfig } from './index';
 
-
 jest.mock('./flatten-html-pages-directory', () => 'flattenHtmlPagesDirectoryPluginStub');
 
 jest.mock('node:url', () => ({
@@ -60,20 +59,17 @@ describe('#defineExtensionConfig function', () => {
           vuePlugin: undefined,
         },
       ],
-    ])(
-      'throws an error with the message %s if config=%o',
-      (expectedErrorMessage, config) => {
-        let error;
+    ])('throws an error with the message %s if config=%o', (expectedErrorMessage, config) => {
+      let error;
 
-        try {
-          defineExtensionConfig(config);
-        } catch (e) {
-          error = e;
-        }
+      try {
+        defineExtensionConfig(config);
+      } catch (e) {
+        error = e;
+      }
 
-        expect(error.message).toEqual(expectedErrorMessage);
-      },
-    );
+      expect(error.message).toEqual(expectedErrorMessage);
+    });
   });
 
   it('returns the base config', () => {
@@ -92,10 +88,7 @@ describe('#defineExtensionConfig function', () => {
           '~': 'urlFileUrlToPathStub',
         },
       },
-      plugins: [
-        { name: 'vuepluginstub' },
-        'flattenHtmlPagesDirectoryPluginStub',
-      ],
+      plugins: [{ name: 'vuepluginstub' }, 'flattenHtmlPagesDirectoryPluginStub'],
       root: '/my/source/dir',
       base: '/static',
       build: {
@@ -157,7 +150,7 @@ describe('#defineExtensionConfig function', () => {
       plugins: [
         { name: 'vuepluginstub' },
         'flattenHtmlPagesDirectoryPluginStub',
-        'other-vite-plugin'
+        'other-vite-plugin',
       ],
       root: '/my/source/dir',
       base: '/static',
@@ -193,7 +186,12 @@ describe('#defineExtensionConfig function', () => {
 
     expect(resolve).toHaveBeenCalledWith('/my/source/dir', 'pages');
     expect(readdirSync).toHaveBeenCalledWith('pathResolveStub');
-    expect(resolve).toHaveBeenCalledWith('/my/source/dir', 'pages/', 'fsReaddirSyncStub', 'index.html');
+    expect(resolve).toHaveBeenCalledWith(
+      '/my/source/dir',
+      'pages/',
+      'fsReaddirSyncStub',
+      'index.html',
+    );
     expect(result.build.rollupOptions.input).toEqual({
       fsReaddirSyncStub: 'pathResolveStub',
     });
@@ -210,21 +208,18 @@ describe('#defineExtensionConfig function', () => {
       ['vendor', 'foo/bar/baz/node_modules/vuex/index.js'],
       [undefined, 'foo/bar/baz/index.js'],
       [undefined, 'main.css'],
-    ])(
-      'returns %s if the module id=%s',
-      (expected, moduleId) => {
-        const config = {
-          srcDir: '/my/source/dir',
-          srcUrl: 'file://my/source/dir',
-          outputDir: '/my/output/dir',
-          vuePlugin: { name: 'vuepluginstub' },
-        };
-        const manualChunksFn = defineExtensionConfig(config).build.rollupOptions.output.manualChunks;
+    ])('returns %s if the module id=%s', (expected, moduleId) => {
+      const config = {
+        srcDir: '/my/source/dir',
+        srcUrl: 'file://my/source/dir',
+        outputDir: '/my/output/dir',
+        vuePlugin: { name: 'vuepluginstub' },
+      };
+      const manualChunksFn = defineExtensionConfig(config).build.rollupOptions.output.manualChunks;
 
-        result = manualChunksFn(moduleId);
+      result = manualChunksFn(moduleId);
 
-        expect(result).toEqual(expected);
-      },
-    );
+      expect(result).toEqual(expected);
+    });
   });
 });

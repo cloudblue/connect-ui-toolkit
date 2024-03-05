@@ -1,28 +1,30 @@
 import { fastApiTableAdapter } from './adapter';
 
-
 describe('#fastApiTableAdapter', () => {
   let result;
   let fetchResponse = {};
 
   Object.defineProperty(global, 'fetch', {
-    value: jest.fn().mockImplementation(() => new Promise((resolve) => {
-      resolve({
-        status: fetchResponse.status,
-        statusText: fetchResponse.statusText,
-        ok: fetchResponse.ok,
-        json: jest.fn().mockResolvedValue(fetchResponse.items),
-        headers: {
-          get: () => {
-            if (fetchResponse.contentRangeTotal) {
-              return `items 0-10/${fetchResponse.contentRangeTotal}`;
-            }
+    value: jest.fn().mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolve({
+            status: fetchResponse.status,
+            statusText: fetchResponse.statusText,
+            ok: fetchResponse.ok,
+            json: jest.fn().mockResolvedValue(fetchResponse.items),
+            headers: {
+              get: () => {
+                if (fetchResponse.contentRangeTotal) {
+                  return `items 0-10/${fetchResponse.contentRangeTotal}`;
+                }
 
-            return '';
-          },
-        },
-      });
-    })),
+                return '';
+              },
+            },
+          });
+        }),
+    ),
   });
 
   beforeEach(() => {
@@ -60,7 +62,7 @@ describe('#fastApiTableAdapter', () => {
     });
 
     describe('#load', () => {
-      it('calls the adapter\'s endpoint with the correct parameters', async () => {
+      it("calls the adapter's endpoint with the correct parameters", async () => {
         await adapter.load();
 
         expect(fetch).toHaveBeenCalledWith('/foo?limit=10&offset=0');
@@ -106,7 +108,9 @@ describe('#fastApiTableAdapter', () => {
         }
 
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toEqual('Failed to fetch "/foo?limit=10&offset=0". Received status "500: Internal Server Error"');
+        expect(error.message).toEqual(
+          'Failed to fetch "/foo?limit=10&offset=0". Received status "500: Internal Server Error"',
+        );
       });
     });
 

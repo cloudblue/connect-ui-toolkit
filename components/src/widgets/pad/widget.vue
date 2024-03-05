@@ -25,7 +25,7 @@ export default {
   },
 
   computed: {
-    opened: vm => vm.requested ? vm.requested === vm.pad : vm.active,
+    opened: (vm) => (vm.requested ? vm.requested === vm.pad : vm.active),
   },
 
   watch: {
@@ -38,10 +38,9 @@ export default {
   },
 
   created() {
-    this.$bus.on('click-tab', tab => (this.requested = tab));
+    this.$bus.on('click-tab', (tab) => (this.requested = tab));
   },
 };
-
 </script>
 
 <style lang="stylus" scoped>
@@ -50,5 +49,3 @@ export default {
   padding-top: 32px;
 }
 </style>
-
-

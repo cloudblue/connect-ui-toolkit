@@ -1,10 +1,9 @@
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils';
 import Menu from './widget';
 
 describe('Menu component', () => {
   describe('methods', () => {
     describe('#toggle', () => {
-
       it('toggles menu to true when clicking', () => {
         const wrapper = mount(Menu);
         wrapper.vm.showMenu = false;
@@ -23,7 +22,6 @@ describe('Menu component', () => {
     });
 
     describe('#handleClickOutside', () => {
-
       it('closes menu when clicked outside menu bounds', async () => {
         const event = { composedPath: jest.fn().mockReturnValue(['slot', 'button']) };
         const wrapper = mount(Menu);
@@ -61,8 +59,9 @@ describe('Menu component', () => {
           wrapper.vm.showMenu = true;
           wrapper.vm.onClickInside();
 
-        expect(wrapper.vm.showMenu).toEqual(expected);
-      });
+          expect(wrapper.vm.showMenu).toEqual(expected);
+        },
+      );
     });
   });
 
@@ -154,13 +153,10 @@ describe('Menu component', () => {
       [true, 'right'],
       [false, 'center'],
       [false, 'foo'],
-    ])(
-      'returns %s if the prop value is %s',
-      (expected, value) => {
-        const result = Menu.props.align.validator(value);
+    ])('returns %s if the prop value is %s', (expected, value) => {
+      const result = Menu.props.align.validator(value);
 
-        expect(result).toEqual(expected);
-      },
-    );
+      expect(result).toEqual(expected);
+    });
   });
 });

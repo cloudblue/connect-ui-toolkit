@@ -3,7 +3,6 @@ import registerWidget from '~core/registerWidget';
 
 registerWidget('ui-table', Table);
 
-
 export const Component = {
   render: (args) => ({
     setup() {
@@ -28,17 +27,17 @@ export const Component = {
       {
         name: 'name',
         width: '80px',
-        text: "Name",
+        text: 'Name',
       },
       {
         name: 'lastname',
         width: '80px',
-        text: "LastName",
+        text: 'LastName',
       },
       {
         name: 'age',
         width: '40px',
-        text: "Age",
+        text: 'Age',
       },
     ],
   },

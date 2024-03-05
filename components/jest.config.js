@@ -3,11 +3,7 @@ module.exports = {
   rootDir: __dirname,
   displayName: 'components',
 
-  moduleFileExtensions: [
-    'js',
-    'json',
-    'vue',
-  ],
+  moduleFileExtensions: ['js', 'json', 'vue'],
 
   transform: {
     '^.+\\.vue$': '@vue/vue3-jest',
@@ -15,9 +11,7 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
   },
 
-  transformIgnorePatterns: [
-    "/node_modules/(?!(@cloudblueconnect)/)"
-  ],
+  transformIgnorePatterns: ['/node_modules/(?!(@cloudblueconnect)/)'],
 
   moduleNameMapper: {
     '^~widgets/(.*)$': '<rootDir>./src/widgets/$1',
@@ -29,18 +23,14 @@ module.exports = {
 
   clearMocks: true,
 
-  collectCoverageFrom: [
-    '<rootDir>/src/**/*.{js,vue}',
-  ],
+  collectCoverageFrom: ['<rootDir>/src/**/*.{js,vue}'],
 
-  testMatch: [
-    '<rootDir>/(**/*\\.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))',
-  ],
+  testMatch: ['<rootDir>/(**/*\\.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'],
 
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
-    customExportConditions: ["node", "node-addons"],
+    customExportConditions: ['node', 'node-addons'],
   },
 
   globals: {

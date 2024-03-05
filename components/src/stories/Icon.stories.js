@@ -17,8 +17,8 @@ export default {
       control: {
         type: 'select',
       },
-    }
-  }
+    },
+  },
 };
 
 export const Component = {
@@ -32,5 +32,5 @@ export const Component = {
     iconName: 'googleSnowboardingBaseline',
     size: '32',
     color: '#757575',
-  }
+  },
 };

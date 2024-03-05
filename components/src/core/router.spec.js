@@ -1,12 +1,6 @@
-import {
-  connectPortalRoutes,
-  connectPortalRoutesDict,
-} from '~constants/portal-routes';
+import { connectPortalRoutes, connectPortalRoutesDict } from '~constants/portal-routes';
 
-import {
-  processRoute,
-} from '~core/router';
-
+import { processRoute } from '~core/router';
 
 describe('#processRoute', () => {
   let result;
@@ -21,7 +15,7 @@ describe('#processRoute', () => {
     it('throws an error', () => {
       try {
         processRoute();
-      } catch(e) {
+      } catch (e) {
         err = e;
       }
 
@@ -40,9 +34,9 @@ describe('#processRoute', () => {
 
   describe('if route is an Object', () => {
     it('returns the route without processing', () => {
-      result = processRoute({foo: 'bar'});
+      result = processRoute({ foo: 'bar' });
 
-      expect(result).toEqual({foo: 'bar'});
+      expect(result).toEqual({ foo: 'bar' });
     });
   });
 
@@ -52,12 +46,14 @@ describe('#processRoute', () => {
 
       try {
         processRoute(fakeRoute);
-      } catch(e) {
+      } catch (e) {
         err = e;
       }
 
       expect(err).toBeInstanceOf(Error);
-      expect(err.message).toEqual(`[Connect UI Toolkit]: Route ${fakeRoute.toString()} does not exist.\nThe following routes are available:\n${Object.keys(connectPortalRoutesDict).join(', ')}`);
+      expect(err.message).toEqual(
+        `[Connect UI Toolkit]: Route ${fakeRoute.toString()} does not exist.\nThe following routes are available:\n${Object.keys(connectPortalRoutesDict).join(', ')}`,
+      );
     });
 
     it('returns the correct route for a simple route', () => {
@@ -86,12 +82,14 @@ describe('#processRoute', () => {
 
       try {
         processRoute(routeWithRequiredParameter);
-      } catch(e) {
+      } catch (e) {
         err = e;
       }
 
       expect(err).toBeInstanceOf(Error);
-      expect(err.message).toEqual(`[Connect UI Toolkit]: Route ${routeWithRequiredParameter.toString()} requires the ${connectPortalRoutes[routeWithRequiredParameter].requires} parameter.`);
+      expect(err.message).toEqual(
+        `[Connect UI Toolkit]: Route ${routeWithRequiredParameter.toString()} requires the ${connectPortalRoutes[routeWithRequiredParameter].requires} parameter.`,
+      );
     });
 
     it('returns the correct route for a route that requires a parameter and it is sent', () => {

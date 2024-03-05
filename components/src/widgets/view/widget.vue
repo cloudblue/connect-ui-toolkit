@@ -10,16 +10,15 @@
     <template v-else>
       <ui-nav
         class="c-view__navigation"
-        :assistive-title="assistiveTitle"
-        :current-tab="activeTab"
-        :showBackButton="showBackButton"
+        :assistiveTitle="assistiveTitle"
+        :currentTab="activeTab"
+        :showBackButton="showBackButton ? '' : null"
         :title="title"
         .tabs="tabs"
         @click-tab="setCurrentTab"
         @go-back="$emit('go-back')"
       >
         <slot name="tabs" />
-        <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
         <div slot="actions">
           <slot name="actions" />
         </div>
@@ -56,7 +55,6 @@ import navigation from '~widgets/navigation/widget.vue';
 import registerWidget from '~core/registerWidget';
 
 registerWidget('ui-nav', navigation);
-
 
 export default {
   props: {
@@ -98,7 +96,7 @@ export default {
   watch: {
     async activeTab() {
       await this.$nextTick();
-      this.$injector('$size')
+      this.$injector('$size');
     },
 
     currentTab: {
@@ -119,7 +117,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="stylus">
 .c-view {

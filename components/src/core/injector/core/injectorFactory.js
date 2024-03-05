@@ -1,16 +1,10 @@
-import {
-  clone,
-  has,
-} from '~core/helpers';
+import { clone, has } from '~core/helpers';
 
-import {
-  processRoute
-} from '~core/router';
+import { processRoute } from '~core/router';
 
-
-export default core => {
+export default (core) => {
   const injector = {
-    watch(a, b, {immediate} = {}) {
+    watch(a, b, { immediate } = {}) {
       let fn, name;
 
       if (typeof a === 'function') {
@@ -35,19 +29,25 @@ export default core => {
     commit(data) {
       core.assign(data);
 
-      window.top.postMessage({
-        $id: core.id || null,
-        data: core.state ? clone(core.state) : null,
-      }, "*");
+      window.top.postMessage(
+        {
+          $id: core.id || null,
+          data: core.state ? clone(core.state) : null,
+        },
+        '*',
+      );
     },
 
     emit(name, data = true) {
-      window.top.postMessage({
-        $id: core.id || null,
-        events: {
-          [name]: data,
+      window.top.postMessage(
+        {
+          $id: core.id || null,
+          events: {
+            [name]: data,
+          },
         },
-      }, "*");
+        '*',
+      );
     },
 
     listen(name, cb) {

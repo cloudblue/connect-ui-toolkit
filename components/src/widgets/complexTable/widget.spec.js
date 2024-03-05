@@ -1,11 +1,9 @@
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils';
 import ComplexTable from './widget';
-import { nextTick } from 'vue'
-
+import { nextTick } from 'vue';
 
 describe('ComplexTable widget', () => {
   let result;
-
 
   describe('computed', () => {
     describe('#totalPages', () => {
@@ -16,7 +14,7 @@ describe('ComplexTable widget', () => {
             items: ['hh'],
             headers: ['jj'],
           },
-        })
+        });
 
         result = wrapper.vm.totalPages;
 
@@ -33,7 +31,7 @@ describe('ComplexTable widget', () => {
             headers: ['jj'],
             currentPage: 1,
           },
-        })
+        });
 
         result = wrapper.vm.previousButtonDisabled;
 
@@ -48,7 +46,7 @@ describe('ComplexTable widget', () => {
             headers: ['jj'],
             currentPage: 2,
           },
-        })
+        });
 
         result = wrapper.vm.previousButtonDisabled;
 
@@ -65,7 +63,7 @@ describe('ComplexTable widget', () => {
             headers: ['jj'],
             currentPage: 3,
           },
-        })
+        });
 
         result = wrapper.vm.nextButtonDisabled;
 
@@ -80,7 +78,7 @@ describe('ComplexTable widget', () => {
             headers: ['jj'],
             currentPage: 2,
           },
-        })
+        });
 
         result = wrapper.vm.nextButtonDisabled;
 
@@ -95,16 +93,19 @@ describe('ComplexTable widget', () => {
             totalItems: 35,
             items: ['hh'],
             headers: [
-              {value: 'name', text: 'Name', filterable: true},
-              {value: 'lastName', text: 'Lastname', filterable: true},
-              {value: 'age', text: 'Age'},
+              { value: 'name', text: 'Name', filterable: true },
+              { value: 'lastName', text: 'Lastname', filterable: true },
+              { value: 'age', text: 'Age' },
             ],
           },
-        })
+        });
 
         result = wrapper.vm.filterableHeaders;
 
-        expect(result).toEqual([{"filterable": true, "text": "Name", "value": "name"}, {"filterable": true, "text": "Lastname", "value": "lastName"}]);
+        expect(result).toEqual([
+          { filterable: true, text: 'Name', value: 'name' },
+          { filterable: true, text: 'Lastname', value: 'lastName' },
+        ]);
       });
     });
 
@@ -115,16 +116,16 @@ describe('ComplexTable widget', () => {
             totalItems: 35,
             items: ['hh'],
             headers: [
-              {value: 'name', text: 'Name', filterable: true},
-              {value: 'lastName', text: 'Lastname', filterable: true},
-              {value: 'age', text: 'Age'},
+              { value: 'name', text: 'Name', filterable: true },
+              { value: 'lastName', text: 'Lastname', filterable: true },
+              { value: 'age', text: 'Age' },
             ],
           },
-        })
+        });
 
-        wrapper.get('ui-button').trigger('click')
-        const filterableItems = wrapper.findAll('.filter-item ui-textfield')
-        filterableItems[0].trigger('input', { detail: ['my name'] })
+        wrapper.get('ui-button').trigger('click');
+        const filterableItems = wrapper.findAll('.filter-item ui-textfield');
+        filterableItems[0].trigger('input', { detail: ['my name'] });
 
         result = wrapper.vm.cleanFiltersApplied;
 
@@ -143,11 +144,11 @@ describe('ComplexTable widget', () => {
             headers: ['jj'],
             currentPage: 2,
           },
-        })
+        });
 
         result = wrapper.vm.previousClicked();
 
-        expect(wrapper.emitted('previousClicked')).toBeTruthy()
+        expect(wrapper.emitted('previousClicked')).toBeTruthy();
       });
     });
 
@@ -160,11 +161,11 @@ describe('ComplexTable widget', () => {
             headers: ['jj'],
             currentPage: 2,
           },
-        })
+        });
 
         result = wrapper.vm.nextClicked();
 
-        expect(wrapper.emitted('nextClicked')).toBeTruthy()
+        expect(wrapper.emitted('nextClicked')).toBeTruthy();
       });
     });
 
@@ -175,30 +176,32 @@ describe('ComplexTable widget', () => {
             totalItems: 35,
             items: ['hh'],
             headers: [
-              {value: 'name', text: 'Name', filterable: true},
-              {value: 'lastName', text: 'Lastname', filterable: true},
-              {value: 'age', text: 'Age'},
+              { value: 'name', text: 'Name', filterable: true },
+              { value: 'lastName', text: 'Lastname', filterable: true },
+              { value: 'age', text: 'Age' },
             ],
           },
-        })
+        });
 
-        wrapper.get('ui-button').trigger('click')
-        const filterableItems = wrapper.findAll('.filter-item ui-textfield')
-        filterableItems[0].trigger('input', { detail: ['my name'] })
+        wrapper.get('ui-button').trigger('click');
+        const filterableItems = wrapper.findAll('.filter-item ui-textfield');
+        filterableItems[0].trigger('input', { detail: ['my name'] });
 
         result = wrapper.vm.applyFilters();
 
-        expect(wrapper.emitted('filtersApplied')).toEqual([[
-          {
-            name: 'my name',
-          }
-        ]])
+        expect(wrapper.emitted('filtersApplied')).toEqual([
+          [
+            {
+              name: 'my name',
+            },
+          ],
+        ]);
       });
     });
 
     describe('#prepareItems', () => {
       it('returns the first 10 items', () => {
-        const itemsList = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+        const itemsList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
         const wrapper = mount(ComplexTable, {
           propsData: {
             totalItems: 35,
@@ -206,7 +209,7 @@ describe('ComplexTable widget', () => {
             headers: ['jj'],
             currentPage: 2,
           },
-        })
+        });
 
         result = wrapper.vm.prepareItems(itemsList);
 
@@ -224,13 +227,13 @@ describe('ComplexTable widget', () => {
             items: [],
             headers: ['jj'],
           },
-        })
-
-        wrapper.setProps({
-          items: ['other']
         });
 
-        await nextTick()
+        wrapper.setProps({
+          items: ['other'],
+        });
+
+        await nextTick();
 
         expect(wrapper.emitted().itemsLoaded).toBeTruthy();
       });

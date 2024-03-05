@@ -11,6 +11,7 @@ Build your Connect Extension UI easily with our UI Toolkit. Feel free to use any
 or framework you prefer!
 
 ## Installation
+
 ### Minimalistic via CDN
 
 Just plug a module via `script` tag, import default exported function and call it. You're good.
@@ -18,9 +19,9 @@ Just plug a module via `script` tag, import default exported function and call i
 N.B.: For development mode - by default `<path>` will be `http://localhost:3003`
 
 ```html
-<script type="module"> 
+<script type="module">
   import createApp from '<path>';
-  
+
   createApp();
 </script>
 ```
@@ -28,6 +29,7 @@ N.B.: For development mode - by default `<path>` will be `http://localhost:3003`
 This will implement minimalistic interaction with parent Connect Application.
 
 ## Usage
+
 ### Use widgets
 
 1. Import required widget from named exports
@@ -35,11 +37,9 @@ This will implement minimalistic interaction with parent Connect Application.
 3. Configuration object should contain desired tag name as a `key` and widget descriptor object as a `value`. N.B.: widget name should contain at least one "-"
 
 ```html
-<script type="module"> 
-  import createApp, { 
-    Card,
-  } from '<path>';
-  
+<script type="module">
+  import createApp, { Card } from '<path>';
+
   createApp({
     'my-card': Card,
   });
@@ -55,24 +55,26 @@ This will implement minimalistic interaction with parent Connect Application.
 Control widgets using attributes (see widgets documentation)
 
 ### Interaction with parent app
-We implemented two ways to interact with parent application - one is data-based, another events-based. 
-You will find supported data properties and handled events list in slot's documentation. 
-Let's see how you can use it to build your app: 
+
+We implemented two ways to interact with parent application - one is data-based, another events-based.
+You will find supported data properties and handled events list in slot's documentation.
+Let's see how you can use it to build your app:
 
 ### Data-based interface with `watch/commit`
-If some data-based interface is documented for particular slot 
+
+If some data-based interface is documented for particular slot
 you may subscribe on it using `watch` method or publish changes using `commit`
 
 ```html
-<script type="module"> 
+<script type="module">
   import createApp from '<path>';
-  
+
   const app = createApp();
-  
-  app.watch('observed', (value) => { 
+
+  app.watch('observed', (value) => {
     /* handle "observed" property change here */
   });
-  
+
   app.commit({
     observed: /* Desired "observed" value here */,
   });
@@ -94,29 +96,18 @@ Functions, Dates etc. will not work.**
 ### Events-based interface with `listen/emit`;
 
 ```html
-<script type="module"> 
+<script type="module">
   import createApp from '<path>';
-  
+
   const app = createApp();
-  
+
   app.emit('openDialog', {
     title: 'Lorem Ipsum',
     description: 'Dolor sit amet',
   });
-  
+
   app.listen('dialog:confirmed', () => {
     /* handle parent app dialog confirmation */
   });
 </script>
 ```
-
-
-
-
-
-
-
-
-
-
-

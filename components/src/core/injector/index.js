@@ -2,7 +2,6 @@ import Core from './core/Core';
 import injectorFactory from './core/injectorFactory';
 import launch from './core/launcher';
 
-
 export const injectorMixin = {
   methods: {
     $injector(type, data) {

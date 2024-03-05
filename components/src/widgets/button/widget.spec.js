@@ -1,6 +1,5 @@
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils';
 import Button from './widget';
-
 
 describe('Button widget', () => {
   let result;
@@ -8,7 +7,7 @@ describe('Button widget', () => {
   describe('computed', () => {
     describe('#style', () => {
       it('returns the styles', () => {
-        const wrapper = mount(Button)
+        const wrapper = mount(Button);
 
         result = wrapper.vm.style;
 
@@ -25,11 +24,11 @@ describe('Button widget', () => {
   describe('methods', () => {
     describe('#onClick', () => {
       it('emits clicked event if it is not disabled', async () => {
-        const wrapper = mount(Button)
+        const wrapper = mount(Button);
 
         result = wrapper.vm.onClick();
 
-        expect(wrapper.emitted('clicked')).toBeTruthy()
+        expect(wrapper.emitted('clicked')).toBeTruthy();
       });
     });
   });

@@ -1,6 +1,5 @@
 import View from './widget';
 
-
 describe('View widget', () => {
   let context;
   let result;

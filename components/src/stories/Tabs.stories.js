@@ -8,7 +8,8 @@ export const Component = {
     setup() {
       return { args };
     },
-    template: '<ui-tabs v-bind="args" @click-tab="setTab"><div slot="first">Content for First tab</div><div slot="second">Content for Second tab</div></ui-tabs>',
+    template:
+      '<ui-tabs v-bind="args" @click-tab="setTab"><div slot="first">Content for First tab</div><div slot="second">Content for Second tab</div></ui-tabs>',
     methods: {
       setTab({ detail }) {
         this.args.currentTab = detail;
@@ -38,7 +39,7 @@ export default {
     },
     currentTab: {
       control: 'select',
-      options: Component.args.tabs.map(v => v.value),
+      options: Component.args.tabs.map((v) => v.value),
     },
   },
 };
