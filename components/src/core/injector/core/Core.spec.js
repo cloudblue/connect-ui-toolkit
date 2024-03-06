@@ -43,7 +43,7 @@ describe('Core', () => {
 
       expect(core.state).toEqual({
         test: 'NEW_TEST',
-      })
+      });
     });
 
     it('should launch proper watchers', () => {

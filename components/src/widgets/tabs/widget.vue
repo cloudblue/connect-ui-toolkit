@@ -1,7 +1,7 @@
 <template>
   <div
     class="tabs"
-    :class="{ 'tabs_clean': clean }"
+    :class="{ tabs_clean: clean }"
   >
     <div class="tabs__container">
       <slot>
@@ -38,7 +38,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   props: {
@@ -63,18 +62,19 @@ export default {
     open(tab) {
       if (tab.disabled || tab.value === this.currentTab) return;
 
-      this.$el.dispatchEvent(new CustomEvent('click-tab', { detail: tab.value, bubbles: true, composed: true }));
+      this.$el.dispatchEvent(
+        new CustomEvent('click-tab', { detail: tab.value, bubbles: true, composed: true }),
+      );
     },
 
     linkClass(tab) {
       return {
-        'tab_active': tab.value === this.currentTab,
-        'tab_disabled': tab.disabled,
+        tab_active: tab.value === this.currentTab,
+        tab_disabled: tab.disabled,
       };
     },
   },
 };
-
 </script>
 
 <style lang="stylus" scoped>

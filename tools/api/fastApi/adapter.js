@@ -1,4 +1,5 @@
-const getTotalItemsFromContentRangeHeader = value => parseInt(/\w+ \d+-\d+\/(\d+)/g.exec(value)[1]);
+const getTotalItemsFromContentRangeHeader = (value) =>
+  parseInt(/\w+ \d+-\d+\/(\d+)/g.exec(value)[1]);
 
 const fetchItems = async (endpoint, queryParams) => {
   const parameters = new URLSearchParams(queryParams);
@@ -7,7 +8,9 @@ const fetchItems = async (endpoint, queryParams) => {
   const response = await fetch(fullUrl);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch "${fullUrl}". Received status "${response.status}: ${response.statusText}"`);
+    throw new Error(
+      `Failed to fetch "${fullUrl}". Received status "${response.status}: ${response.statusText}"`,
+    );
   }
 
   const contentRange = response.headers.get('content-range');
@@ -35,7 +38,6 @@ export const fastApiTableAdapter = (endpoint, rowsPerPage = 10) => {
   let limit = rowsPerPage;
   let filters = {};
 
-
   /**
    * @returns {Promise<{total: number, page: number, items: *[]}>}
    */
@@ -45,7 +47,6 @@ export const fastApiTableAdapter = (endpoint, rowsPerPage = 10) => {
       offset: limit * (state.page - 1),
       ...filters,
     });
-
 
     state.total = response.total;
     state.items = response.items;
@@ -91,7 +92,7 @@ export const fastApiTableAdapter = (endpoint, rowsPerPage = 10) => {
    * @returns {Promise<{total: number, page: number, items: *[]}>}
    */
   const setRowsPerPage = (newRowsPerPage) => {
-    limit = newRowsPerPage
+    limit = newRowsPerPage;
     state.page = 1;
 
     return load();

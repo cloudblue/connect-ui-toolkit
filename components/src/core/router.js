@@ -1,15 +1,13 @@
-import {
-  connectPortalRoutes,
-  connectPortalRoutesDict,
-} from '~constants/portal-routes';
-
+import { connectPortalRoutes, connectPortalRoutesDict } from '~constants/portal-routes';
 
 const processRegisteredRoute = (route, param) => {
   const spaRoute = connectPortalRoutes[route];
   let processedRoute = { name: '' };
 
   if (!spaRoute) {
-    throw new Error(`[Connect UI Toolkit]: Route ${route.toString()} does not exist.\nThe following routes are available:\n${Object.keys(connectPortalRoutesDict).join(', ')}`);
+    throw new Error(
+      `[Connect UI Toolkit]: Route ${route.toString()} does not exist.\nThe following routes are available:\n${Object.keys(connectPortalRoutesDict).join(', ')}`,
+    );
   }
 
   if (typeof spaRoute === 'string') {
@@ -24,7 +22,9 @@ const processRegisteredRoute = (route, param) => {
 
     if (spaRoute.requires) {
       if (!param) {
-        throw new Error(`[Connect UI Toolkit]: Route ${route.toString()} requires the ${spaRoute.requires} parameter.`);
+        throw new Error(
+          `[Connect UI Toolkit]: Route ${route.toString()} requires the ${spaRoute.requires} parameter.`,
+        );
       }
 
       processedRoute.params[spaRoute.requires] = param;
@@ -49,5 +49,7 @@ export const processRoute = (route, param) => {
     return processRegisteredRoute(route, param);
   }
 
-  throw new Error(`[Connect UI Toolkit]: Route could not be processed. Route is: ${JSON.stringify(route)}`);
+  throw new Error(
+    `[Connect UI Toolkit]: Route could not be processed. Route is: ${JSON.stringify(route)}`,
+  );
 };

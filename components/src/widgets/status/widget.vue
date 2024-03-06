@@ -2,17 +2,13 @@
   <div class="status-mark">
     <ui-icon
       class="status-mark__icon"
-      :icon-name="iconName"
+      :iconName="iconName"
       :color="iconColor"
       :size="iconSize"
     />
-    <span 
-      class="status-mark__text"
-    > {{ text }}
-    </span>
+    <span class="status-mark__text"> {{ text }} </span>
   </div>
 </template>
-
 
 <script>
 import icon from '~widgets/icon/widget.vue';
@@ -39,11 +35,10 @@ export default {
     iconSize: {
       type: [Number, String],
       default: '16',
-    }
+    },
   },
 };
 </script>
-
 
 <style lang="stylus">
 .status-mark {

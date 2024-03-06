@@ -1,6 +1,5 @@
 import Tab from './widget';
 
-
 describe('Tab', () => {
   let context;
   let result;
@@ -23,16 +22,13 @@ describe('Tab', () => {
         [false, 'foo', 'bar', true],
         [false, '', 'bar', false],
         [true, '', 'bar', true],
-      ])(
-        'returns %s if requested=%s, tab=%s, active=%s',
-        (expected, requested, tab, active) => {
-          context = { requested, tab, active };
+      ])('returns %s if requested=%s, tab=%s, active=%s', (expected, requested, tab, active) => {
+        context = { requested, tab, active };
 
-          result = Tab.computed.selected(context);
+        result = Tab.computed.selected(context);
 
-          expect(result).toEqual(expected);
-        },
-      );
+        expect(result).toEqual(expected);
+      });
     });
   });
 
@@ -68,7 +64,7 @@ describe('Tab', () => {
         Tab.created.call(context);
 
         expect(context.open).toHaveBeenCalled();
-      })
+      });
 
       it('should not call open if active=false', () => {
         context.active = false;
@@ -76,7 +72,7 @@ describe('Tab', () => {
         Tab.created.call(context);
 
         expect(context.open).not.toHaveBeenCalled();
-      })
+      });
     });
   });
 

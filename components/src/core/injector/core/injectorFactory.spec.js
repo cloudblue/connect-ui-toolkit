@@ -1,8 +1,5 @@
 import injectorFactory from './injectorFactory';
-import {
-  processRoute
-} from '~core/router';
-
+import { processRoute } from '~core/router';
 
 jest.mock('~core/router', () => ({
   processRoute: jest.fn().mockReturnValue('processRouteMockedReturnValue'),
@@ -18,7 +15,7 @@ describe('injectorFactory', () => {
       injector.watch('foo', cb);
       core.watchers.foo[0]();
 
-      expect(cb).toHaveBeenCalledWith('bar')
+      expect(cb).toHaveBeenCalledWith('bar');
     });
 
     it('should add immediate callback call', () => {
@@ -43,7 +40,7 @@ describe('injectorFactory', () => {
 
     it('should extend existing watcher for passed property with a callback', () => {
       const core = {
-        watchers: { foo: [() => {}]},
+        watchers: { foo: [() => {}] },
         state: { foo: 'bar' },
       };
 
@@ -53,7 +50,7 @@ describe('injectorFactory', () => {
       injector.watch('foo', cb);
       core.watchers.foo[1]();
 
-      expect(cb).toHaveBeenCalledWith('bar')
+      expect(cb).toHaveBeenCalledWith('bar');
     });
 
     it('should add a callback as watcher for whole state if just callback passed', () => {
@@ -101,10 +98,13 @@ describe('injectorFactory', () => {
     it('should call window.top.postMessage() with proper id and data', () => {
       commit({ foo: 'BAR' });
 
-      expect(window.top.postMessage).toHaveBeenCalledWith({
-        $id: 'XXX',
-        data: { foo: 'bar' },
-      }, '*');
+      expect(window.top.postMessage).toHaveBeenCalledWith(
+        {
+          $id: 'XXX',
+          data: { foo: 'bar' },
+        },
+        '*',
+      );
     });
 
     it('should set null by default for passed state props', () => {
@@ -112,10 +112,13 @@ describe('injectorFactory', () => {
       core.state = undefined;
       commit({ foo: 'BAR' });
 
-      expect(window.top.postMessage).toHaveBeenCalledWith({
-        $id: null,
-        data: null,
-      }, '*');
+      expect(window.top.postMessage).toHaveBeenCalledWith(
+        {
+          $id: null,
+          data: null,
+        },
+        '*',
+      );
     });
   });
 
@@ -127,35 +130,43 @@ describe('injectorFactory', () => {
     it('should emit proper event', () => {
       injectorFactory({ id: 'XXX' }).emit('foo', 'BAR');
 
-      expect(window.top.postMessage).toHaveBeenCalledWith({
-        $id: 'XXX',
-        events: {
-          foo: 'BAR',
+      expect(window.top.postMessage).toHaveBeenCalledWith(
+        {
+          $id: 'XXX',
+          events: {
+            foo: 'BAR',
+          },
         },
-      }, '*');
+        '*',
+      );
     });
 
     it('should set $id to null when not passed', () => {
       injectorFactory({}).emit('foo', 'BAR');
 
-      expect(window.top.postMessage).toHaveBeenCalledWith({
-        $id: null,
-        events: {
-          foo: 'BAR',
+      expect(window.top.postMessage).toHaveBeenCalledWith(
+        {
+          $id: null,
+          events: {
+            foo: 'BAR',
+          },
         },
-      }, '*');
+        '*',
+      );
     });
-
 
     it('should set data to true by default', () => {
       injectorFactory({ id: 'XXX' }).emit('foo');
 
-      expect(window.top.postMessage).toHaveBeenCalledWith({
-        $id: 'XXX',
-        events: {
-          foo: true,
+      expect(window.top.postMessage).toHaveBeenCalledWith(
+        {
+          $id: 'XXX',
+          events: {
+            foo: true,
+          },
         },
-      }, '*');
+        '*',
+      );
     });
   });
 

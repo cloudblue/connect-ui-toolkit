@@ -1,7 +1,6 @@
 import { useFastApiTableAdapter } from './vue-composable';
 import { fastApiTableAdapter } from './adapter';
 
-
 jest.mock('./adapter', () => ({
   fastApiTableAdapter: jest.fn().mockImplementation(() => {
     const result = {
@@ -68,7 +67,7 @@ describe('#useFastApiTableAdapter', () => {
         expect(composable.loading.value).toEqual(false);
       });
 
-      it('calls the adapter\'s load method', async () => {
+      it("calls the adapter's load method", async () => {
         await composable.load();
 
         expect(adapter.load).toHaveBeenCalled();
@@ -110,7 +109,7 @@ describe('#useFastApiTableAdapter', () => {
         expect(composable.loading.value).toEqual(false);
       });
 
-      it('calls the adapter\'s next method', async () => {
+      it("calls the adapter's next method", async () => {
         await composable.next();
 
         expect(adapter.next).toHaveBeenCalled();
@@ -152,7 +151,7 @@ describe('#useFastApiTableAdapter', () => {
         expect(composable.loading.value).toEqual(false);
       });
 
-      it('calls the adapter\'s previous method', async () => {
+      it("calls the adapter's previous method", async () => {
         await composable.previous();
 
         expect(adapter.previous).toHaveBeenCalled();
@@ -194,7 +193,7 @@ describe('#useFastApiTableAdapter', () => {
         expect(composable.loading.value).toEqual(false);
       });
 
-      it('calls the adapter\'s filter method', async () => {
+      it("calls the adapter's filter method", async () => {
         await composable.filter({ foo: 'bar' });
 
         expect(adapter.filter).toHaveBeenCalledWith({ foo: 'bar' });
@@ -236,7 +235,7 @@ describe('#useFastApiTableAdapter', () => {
         expect(composable.loading.value).toEqual(false);
       });
 
-      it('calls the adapter\'s setRowsPerPage method', async () => {
+      it("calls the adapter's setRowsPerPage method", async () => {
         await composable.setRowsPerPage(5);
 
         expect(adapter.setRowsPerPage).toHaveBeenCalled();

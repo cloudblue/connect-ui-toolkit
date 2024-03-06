@@ -2,7 +2,6 @@ import { ref } from 'vue';
 
 import { fastApiTableAdapter } from './adapter';
 
-
 /**
  * Vue composable to wrap fastApiTableAdapter into reactive properties
  *
@@ -33,9 +32,9 @@ export const useFastApiTableAdapter = (endpoint, rowsPerPage = 10) => {
     } finally {
       loading.value = false;
     }
-  }
+  };
 
-  const load =  () => doAdapterAction('load');
+  const load = () => doAdapterAction('load');
   const next = () => doAdapterAction('next');
   const previous = () => doAdapterAction('previous');
   const filter = (newFilters) => doAdapterAction('filter', newFilters);

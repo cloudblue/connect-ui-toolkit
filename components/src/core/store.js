@@ -1,12 +1,6 @@
-import {
-  reactive,
-} from 'vue';
+import { reactive } from 'vue';
 
-import {
-  has,
-  path,
-} from '~core/helpers';
-
+import { has, path } from '~core/helpers';
 
 export const $module = ({ state = {}, actions = {} }) => {
   return {
@@ -31,7 +25,7 @@ export const createStore = () => {
     /* Reactivity is granted by state itself - so it is just a simple getter on this level */
     /* Using "*" for property name will return whole module state at once  */
     watch(module, property = '*') {
-      if (property === '*') return $modules[module].state
+      if (property === '*') return $modules[module].state;
 
       return $modules[module].state[property];
     },
@@ -41,7 +35,7 @@ export const createStore = () => {
     /* This is why instead of direct assignment in components is better to use this mutation */
     commit(module, property, value) {
       $modules[module].state[property] = value;
-      (path([module, property], $subscribers) || []).forEach(cb => cb(value));
+      (path([module, property], $subscribers) || []).forEach((cb) => cb(value));
     },
 
     /* This one is for triggering actions */

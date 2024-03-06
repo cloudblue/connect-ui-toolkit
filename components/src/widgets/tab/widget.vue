@@ -25,12 +25,12 @@ export default {
   },
 
   computed: {
-    selected: vm => vm.requested ? vm.requested === vm.tab : vm.active,
+    selected: (vm) => (vm.requested ? vm.requested === vm.tab : vm.active),
   },
 
   created() {
     if (this.active) this.open();
-    this.$bus.on('click-tab', tab => (this.requested = tab));
+    this.$bus.on('click-tab', (tab) => (this.requested = tab));
   },
 
   methods: {
@@ -39,7 +39,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style lang="stylus" scoped>

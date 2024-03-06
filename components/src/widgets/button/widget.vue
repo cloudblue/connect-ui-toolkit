@@ -12,11 +12,11 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 const emit = defineEmits(['clicked']);
 
- const props = defineProps({
+const props = defineProps({
   text: {
     type: String,
     default: '',
@@ -43,17 +43,18 @@ const emit = defineEmits(['clicked']);
   },
 });
 
-const style = computed(() => `
+const style = computed(
+  () => `
   background-color: ${props.backgroundColor};
   color: ${props.color};
   height: ${props.height};
   width: ${props.width};
-`);
+`,
+);
 
 const onClick = () => {
   if (!props.disabled) emit('clicked');
 };
-
 </script>
 
 <style lang="stylus">
@@ -80,5 +81,3 @@ button {
   }
 }
 </style>
-
-

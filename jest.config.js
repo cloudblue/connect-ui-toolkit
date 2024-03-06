@@ -6,8 +6,5 @@ module.exports = {
   coverageDirectory: '<rootDir>/test/coverage/',
   coverageProvider: 'v8',
 
-  projects: [
-    '<rootDir>/components/jest.config.js',
-    '<rootDir>/tools/jest.config.js',
-  ],
+  projects: ['<rootDir>/components/jest.config.js', '<rootDir>/tools/jest.config.js'],
 };

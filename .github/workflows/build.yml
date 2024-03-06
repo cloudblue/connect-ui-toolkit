@@ -2,19 +2,19 @@ name: Build and Test
 
 on:
   push:
-    branches: "*"
+    branches: '*'
     tags:
       - '*'
 
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '18', '20' ]
+        node: ['18', '20']
     name: Node ${{ matrix.node }}
     steps:
       - name: Checkout
@@ -24,9 +24,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Lint
         run: npm run lint
+      - name: Check formatting with Prettier
+        run: npm run format:check
       - name: Testing
         run: npm test
   sonar:
@@ -41,7 +43,7 @@ jobs:
         with:
           node-version: 20
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Testing
         run: npm test
       - uses: SonarSource/sonarcloud-github-action@master

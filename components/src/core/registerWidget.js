@@ -1,19 +1,10 @@
-import {
-  defineCustomElement,
-} from 'vue';
+import { defineCustomElement } from 'vue';
 
-import {
-  busMixin,
-} from '~core/eventBus';
+import { busMixin } from '~core/eventBus';
 
-import {
-  storeMixin,
-} from '~core/store';
+import { storeMixin } from '~core/store';
 
-import {
-  injectorMixin,
-} from '~core/injector';
-
+import { injectorMixin } from '~core/injector';
 
 export default (name, component) => {
   if (!component.mixins) component.mixins = [];

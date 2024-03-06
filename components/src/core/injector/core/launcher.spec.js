@@ -1,6 +1,5 @@
 import launch from './launcher';
 
-
 const resizeObserverCtorSpy = jest.fn();
 const resizeObserverObserveSpy = jest.fn();
 const resizeObserverEntriesStub = [
@@ -36,7 +35,6 @@ describe('$init', () => {
     global.crypto = {
       getRandomValues: jest.fn(() => ['abc']),
     };
-
 
     injector = {
       listen: jest.fn(),
@@ -80,10 +78,13 @@ describe('$init', () => {
     it('should emit "$size" event', () => {
       handler({}, {});
 
-      expect(injector.emit.mock.calls[2]).toEqual(['$size', {
-        height: 400,
-        width: 800,
-      }]);
+      expect(injector.emit.mock.calls[2]).toEqual([
+        '$size',
+        {
+          height: 400,
+          width: 800,
+        },
+      ]);
     });
 
     it('should create a ResizeObserver instance', () => {
@@ -92,7 +93,7 @@ describe('$init', () => {
       expect(resizeObserverCtorSpy).toHaveBeenCalledWith(expect.any(Function));
     });
 
-    it('should call the resize observer\'s observe method with the document body', () => {
+    it("should call the resize observer's observe method with the document body", () => {
       handler({}, {});
 
       expect(resizeObserverObserveSpy).toHaveBeenCalledWith(document.body);
@@ -122,10 +123,13 @@ describe('$init', () => {
     it('should fill size for $size type', () => {
       handler({ detail: { type: '$size' } });
 
-      expect(injector.emit.mock.calls[2]).toEqual(['$size', {
-        height: 0,
-        width: 0,
-      }]);
+      expect(injector.emit.mock.calls[2]).toEqual([
+        '$size',
+        {
+          height: 0,
+          width: 0,
+        },
+      ]);
     });
   });
 

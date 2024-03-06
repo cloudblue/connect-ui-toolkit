@@ -1,7 +1,6 @@
 import { toolkitPlugin, useToolkit } from './toolkit';
 import { inject } from 'vue';
 
-
 jest.mock('vue', () => {
   const actualModule = jest.requireActual('vue');
 
@@ -66,8 +65,10 @@ describe('Toolkit Vue plugin', () => {
         });
       });
 
-      it('calls the toolkit\'s watch method to watch for data changes', () => {
-        expect(toolkitInstance.watch).toHaveBeenCalledWith('*', expect.any(Function), { immediate: true });
+      it("calls the toolkit's watch method to watch for data changes", () => {
+        expect(toolkitInstance.watch).toHaveBeenCalledWith('*', expect.any(Function), {
+          immediate: true,
+        });
       });
 
       it('updates the sharedContext object when the toolkit watch callback is called', () => {

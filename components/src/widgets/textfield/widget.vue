@@ -16,11 +16,12 @@
           name="textfield"
           type="text"
           @input.stop
-        >
+        />
         <span
           v-if="suffix"
           class="text-field__suffix"
-        >{{ suffix }}</span>
+          >{{ suffix }}</span
+        >
       </div>
     </div>
   </div>
@@ -58,18 +59,15 @@ const setFocus = () => (isFocused.value = true);
 
 watch(
   () => props.value,
-  newValue => {
+  (newValue) => {
     localValue.value = newValue;
   },
   { immediate: true },
 );
 
-watch(
-  localValue,
-  (newValue) => {
-    emit('input', newValue);
-  },
-);
+watch(localValue, (newValue) => {
+  emit('input', newValue);
+});
 </script>
 
 <style lang="stylus">

@@ -1,6 +1,5 @@
 import { inject, reactive } from 'vue';
 
-
 export const toolkitPlugin = {
   /**
    * Installs the toolkit plugin, which can be accessed via 'this.$toolkit',

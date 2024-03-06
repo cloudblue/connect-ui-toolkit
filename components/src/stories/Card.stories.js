@@ -8,7 +8,7 @@ export default {
   component: cCard,
   parameters: {
     layout: 'centered',
-  }
+  },
 };
 
 export const Component = {
@@ -31,5 +31,5 @@ export const Component = {
     title: 'Card Title',
     subtitle: 'Card Subtitle',
     content: 'Card Content',
-  }
+  },
 };

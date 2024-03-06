@@ -1,9 +1,4 @@
-import {
-  clone,
-  has,
-  path,
-} from './helpers';
-
+import { clone, has, path } from './helpers';
 
 describe('clone', () => {
   it('should create top-level copy of an object', () => {
@@ -29,15 +24,15 @@ describe('has', () => {
 
 describe('path', () => {
   it('should return value of given path', () => {
-    expect(path(['a', 'b', 'c'], { a: { b: { c: 'ABC' } } })).toBe('ABC')
+    expect(path(['a', 'b', 'c'], { a: { b: { c: 'ABC' } } })).toBe('ABC');
   });
 
   it('should return value of given path even for arrays', () => {
-    expect(path(['a', 0, 'c'], { a: [{ c: 'ABC' }] })).toBe('ABC')
+    expect(path(['a', 0, 'c'], { a: [{ c: 'ABC' }] })).toBe('ABC');
   });
 
   it('should return undefined for unexisting path', () => {
-    expect(path(['a', 'b', 'c'], { a: { c: { b: 'ABC' } } })).toBeUndefined()
+    expect(path(['a', 'b', 'c'], { a: { c: { b: 'ABC' } } })).toBeUndefined();
   });
 
   it('should return self for not an object', () => {

@@ -8,7 +8,7 @@ registerWidget('ui-button', Button);
 export const Component = {
   render: (args) => ({
     setup() {
-      return {args};
+      return { args };
     },
     template: `
       <ui-menu v-bind="args">
@@ -20,7 +20,7 @@ export const Component = {
           <p>Lorem ipsum dolor sit amet</p>
         </div>
       </ui-menu>
-    `
+    `,
   }),
 
   args: {

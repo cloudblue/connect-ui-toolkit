@@ -3,7 +3,6 @@ import registerWidget from '~core/registerWidget';
 
 registerWidget('ui-button', Button);
 
-
 export const Component = {
   render: (args) => ({
     setup() {

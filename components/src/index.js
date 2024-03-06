@@ -1,7 +1,6 @@
 import $injector from '~core/injector';
 import registerWidget from '~core/registerWidget';
 
-
 export { default as Tabs } from '~widgets/tabs/widget.vue';
 export { default as Tab } from '~widgets/tab/widget.vue';
 export { default as Pad } from '~widgets/pad/widget.vue';
@@ -19,9 +18,7 @@ export { default as Menu } from '~widgets/menu/widget.vue';
 export { default as store } from '~core/store';
 export { default as bus } from '~core/eventBus';
 
-export {
-  connectPortalRoutesDict as connectPortalRoutes,
-} from '~constants/portal-routes';
+export { connectPortalRoutesDict as connectPortalRoutes } from '~constants/portal-routes';
 
 export default (widgets = {}, options = {}) => {
   for (const widget in widgets) registerWidget(widget, widgets[widget]);

@@ -3,12 +3,7 @@ const os = require('node:os');
 const componentsConfig = require('./components/webpack.config');
 const toolsConfig = require('./tools/webpack.config');
 
-
-module.exports = [
-  componentsConfig,
-  toolsConfig,
-];
-
+module.exports = [componentsConfig, toolsConfig];
 
 // Calculate how many parallel builds can be done. Minimum is 1, otherwise it's the amount of cores
 // available, maxing at 4.

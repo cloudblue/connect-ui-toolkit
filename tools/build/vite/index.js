@@ -4,7 +4,6 @@ import { resolve } from 'node:path';
 
 import flattenHtmlPagesDirectoryPlugin from './flatten-html-pages-directory';
 
-
 /**
  * Creates a valid vite config set up for a Connect extension that uses Vite + Vue
  *
@@ -18,18 +17,12 @@ import flattenHtmlPagesDirectoryPlugin from './flatten-html-pages-directory';
  * @returns {object} - Valid vite config set up for a connect extension
  */
 export const defineExtensionConfig = (config, viteOptions = {}) => {
-  const {
-    srcDir,
-    srcUrl,
-    outputDir,
-    vuePlugin,
-  } = config;
+  const { srcDir, srcUrl, outputDir, vuePlugin } = config;
 
   if (!srcDir) throw new Error('"srcDir" is required');
   if (!outputDir) throw new Error('"outputDir" is required');
   if (!vuePlugin) throw new Error('"vuePlugin" is required');
   if (!srcUrl) throw new Error('"srcUrl" is required');
-
 
   return {
     ...viteOptions,
@@ -44,11 +37,7 @@ export const defineExtensionConfig = (config, viteOptions = {}) => {
       },
     },
 
-    plugins: [
-      vuePlugin,
-      flattenHtmlPagesDirectoryPlugin,
-      ...(viteOptions.plugins || []),
-    ],
+    plugins: [vuePlugin, flattenHtmlPagesDirectoryPlugin, ...(viteOptions.plugins || [])],
 
     root: srcDir,
     base: '/static',

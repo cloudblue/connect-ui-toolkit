@@ -7,7 +7,7 @@
     >
       <ui-icon
         color="#666666"
-        icon-name="googleArrowBackBaseline"
+        iconName="googleArrowBackBaseline"
         size="24"
       />
     </button>
@@ -32,7 +32,7 @@
     <ui-tabs
       v-if="tabs.length"
       class="navigation-bar__tabs"
-      :current-tab="currentTab"
+      :currentTab="currentTab"
       :tabs.prop="tabs"
       clean
     />

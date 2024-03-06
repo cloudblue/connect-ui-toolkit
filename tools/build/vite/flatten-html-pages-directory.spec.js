@@ -1,13 +1,14 @@
 import flattenHtmlPagesDirectory from './flatten-html-pages-directory';
 
-
 describe('#flattenHtmlPagesDirectory vite plugin', () => {
   it('exposes the correct properties', () => {
-    expect(flattenHtmlPagesDirectory).toEqual(expect.objectContaining({
-      name: 'flatten-html-pages-directory',
-      enforce: 'post',
-      generateBundle: expect.any(Function),
-    }));
+    expect(flattenHtmlPagesDirectory).toEqual(
+      expect.objectContaining({
+        name: 'flatten-html-pages-directory',
+        enforce: 'post',
+        generateBundle: expect.any(Function),
+      }),
+    );
   });
 
   describe('generateBundle function', () => {

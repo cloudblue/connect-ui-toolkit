@@ -14,11 +14,11 @@ export default {
   argTypes: {
     iconName: {
       options: Object.keys(icons),
-      control: { 
+      control: {
         type: 'select',
       },
-    }
-  }
+    },
+  },
 };
 
 export const Component = {
@@ -35,5 +35,5 @@ export const Component = {
     iconName: 'googleUpdateBaseline',
     iconColor: 'green',
     iconSize: '20',
-  }
+  },
 };

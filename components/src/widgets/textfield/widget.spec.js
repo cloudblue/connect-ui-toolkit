@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import Textfield from './widget';
 
-
 describe('Textfield widget', () => {
   let wrapper;
 
@@ -33,7 +32,9 @@ describe('Textfield widget', () => {
       expect(wrapper.get('.text-field label').text()).toEqual('My text input');
       expect(wrapper.get('.text-field__input').exists()).toBeTruthy();
       expect(wrapper.get('.text-field__input').element.value).toEqual('Foo');
-      expect(wrapper.get('.text-field__input').attributes('placeholder')).toEqual('Insert text here');
+      expect(wrapper.get('.text-field__input').attributes('placeholder')).toEqual(
+        'Insert text here',
+      );
       expect(wrapper.get('.text-field__suffix').text()).toEqual('hh:mm:ssss.csv');
       expect(wrapper.get('.text-field__input_right').exists()).toBeTruthy();
       expect(wrapper.find('.text-field_focused').exists()).toBeFalsy();
