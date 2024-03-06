@@ -1,5 +1,12 @@
 # Connect UI Toolkit
 
+<a href="https://npmjs.com/package/@cloudblueconnect/connect-ui-toolkit"><img src="https://img.shields.io/npm/v/%40cloudblueconnect%2Fconnect-ui-toolkit?logo=npm" alt="NPM package"></a>
+<a href="https://github.com/cloudblue/connect-ui-toolkit/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/cloudblue/connect-ui-toolkit/build.yml" alt="CI build"></a>
+<a href="https://sonarcloud.io/summary/overall?id=connect-ui-toolkit"><img src="https://sonarcloud.io/api/project_badges/measure?project=connect-ui-toolkit&metric=alert_status" alt="Sonar Quality Gate"></a>
+<a href="https://sonarcloud.io/summary/overall?id=connect-ui-toolkit"><img src="https://sonarcloud.io/api/project_badges/measure?project=connect-ui-toolkit&metric=coverage" alt="Sonar Test Coverage"></a>
+
+---
+
 Build your Connect Extension UI easily with our UI Toolkit. Feel free to use any frontend library 
 or framework you prefer!
 
