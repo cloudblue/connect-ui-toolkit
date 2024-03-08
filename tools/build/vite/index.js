@@ -1,8 +1,16 @@
+/* eslint-env node */
 import { fileURLToPath } from 'node:url';
 import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import flattenHtmlPagesDirectoryPlugin from './flatten-html-pages-directory';
+
+const checkIfIsProduction = (mode) => {
+  if (mode) return mode === 'production';
+  if (process.env.NODE_ENV) return process.env.NODE_ENV === 'production';
+
+  return false;
+};
 
 /**
  * Creates a valid vite config set up for a Connect extension that uses Vite + Vue
@@ -14,63 +22,72 @@ import flattenHtmlPagesDirectoryPlugin from './flatten-html-pages-directory';
  * @param {object} config.vuePlugin - '@vitejs/vue' plugin instance
  * @param {object} viteOptions - your custom vite config options
  *
- * @returns {object} - Valid vite config set up for a connect extension
+ * @returns {function({mode: ('development'|'production')}): {resolve: *&{alias: *&{"~": string}}, build: *&{minify: string|boolean, emptyOutDir: boolean, sourcemap, rollupOptions: *&{output: *&{manualChunks(*): (string|undefined), format: string, dir: *}, input: {}}, outDir: *}, plugins, root: *, base: string}} - Valid vite config set up for a connect extension
  */
-export const defineExtensionConfig = (config, viteOptions = {}) => {
-  const { srcDir, srcUrl, outputDir, vuePlugin } = config;
+export const defineExtensionConfig =
+  (config, viteOptions = {}) =>
+  ({ mode }) => {
+    const { srcDir, srcUrl, outputDir, vuePlugin } = config;
 
-  if (!srcDir) throw new Error('"srcDir" is required');
-  if (!outputDir) throw new Error('"outputDir" is required');
-  if (!vuePlugin) throw new Error('"vuePlugin" is required');
-  if (!srcUrl) throw new Error('"srcUrl" is required');
+    if (!srcDir) throw new Error('"srcDir" is required');
+    if (!outputDir) throw new Error('"outputDir" is required');
+    if (!vuePlugin) throw new Error('"vuePlugin" is required');
+    if (!srcUrl) throw new Error('"srcUrl" is required');
 
-  return {
-    ...viteOptions,
+    const isProduction = checkIfIsProduction(mode);
 
-    resolve: {
-      ...viteOptions.resolve,
+    return {
+      ...viteOptions,
 
-      alias: {
-        ...viteOptions.resolve?.alias,
+      resolve: {
+        ...viteOptions.resolve,
 
-        '~': fileURLToPath(srcUrl),
+        alias: {
+          ...viteOptions.resolve?.alias,
+
+          '~': fileURLToPath(srcUrl),
+        },
       },
-    },
 
-    plugins: [vuePlugin, flattenHtmlPagesDirectoryPlugin, ...(viteOptions.plugins || [])],
+      plugins: [vuePlugin, flattenHtmlPagesDirectoryPlugin, ...(viteOptions.plugins || [])],
 
-    root: srcDir,
-    base: '/static',
+      root: srcDir,
+      base: '/static',
 
-    build: {
-      ...viteOptions.build,
+      build: {
+        // Enable minification on production builds
+        minify: isProduction ? 'esbuild' : false,
+        // Enable sourcemaps on non-production builds
+        sourcemap: !isProduction,
 
-      outDir: outputDir,
-      emptyOutDir: true,
+        ...viteOptions.build,
 
-      rollupOptions: {
-        ...viteOptions.build?.rollupOptions,
+        outDir: outputDir,
+        emptyOutDir: true,
 
-        // Load all pages in {{srcDir}}/pages/{{pageName}}/index.html as entrypoints
-        input: readdirSync(resolve(srcDir, 'pages')).reduce((entryPoints, pageName) => {
-          entryPoints[pageName] = resolve(srcDir, 'pages/', pageName, 'index.html');
+        rollupOptions: {
+          ...viteOptions.build?.rollupOptions,
 
-          return entryPoints;
-        }, {}),
+          // Load all pages in {{srcDir}}/pages/{{pageName}}/index.html as entrypoints
+          input: readdirSync(resolve(srcDir, 'pages')).reduce((entryPoints, pageName) => {
+            entryPoints[pageName] = resolve(srcDir, 'pages/', pageName, 'index.html');
 
-        output: {
-          ...viteOptions.build?.rollupOptions?.output,
+            return entryPoints;
+          }, {}),
 
-          format: 'es',
-          dir: outputDir,
+          output: {
+            ...viteOptions.build?.rollupOptions?.output,
 
-          // Split node_modules into a "vendor" chunk, and @cloudblueconnect modules into a "connect" chunk
-          manualChunks(id) {
-            if (id.includes('@cloudblueconnect')) return 'connect';
-            if (id.includes('node_modules')) return 'vendor';
+            format: 'es',
+            dir: outputDir,
+
+            // Split node_modules into a "vendor" chunk, and @cloudblueconnect modules into a "connect" chunk
+            manualChunks(id) {
+              if (id.includes('@cloudblueconnect')) return 'connect';
+              if (id.includes('node_modules')) return 'vendor';
+            },
           },
         },
       },
-    },
+    };
   };
-};
