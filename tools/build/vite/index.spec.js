@@ -63,7 +63,7 @@ describe('#defineExtensionConfig function', () => {
       let error;
 
       try {
-        defineExtensionConfig(config);
+        defineExtensionConfig(config)({ mode: 'production' });
       } catch (e) {
         error = e;
       }
@@ -72,7 +72,7 @@ describe('#defineExtensionConfig function', () => {
     });
   });
 
-  it('returns the base config', () => {
+  it('returns the base config for production mode', () => {
     const config = {
       srcDir: '/my/source/dir',
       srcUrl: 'file://my/source/dir',
@@ -80,7 +80,7 @@ describe('#defineExtensionConfig function', () => {
       vuePlugin: { name: 'vuepluginstub' },
     };
 
-    result = defineExtensionConfig(config);
+    result = defineExtensionConfig(config)({ mode: 'production' });
 
     expect(result).toEqual({
       resolve: {
@@ -92,6 +92,46 @@ describe('#defineExtensionConfig function', () => {
       root: '/my/source/dir',
       base: '/static',
       build: {
+        minify: 'esbuild',
+        sourcemap: false,
+        outDir: '/my/output/dir',
+        emptyOutDir: true,
+        rollupOptions: {
+          input: {
+            fsReaddirSyncStub: 'pathResolveStub',
+          },
+          output: {
+            format: 'es',
+            dir: '/my/output/dir',
+            manualChunks: expect.any(Function),
+          },
+        },
+      },
+    });
+  });
+
+  it('returns the base config for development mode', () => {
+    const config = {
+      srcDir: '/my/source/dir',
+      srcUrl: 'file://my/source/dir',
+      outputDir: '/my/output/dir',
+      vuePlugin: { name: 'vuepluginstub' },
+    };
+
+    result = defineExtensionConfig(config)({ mode: 'development' });
+
+    expect(result).toEqual({
+      resolve: {
+        alias: {
+          '~': 'urlFileUrlToPathStub',
+        },
+      },
+      plugins: [{ name: 'vuepluginstub' }, 'flattenHtmlPagesDirectoryPluginStub'],
+      root: '/my/source/dir',
+      base: '/static',
+      build: {
+        minify: false,
+        sourcemap: true,
         outDir: '/my/output/dir',
         emptyOutDir: true,
         rollupOptions: {
@@ -126,6 +166,7 @@ describe('#defineExtensionConfig function', () => {
       },
       plugins: ['other-vite-plugin'],
       build: {
+        minify: 'custom-value-that-ignores-mode',
         someProperty: 'someValue',
         rollupOptions: {
           bar: 'baz',
@@ -136,7 +177,7 @@ describe('#defineExtensionConfig function', () => {
       },
     };
 
-    result = defineExtensionConfig(config, customViteConfig);
+    result = defineExtensionConfig(config, customViteConfig)({ mode: 'production' });
 
     expect(result).toEqual({
       foo: 'bar',
@@ -155,6 +196,8 @@ describe('#defineExtensionConfig function', () => {
       root: '/my/source/dir',
       base: '/static',
       build: {
+        minify: 'custom-value-that-ignores-mode',
+        sourcemap: false,
         someProperty: 'someValue',
         outDir: '/my/output/dir',
         emptyOutDir: true,
@@ -182,7 +225,7 @@ describe('#defineExtensionConfig function', () => {
       vuePlugin: { name: 'vuepluginstub' },
     };
 
-    result = defineExtensionConfig(config);
+    result = defineExtensionConfig(config)({ mode: 'production' });
 
     expect(resolve).toHaveBeenCalledWith('/my/source/dir', 'pages');
     expect(readdirSync).toHaveBeenCalledWith('pathResolveStub');
@@ -215,7 +258,8 @@ describe('#defineExtensionConfig function', () => {
         outputDir: '/my/output/dir',
         vuePlugin: { name: 'vuepluginstub' },
       };
-      const manualChunksFn = defineExtensionConfig(config).build.rollupOptions.output.manualChunks;
+      const manualChunksFn = defineExtensionConfig(config)({ mode: 'production' }).build
+        .rollupOptions.output.manualChunks;
 
       result = manualChunksFn(moduleId);
 
