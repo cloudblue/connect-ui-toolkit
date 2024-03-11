@@ -210,6 +210,12 @@ const routes = {
     requires: 'id',
   },
 
+  reportTemplates: 'settings.reports',
+  reportTemplateDetails: {
+    name: 'settings.reports.template.details',
+    requires: 'id',
+  },
+
   billingStreams: 'commerce.billing.streams',
   billingStreamDetails: {
     name: 'commerce.billing.streams.details',
