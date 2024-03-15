@@ -1,5 +1,9 @@
 /** @type {import('jest').Config} */
-module.exports = {
+import url from 'node:url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+export default {
   rootDir: __dirname,
   displayName: 'tools',
 
@@ -9,12 +13,11 @@ module.exports = {
 
   testMatch: ['<rootDir>/(**/*\\.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'],
 
-  transform: {
-    '^.+\\.js$': 'babel-jest',
-  },
+  transform: {},
 
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
+    customExportConditions: ['node', 'node-addons'],
   },
 };

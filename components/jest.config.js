@@ -1,5 +1,9 @@
 /** @type {import('jest').Config} */
-module.exports = {
+import url from 'node:url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+export default {
   rootDir: __dirname,
   displayName: 'components',
 
@@ -8,7 +12,6 @@ module.exports = {
   transform: {
     '^.+\\.vue$': '@vue/vue3-jest',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.js$': 'babel-jest',
   },
 
   transformIgnorePatterns: ['/node_modules/(?!(@cloudblueconnect)/)'],

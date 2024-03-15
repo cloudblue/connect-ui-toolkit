@@ -1,6 +1,6 @@
 const path = require('node:path');
 
-module.exports = {
+export default {
   stories: [
     '../components/src/**/*.stories.@(js|jsx|ts|tsx|vue)',
     '../components/src/stories/**/*.mdx',

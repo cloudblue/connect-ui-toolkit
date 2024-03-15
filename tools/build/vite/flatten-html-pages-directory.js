@@ -1,4 +1,4 @@
-export default {
+export const flatten = {
   // Custom plugin to flatten the output directory structure for the extension pages
   // Vite does not respect the name given to the input file (see https://vitejs.dev/guide/build.html#multi-page-app)
   // for decent reasons, but these reasons do not apply to Connect Extensions, as they are not run on dev mode.

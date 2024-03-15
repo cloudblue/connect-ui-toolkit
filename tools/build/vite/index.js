@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-import flattenHtmlPagesDirectoryPlugin from './flatten-html-pages-directory';
+import { flatten as flattenHtmlPagesDirectoryPlugin } from './flatten-html-pages-directory.js';
 
 const checkIfIsProduction = (mode) => {
   if (mode) return mode === 'production';

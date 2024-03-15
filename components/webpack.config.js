@@ -1,8 +1,11 @@
-const path = require('node:path');
-const { VueLoaderPlugin } = require('vue-loader');
-const ESLintPlugin = require('eslint-webpack-plugin');
+import path from 'node:path';
+import { VueLoaderPlugin } from 'vue-loader';
+import ESLintPlugin from 'eslint-webpack-plugin';
+import url from 'node:url';
 
-module.exports = {
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+export default {
   mode: process.env.NODE_ENV,
 
   experiments: {
@@ -32,12 +35,6 @@ module.exports = {
             },
           },
         },
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: [path.resolve(__dirname, 'src'), path.resolve('test')],
-        exclude: /node_modules/,
       },
       {
         test: /\.styl(us)?$/,
