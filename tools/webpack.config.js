@@ -1,6 +1,9 @@
-const path = require('node:path');
+import path from 'node:path';
+import url from 'node:url';
 
-module.exports = {
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+export default {
   mode: process.env.NODE_ENV,
 
   experiments: {
@@ -34,20 +37,12 @@ module.exports = {
     },
   },
 
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-
   externals: [
     {
       vue: 'vue',
     },
     /node:\w*/,
   ],
+
+  // target: 'es2020',
 };

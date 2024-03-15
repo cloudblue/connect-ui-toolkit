@@ -1,5 +1,4 @@
-const configs = require('./webpack.config');
-const { parallelism } = require('./webpack.config');
+import configs, { parallelism } from './webpack.config.js';
 
 const devServerConfig = {
   devServer: {
@@ -16,6 +15,6 @@ const devServerConfig = {
   },
 };
 
-module.exports = [devServerConfig, ...configs];
+export default [devServerConfig, ...configs];
 
-module.exports.parallelism = parallelism;
+export { parallelism };

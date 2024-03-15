@@ -1,5 +1,9 @@
 /** @type {import('jest').Config} */
-module.exports = {
+import url from 'node:url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+export default {
   rootDir: __dirname,
 
   collectCoverage: true,
