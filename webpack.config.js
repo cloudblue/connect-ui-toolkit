@@ -1,13 +1,12 @@
-const os = require('node:os');
+import { cpus } from 'node:os';
 
-const componentsConfig = require('./components/webpack.config');
-const toolsConfig = require('./tools/webpack.config');
-
-module.exports = [componentsConfig, toolsConfig];
+import componentsConfig from './components/webpack.config.js';
+import toolsConfig from './tools/webpack.config.js';
 
 // Calculate how many parallel builds can be done. Minimum is 1, otherwise it's the amount of cores
 // available, maxing at 4.
-const cpuCount = os.cpus().length || 1;
+const cpuCount = cpus().length || 1;
 const parallelBuildsNum = Math.min(cpuCount, 4);
 
-module.exports.parallelism = parallelBuildsNum;
+export default [componentsConfig, toolsConfig];
+export const parallelism = parallelBuildsNum;

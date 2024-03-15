@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-import { fastApiTableAdapter } from './adapter';
+import { fastApiTableAdapter } from './adapter.js';
 
 /**
  * Vue composable to wrap fastApiTableAdapter into reactive properties
