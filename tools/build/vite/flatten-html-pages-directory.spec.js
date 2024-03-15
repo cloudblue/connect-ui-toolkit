@@ -1,4 +1,4 @@
-import flattenHtmlPagesDirectory from './flatten-html-pages-directory';
+import { flatten as flattenHtmlPagesDirectory } from './flatten-html-pages-directory';
 
 describe('#flattenHtmlPagesDirectory vite plugin', () => {
   it('exposes the correct properties', () => {

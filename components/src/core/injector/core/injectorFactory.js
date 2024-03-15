@@ -1,6 +1,6 @@
-import { clone, has } from '~core/helpers';
+import { clone, has } from '~core/helpers.js';
 
-import { processRoute } from '~core/router';
+import { processRoute } from '~core/router.js';
 
 export default (core) => {
   const injector = {
