@@ -9,6 +9,7 @@ export { default as Icon } from '~widgets/icon/widget.vue';
 export { default as View } from '~widgets/view/widget.vue';
 export { default as Navigation } from '~widgets/navigation/widget.vue';
 export { default as Status } from '~widgets/status/widget.vue';
+export { default as Select } from '~widgets/select/widget.vue';
 export { default as Textfield } from '~widgets/textfield/widget.vue';
 export { default as Table } from '~widgets/table/widget.vue';
 export { default as ComplexTable } from './widgets/complexTable/widget.vue';
