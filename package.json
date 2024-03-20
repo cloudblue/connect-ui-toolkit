@@ -69,6 +69,7 @@
     "stylus": "^0.63.0",
     "stylus-loader": "^8.1.0",
     "svgo-loader": "^4.0.0",
+    "validator": "^13.11.0",
     "vue-eslint-parser": "^9.4.2",
     "vue-loader": "^17.4.2",
     "vue-style-loader": "^4.1.3",

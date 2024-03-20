@@ -37,6 +37,25 @@ export const Object = {
   },
 };
 
+export const Validation = {
+  name: 'Input validation',
+  render: Basic.render,
+
+  args: {
+    ...Basic.args,
+    label: 'Select input with validation',
+    hint: 'Select the second option if you want the validation to be successful',
+    propValue: 'id',
+    propText: 'name',
+    options: [
+      { id: 'OBJ-123', name: 'The first object' },
+      { id: 'OBJ-456', name: 'The second object' },
+      { id: 'OBJ-789', name: 'The third object' },
+    ],
+    rules: [(value) => value === 'OBJ-456' || 'You picked the wrong option :( '],
+  },
+};
+
 export const Events = {
   name: 'Using v-model',
   render: (args) => ({
@@ -61,6 +80,45 @@ export const Events = {
     `,
   }),
   args: Basic.args,
+};
+
+export const Slots = {
+  name: 'Custom element render',
+  render: (args) => ({
+    setup() {
+      const selectedItem = ref('');
+      const setSelectedItem = (event) => {
+        selectedItem.value = event.detail[0];
+      };
+
+      return { args, selectedItem, setSelectedItem };
+    },
+    template: `
+      <div>
+        <ui-select
+          v-bind="args"
+          :modelValue="selectedItem"
+          @update:modelValue="setSelectedItem"
+          style="width:500px;"
+        >
+          <span slot="selected">
+            <template v-if="selectedItem">The current selected value is: {{ selectedItem }}</template>
+            <template v-else>There is no item selected</template>
+          </span>
+        </ui-select>
+      </div>
+    `,
+  }),
+  args: {
+    ...Basic.args,
+    label: 'This implementation uses the "selected" slot and the "optionTextFn"',
+    options: [
+      { id: 'OBJ-123', name: 'The first object' },
+      { id: 'OBJ-456', name: 'The second object' },
+      { id: 'OBJ-789', name: 'The third object' },
+    ],
+    optionTextFn: (item) => `${item.name} (${item.id})`,
+  },
 };
 
 export default {

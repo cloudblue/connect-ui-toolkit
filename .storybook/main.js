@@ -56,6 +56,7 @@ module.exports = {
       '~core': path.resolve(__dirname, '../components/src/core'),
       '~widgets': path.resolve(__dirname, '../components/src/widgets'),
       '~constants': path.resolve(__dirname, '../components/src/constants'),
+      '~composables': path.resolve(__dirname, '../components/src/composables'),
     };
 
     return config;
