@@ -44,6 +44,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['opened', 'closed']);
+
 const showMenu = ref(false);
 const menu = ref(null);
 
@@ -55,17 +57,22 @@ const fullWidthClass = computed(() => (props.fullWidth ? 'menu-content_full-widt
 
 const toggle = () => {
   showMenu.value = !showMenu.value;
+  emit(showMenu.value ? 'opened' : 'closed');
 };
 
 const handleClickOutside = (event) => {
   const isClickWithinMenuBounds = event.composedPath().some((el) => el === menu.value);
   if (!isClickWithinMenuBounds) {
     showMenu.value = false;
+    emit('closed');
   }
 };
 
 const onClickInside = () => {
-  if (props.closeOnClickInside) showMenu.value = false;
+  if (props.closeOnClickInside) {
+    showMenu.value = false;
+    emit('closed');
+  }
 };
 
 onMounted(() => {

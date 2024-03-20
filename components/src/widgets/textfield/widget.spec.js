@@ -40,12 +40,50 @@ describe('Textfield widget', () => {
       expect(wrapper.find('.text-field_focused').exists()).toBeFalsy();
     });
 
-    it('sets the "text-field_focused" class when focused', async () => {
-      wrapper = mount(Textfield);
+    it('renders the hint, if used', () => {
+      wrapper = mount(Textfield, {
+        props: {
+          hint: 'Please fill this input',
+        },
+      });
 
-      await wrapper.find('.text-field').trigger('focusin');
+      expect(wrapper.get('.text-field__hint').text()).toEqual('Please fill this input');
+    });
+  });
 
-      expect(wrapper.get('.text-field_focused').exists()).toBeTruthy();
+  describe('validation', () => {
+    let rule1;
+    let rule2;
+
+    beforeEach(async () => {
+      rule1 = jest.fn().mockReturnValue(true);
+      rule2 = jest.fn().mockReturnValue('This field is invalid');
+
+      wrapper = mount(Textfield, {
+        props: {
+          hint: 'Hint text',
+          rules: [rule1, rule2],
+        },
+      });
+
+      await wrapper.get('.text-field__input').setValue('foo');
+    });
+
+    it('validates the input value against the rules prop', () => {
+      expect(rule1).toHaveBeenCalledWith('foo');
+      expect(rule2).toHaveBeenCalledWith('foo');
+    });
+
+    it('renders the error messages if validation fails', () => {
+      expect(wrapper.get('.text-field__error-message').text()).toEqual('This field is invalid.');
+    });
+
+    it('does not render the hint if there is an error', () => {
+      expect(wrapper.get('.text-field__hint').text()).not.toEqual('Hint text');
+    });
+
+    it('adds the "text-field_invalid" class to the element', () => {
+      expect(wrapper.classes()).toContain('text-field_invalid');
     });
   });
 
@@ -56,6 +94,23 @@ describe('Textfield widget', () => {
       await wrapper.find('.text-field__input').setValue('lorem ipsum');
 
       expect(wrapper.emitted().input[0]).toEqual(['lorem ipsum']);
+    });
+
+    it('sets the "text-field_focused" class when clicked', async () => {
+      wrapper = mount(Textfield);
+
+      await wrapper.get('.text-field__wrapper').trigger('click');
+
+      expect(wrapper.classes()).toContain('text-field_focused');
+    });
+
+    it('removes the "text-field_focused" class when the focus is removed', async () => {
+      wrapper = mount(Textfield);
+      await wrapper.get('.text-field__wrapper').trigger('click');
+
+      await wrapper.get('.text-field__wrapper').trigger('focusout');
+
+      expect(wrapper.classes()).not.toContain('text-field_focused');
     });
   });
 });

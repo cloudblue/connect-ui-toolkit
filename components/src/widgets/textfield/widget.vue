@@ -1,14 +1,17 @@
 <template>
   <div
     class="text-field"
-    :class="{ 'text-field_focused': isFocused }"
-    @focusin="setFocus"
-    @focusout="removeFocus"
+    :class="computedClasses"
   >
     <label for="textfield">{{ label }}</label>
-    <div class="text-field__wrapper">
+    <div
+      class="text-field__wrapper"
+      @click="setFocus"
+      @focusout="removeFocus"
+    >
       <div class="text-field__body">
         <input
+          ref="inputEl"
           v-model="localValue"
           class="text-field__input"
           :class="{ 'text-field__input_right': suffix }"
@@ -20,15 +23,29 @@
         <span
           v-if="suffix"
           class="text-field__suffix"
-          >{{ suffix }}</span
         >
+          {{ suffix }}
+        </span>
       </div>
+    </div>
+    <div
+      v-if="hint || !isValid"
+      class="text-field__hint"
+    >
+      <p
+        v-if="!isValid"
+        class="text-field__error-message"
+      >
+        {{ errorMessagesString }}
+      </p>
+      <p v-else>{{ hint }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useFieldValidation } from '~composables/validation';
 
 const props = defineProps({
   value: {
@@ -47,15 +64,35 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  hint: {
+    type: String,
+    default: '',
+  },
+  rules: {
+    type: Array,
+    default: () => [],
+  },
 });
+
+const emit = defineEmits(['input']);
 
 const localValue = ref('');
 
+const { isValid, errorMessagesString } = useFieldValidation(localValue, props.rules);
+
+const inputEl = ref(null);
 const isFocused = ref(false);
-const emit = defineEmits(['input']);
+
+const computedClasses = computed(() => ({
+  'text-field_focused': isFocused.value,
+  'text-field_invalid': !isValid.value,
+}));
 
 const removeFocus = () => (isFocused.value = false);
-const setFocus = () => (isFocused.value = true);
+const setFocus = () => {
+  isFocused.value = true;
+  inputEl.value.focus();
+};
 
 watch(
   () => props.value,
@@ -83,8 +120,10 @@ watch(localValue, (newValue) => {
   color: base-text-color;
 
   label {
+    margin-bottom: 8px;
     font-weight 500;
     font-size: 14px;
+    line-height: 1.4;
   }
 
   &__body {
@@ -110,7 +149,15 @@ watch(localValue, (newValue) => {
 
     .text-field_focused & {
       border-color: #4797f2;
-      border-width: 2px ;
+      outline: 1px solid #4797f2;
+    }
+
+    .text-field_invalid & {
+      border-color: #FF6A6A;
+    }
+
+    .text-field_focused.text-field_invalid & {
+      outline: 1px solid #FF6A6A;
     }
   }
 
@@ -118,6 +165,7 @@ watch(localValue, (newValue) => {
     flex-grow: 1;
     outline: none;
     border-style: none;
+    padding: 0;
     background-color: transparent;
     font-size: 14px;
     font-weight: 400;
@@ -154,6 +202,22 @@ watch(localValue, (newValue) => {
     font-weight: 400;
     line-height: 20px;
     color: #707070;
+  }
+
+  &__hint {
+    margin-top: 4px;
+
+    p {
+      color: #707070;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .text-field__error-message {
+      color: #FF6A6A;
+    }
   }
 }
 </style>

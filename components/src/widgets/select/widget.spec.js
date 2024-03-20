@@ -49,6 +49,62 @@ describe('Select', () => {
       expect(menuOptions[1].text()).toEqual('Bar');
       expect(menuOptions[2].text()).toEqual('Baz');
     });
+
+    it('can render option text based on the optionTextFn prop', async () => {
+      await wrapper.setProps({
+        options: [
+          { id: '123', external_id: 'ext-123', name: 'Foo' },
+          { id: '456', external_id: 'ext-456', name: 'Bar' },
+          { id: '789', external_id: 'ext-789', name: 'Baz' },
+        ],
+        optionTextFn: (option) => `${option.name} (${option.id})`,
+      });
+
+      const menuOptions = wrapper.findAll('.select-input__option');
+
+      expect(menuOptions.length).toEqual(3);
+      expect(menuOptions[0].text()).toEqual('Foo (123)');
+      expect(menuOptions[1].text()).toEqual('Bar (456)');
+      expect(menuOptions[2].text()).toEqual('Baz (789)');
+    });
+  });
+
+  describe('validation', () => {
+    let rule1;
+    let rule2;
+
+    beforeEach(async () => {
+      rule1 = jest.fn().mockReturnValue(true);
+      rule2 = jest.fn().mockReturnValue('This field is invalid');
+
+      wrapper = mount(Select, {
+        props: {
+          modelValue: '',
+          options: ['foo', 'bar', 'baz'],
+          hint: 'Hint text',
+          rules: [rule1, rule2],
+        },
+      });
+
+      await wrapper.findAll('.select-input__option')[1].trigger('click');
+    });
+
+    it('validates the input value against the rules prop', () => {
+      expect(rule1).toHaveBeenCalledWith('bar');
+      expect(rule2).toHaveBeenCalledWith('bar');
+    });
+
+    it('renders the error messages if validation fails', () => {
+      expect(wrapper.get('.select-input__error-message').text()).toEqual('This field is invalid.');
+    });
+
+    it('does not render the hint if there is an error', () => {
+      expect(wrapper.get('.select-input__hint').text()).not.toEqual('Hint text');
+    });
+
+    it('adds the "select-input_invalid" class to the element', () => {
+      expect(wrapper.classes()).toContain('select-input_invalid');
+    });
   });
 
   describe('events', () => {
@@ -68,6 +124,25 @@ describe('Select', () => {
 
       it('emits the valueChange event with the selected value', () => {
         expect(wrapper.emitted('valueChange')[0]).toEqual(['bar']);
+      });
+    });
+
+    describe('when the menu is opened', () => {
+      it('adds the "select-input_focused" class', async () => {
+        await wrapper.get('ui-menu').trigger('opened');
+
+        expect(wrapper.classes()).toContain('select-input_focused');
+      });
+    });
+
+    describe('when the menu is closed', () => {
+      it('removes the "select-input_focused" class', async () => {
+        // open the menu first
+        await wrapper.get('ui-menu').trigger('opened');
+
+        await wrapper.get('ui-menu').trigger('closed');
+
+        expect(wrapper.classes()).not.toContain('select-input_focused');
       });
     });
   });
