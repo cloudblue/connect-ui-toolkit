@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 
 export default defineConfig({
   build: {
+    emptyOutDir: false,
     lib: {
       entry: {
        "fastApi/adapter": resolve(__dirname, 'api/fastApi/adapter.js'),
