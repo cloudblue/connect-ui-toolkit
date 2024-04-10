@@ -72,6 +72,7 @@ export default {
     line-height: 20px;
     color: #707070;
     margin: 0;
+    white-space: pre-wrap;
   }
 
   &__title-container {
