@@ -32,6 +32,7 @@ export const Validation = {
     hint: 'This is a text field with validation. The value should be an email',
     value: '',
     placeholder: 'john.doe@example.com',
+    required: true,
     rules: [
       (value) => !!value || 'This field is required',
       (value) => isEmail(value) || 'The value is not a valid email address',
@@ -50,5 +51,6 @@ export default {
     value: 'text',
     placeholder: 'text',
     suffix: 'text',
+    required: 'boolean',
   },
 };

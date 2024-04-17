@@ -72,6 +72,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['input']);
@@ -86,6 +90,7 @@ const isFocused = ref(false);
 const computedClasses = computed(() => ({
   'text-field_focused': isFocused.value,
   'text-field_invalid': !isValid.value,
+  'text-field_required': props.required,
 }));
 
 const removeFocus = () => (isFocused.value = false);
@@ -124,6 +129,14 @@ watch(localValue, (newValue) => {
     font-weight 500;
     font-size: 14px;
     line-height: 1.4;
+  }
+
+  &_required label::after {
+    content: '*';
+    margin-left: 3px;
+    color: #FF0000;
+    text-decoration: none;
+    display: inline-block;
   }
 
   &__body {
