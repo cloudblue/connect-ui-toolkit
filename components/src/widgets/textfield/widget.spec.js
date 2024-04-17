@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Textfield from './widget';
+import Textfield from './widget.vue';
 
 describe('Textfield widget', () => {
   let wrapper;

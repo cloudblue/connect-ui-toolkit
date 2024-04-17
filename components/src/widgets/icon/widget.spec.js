@@ -1,4 +1,5 @@
-import Icon from './widget';
+import Icon from './widget.vue';
+import { googleSnowboardingBaseline } from '@cloudblueconnect/material-svg';
 
 describe('Icon', () => {
   let result;
@@ -12,9 +13,7 @@ describe('Icon', () => {
         );
         result = component.icon.value;
 
-        expect(result).toEqual(
-          '<svg>This replaces import of files from @cloudblueconnect/material-svg in .spec.js files to optimize the run time of all unit tests</svg>',
-        );
+        expect(result).toEqual(googleSnowboardingBaseline);
       });
     });
 

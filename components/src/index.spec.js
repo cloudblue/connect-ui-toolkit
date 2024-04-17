@@ -3,14 +3,14 @@ import createApp from './index';
 import injector from '~core/injector';
 import registerWidget from '~core/registerWidget';
 
-jest.mock('~core/injector', () => ({
+vi.mock('~core/injector', () => ({
   __esModule: true,
-  default: jest.fn(() => 'app'),
+  default: vi.fn(() => 'app'),
 }));
 
-jest.mock('~core/registerWidget', () => ({
+vi.mock('~core/registerWidget', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: vi.fn(),
 }));
 
 describe('#createApp function', () => {

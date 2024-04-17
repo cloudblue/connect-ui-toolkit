@@ -1,8 +1,8 @@
 import { useFastApiTableAdapter } from './vue-composable';
 import { fastApiTableAdapter } from './adapter';
 
-jest.mock('./adapter', () => ({
-  fastApiTableAdapter: jest.fn().mockImplementation(() => {
+vi.mock('./adapter', () => ({
+  fastApiTableAdapter: vi.fn().mockImplementation(() => {
     const result = {
       total: 42,
       items: ['foo', 'bar', 'baz'],
@@ -13,11 +13,11 @@ jest.mock('./adapter', () => ({
       items: [],
       total: 0,
       page: 1,
-      load: jest.fn().mockResolvedValue(result),
-      next: jest.fn().mockResolvedValue(result),
-      previous: jest.fn().mockResolvedValue(result),
-      filter: jest.fn().mockResolvedValue(result),
-      setRowsPerPage: jest.fn().mockResolvedValue(result),
+      load: vi.fn().mockResolvedValue(result),
+      next: vi.fn().mockResolvedValue(result),
+      previous: vi.fn().mockResolvedValue(result),
+      filter: vi.fn().mockResolvedValue(result),
+      setRowsPerPage: vi.fn().mockResolvedValue(result),
     };
   }),
 }));

@@ -4,19 +4,19 @@ import Core from './core/Core';
 import injectorFactory from './core/injectorFactory';
 import launcher from './core/launcher';
 
-jest.mock('./core/Core', () => ({
+vi.mock('./core/Core', () => ({
   __esModule: true,
-  default: jest.fn().mockImplementation(() => ({ core: 'CORE' })),
+  default: vi.fn().mockImplementation(() => ({ core: 'CORE' })),
 }));
 
-jest.mock('./core/injectorFactory', () => ({
+vi.mock('./core/injectorFactory', () => ({
   __esModule: true,
-  default: jest.fn(() => 'INJECTOR'),
+  default: vi.fn(() => 'INJECTOR'),
 }));
 
-jest.mock('./core/launcher', () => ({
+vi.mock('./core/launcher', () => ({
   __esModule: true,
-  default: jest.fn(() => Promise.resolve()),
+  default: vi.fn(() => Promise.resolve()),
 }));
 
 describe('createInjector', () => {
