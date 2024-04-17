@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Button from './widget';
+import Button from './widget.vue';
 
 describe('Button widget', () => {
   let result;

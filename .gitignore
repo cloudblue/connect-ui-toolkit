@@ -13,6 +13,8 @@ dist-ssr
 coverage
 *.local
 
+/test/report.json
+
 /cypress/videos/
 /cypress/screenshots/
 

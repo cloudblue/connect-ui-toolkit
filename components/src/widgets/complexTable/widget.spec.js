@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import ComplexTable from './widget';
+import ComplexTable from './widget.vue';
 import { nextTick } from 'vue';
 
 describe('ComplexTable widget', () => {

@@ -5,14 +5,14 @@ describe('#fastApiTableAdapter', () => {
   let fetchResponse = {};
 
   Object.defineProperty(global, 'fetch', {
-    value: jest.fn().mockImplementation(
+    value: vi.fn().mockImplementation(
       () =>
         new Promise((resolve) => {
           resolve({
             status: fetchResponse.status,
             statusText: fetchResponse.statusText,
             ok: fetchResponse.ok,
-            json: jest.fn().mockResolvedValue(fetchResponse.items),
+            json: vi.fn().mockResolvedValue(fetchResponse.items),
             headers: {
               get: () => {
                 if (fetchResponse.contentRangeTotal) {

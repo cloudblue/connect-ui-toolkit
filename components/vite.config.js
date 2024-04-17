@@ -1,7 +1,7 @@
 import path from 'node:path';
 import url from 'node:url';
 import vue from '@vitejs/plugin-vue';
-import svg from 'vite-plugin-svgo'
+import svg from 'vite-plugin-svgo';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -33,9 +33,9 @@ export default defineConfig({
         },
         {
           name: 'prefixIds',
-        }
+        },
       ],
-    })
+    }),
   ],
   build: {
     emptyOutDir: false,
@@ -48,10 +48,7 @@ export default defineConfig({
       output: {
         dir: path.resolve(__dirname, '..', 'dist'),
       },
-      external: [
-       'vue',
-        /node:\w*/,
-      ],
+      external: ['vue', /node:\w*/],
     },
   },
-})
+});
