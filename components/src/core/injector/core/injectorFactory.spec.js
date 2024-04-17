@@ -1,8 +1,8 @@
 import injectorFactory from './injectorFactory';
 import { processRoute } from '~core/router';
 
-jest.mock('~core/router', () => ({
-  processRoute: jest.fn().mockReturnValue('processRouteMockedReturnValue'),
+vi.mock('~core/router', () => ({
+  processRoute: vi.fn().mockReturnValue('processRouteMockedReturnValue'),
 }));
 
 describe('injectorFactory', () => {
@@ -10,7 +10,7 @@ describe('injectorFactory', () => {
     it('should add callback as new watcher for passed property', () => {
       const core = { watchers: {}, state: { foo: 'bar' } };
       const injector = injectorFactory(core);
-      const cb = jest.fn();
+      const cb = vi.fn();
 
       injector.watch('foo', cb);
       core.watchers.foo[0]();
@@ -21,7 +21,7 @@ describe('injectorFactory', () => {
     it('should add immediate callback call', () => {
       const core = { watchers: {}, state: { foo: 'bar' } };
       const injector = injectorFactory(core);
-      const cb = jest.fn();
+      const cb = vi.fn();
 
       injector.watch('foo', cb, { immediate: true });
 
@@ -31,7 +31,7 @@ describe('injectorFactory', () => {
     it('should add immediate callback call with "*" key', () => {
       const core = { watchers: {}, state: { foo: 'bar' } };
       const injector = injectorFactory(core);
-      const cb = jest.fn();
+      const cb = vi.fn();
 
       injector.watch('*', cb, { immediate: true });
 
@@ -45,7 +45,7 @@ describe('injectorFactory', () => {
       };
 
       const injector = injectorFactory(core);
-      const cb = jest.fn();
+      const cb = vi.fn();
 
       injector.watch('foo', cb);
       core.watchers.foo[1]();
@@ -60,7 +60,7 @@ describe('injectorFactory', () => {
       };
 
       const injector = injectorFactory(core);
-      const cb = jest.fn();
+      const cb = vi.fn();
 
       injector.watch(cb);
       core.watchers['*'][0]();
@@ -74,10 +74,10 @@ describe('injectorFactory', () => {
     let commit;
 
     beforeEach(() => {
-      global.window.top.postMessage = jest.fn();
+      global.window.top.postMessage = vi.fn();
 
       core = {
-        assign: jest.fn(),
+        assign: vi.fn(),
         id: 'XXX',
         state: {
           foo: 'bar',
@@ -124,7 +124,7 @@ describe('injectorFactory', () => {
 
   describe('#emit()', () => {
     beforeEach(() => {
-      global.window.top.postMessage = jest.fn();
+      global.window.top.postMessage = vi.fn();
     });
 
     it('should emit proper event', () => {
@@ -173,7 +173,7 @@ describe('injectorFactory', () => {
   describe('#listen()', () => {
     it('should put provided callback to proper listeners', () => {
       const core = { listeners: {} };
-      const cb = jest.fn();
+      const cb = vi.fn();
       injectorFactory(core).listen('foo', cb);
       core.listeners.foo();
 
@@ -187,7 +187,7 @@ describe('injectorFactory', () => {
 
     beforeEach(() => {
       injector = injectorFactory({});
-      injectorEmitSpy = jest.spyOn(injector, 'emit');
+      injectorEmitSpy = vi.spyOn(injector, 'emit');
     });
 
     it('calls processRoute with the given arguments', () => {

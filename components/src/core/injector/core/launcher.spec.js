@@ -1,7 +1,7 @@
 import launch from './launcher';
 
-const resizeObserverCtorSpy = jest.fn();
-const resizeObserverObserveSpy = jest.fn();
+const resizeObserverCtorSpy = vi.fn();
+const resizeObserverObserveSpy = vi.fn();
 const resizeObserverEntriesStub = [
   {
     contentRect: {
@@ -30,20 +30,18 @@ describe('$init', () => {
   let init;
 
   beforeEach(() => {
-    global.window.addEventListener = jest.fn();
+    global.window.addEventListener = vi.fn();
     global.window.name = 'XXX';
-    global.crypto = {
-      getRandomValues: jest.fn(() => ['abc']),
-    };
+    global.crypto.getRandomValues = vi.fn(() => ['abc']);
 
     injector = {
-      listen: jest.fn(),
-      emit: jest.fn(),
+      listen: vi.fn(),
+      emit: vi.fn(),
     };
 
     core = {
-      size: jest.fn(() => 'SIZE'),
-      assign: jest.fn(),
+      size: vi.fn(() => 'SIZE'),
+      assign: vi.fn(),
     };
 
     init = () => launch(injector, core);
@@ -163,7 +161,7 @@ describe('$init', () => {
         },
       };
 
-      core.listeners = { test: jest.fn() };
+      core.listeners = { test: vi.fn() };
       handler({ data });
 
       expect(core.listeners.test).toHaveBeenCalledWith('TEST', data);

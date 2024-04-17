@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Menu from './widget';
+import Menu from './widget.vue';
 
 describe('Menu component', () => {
   describe('methods', () => {
@@ -23,7 +23,7 @@ describe('Menu component', () => {
 
     describe('#handleClickOutside', () => {
       it('closes menu when clicked outside menu bounds', async () => {
-        const event = { composedPath: jest.fn().mockReturnValue(['slot', 'button']) };
+        const event = { composedPath: vi.fn().mockReturnValue(['slot', 'button']) };
         const wrapper = mount(Menu);
         wrapper.vm.menu = 'div';
         wrapper.vm.showMenu = true;
@@ -33,7 +33,7 @@ describe('Menu component', () => {
       });
 
       it('does not close menu when clicked inside menu bounds', async () => {
-        const event = { composedPath: jest.fn().mockReturnValue(['slot', 'button']) };
+        const event = { composedPath: vi.fn().mockReturnValue(['slot', 'button']) };
         const wrapper = mount(Menu);
         wrapper.vm.menu = 'button';
         wrapper.vm.showMenu = true;
@@ -67,7 +67,7 @@ describe('Menu component', () => {
 
   describe('onMounted', () => {
     it('adds up event listener on component mount', () => {
-      const addEventListenerSpy = jest.spyOn(document, 'addEventListener');
+      const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
 
       mount(Menu);
 
@@ -79,7 +79,7 @@ describe('Menu component', () => {
 
   describe('onUnmounted', () => {
     it('cleans up event listener on component unmount', async () => {
-      const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
+      const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
 
       const wrapper = mount(Menu);
       await wrapper.unmount();

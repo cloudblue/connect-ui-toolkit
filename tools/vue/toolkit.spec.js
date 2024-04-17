@@ -1,12 +1,12 @@
 import { toolkitPlugin, useToolkit } from './toolkit';
 import { inject } from 'vue';
 
-jest.mock('vue', () => {
-  const actualModule = jest.requireActual('vue');
+vi.mock('vue', async (importOriginal) => {
+  const actualModule = await importOriginal('vue');
 
   return {
     ...actualModule,
-    inject: jest.fn().mockReturnValue('injectStub'),
+    inject: vi.fn().mockReturnValue('injectStub'),
   };
 });
 
@@ -38,12 +38,12 @@ describe('Toolkit Vue plugin', () => {
 
       beforeEach(() => {
         vueApp = {
-          provide: jest.fn(),
+          provide: vi.fn(),
           config: { globalProperties: {} },
         };
         toolkitInstance = {
-          watch: jest.fn().mockImplementation((_, callback) => callback({ foo: 'bar' })),
-          navigateTo: jest.fn(),
+          watch: vi.fn().mockImplementation((_, callback) => callback({ foo: 'bar' })),
+          navigateTo: vi.fn(),
         };
 
         toolkitPlugin.install(vueApp, toolkitInstance);

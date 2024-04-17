@@ -1,4 +1,4 @@
-import Tab from './widget';
+import Tab from './widget.vue';
 
 describe('Tab', () => {
   let context;
@@ -38,8 +38,8 @@ describe('Tab', () => {
         context = {
           active: false,
           requested: null,
-          $bus: { on: jest.fn() },
-          open: jest.fn(),
+          $bus: { on: vi.fn() },
+          open: vi.fn(),
         };
       });
 
@@ -82,7 +82,7 @@ describe('Tab', () => {
         context = {
           tab: 'foo',
           $bus: {
-            emit: jest.fn(),
+            emit: vi.fn(),
           },
         };
 

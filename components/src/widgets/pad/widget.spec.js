@@ -1,4 +1,4 @@
-import Pad from './widget';
+import Pad from './widget.vue';
 
 describe('Pad widget', () => {
   let context;
@@ -37,7 +37,7 @@ describe('Pad widget', () => {
       beforeEach(() => {
         context = {
           requested: null,
-          $bus: { on: jest.fn() },
+          $bus: { on: vi.fn() },
         };
 
         Pad.created.call(context);
@@ -61,8 +61,8 @@ describe('Pad widget', () => {
     describe('#opened', () => {
       beforeEach(() => {
         context = {
-          $nextTick: jest.fn(),
-          $injector: jest.fn(),
+          $nextTick: vi.fn(),
+          $injector: vi.fn(),
         };
       });
 
