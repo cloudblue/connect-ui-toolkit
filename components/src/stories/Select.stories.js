@@ -47,6 +47,7 @@ export const Validation = {
     hint: 'Select the second option if you want the validation to be successful',
     propValue: 'id',
     propText: 'name',
+    required: true,
     options: [
       { id: 'OBJ-123', name: 'The first object' },
       { id: 'OBJ-456', name: 'The second object' },
@@ -133,6 +134,7 @@ export default {
     hint: 'text',
     propValue: 'text',
     propText: 'text',
+    required: 'boolean',
     options: { control: 'array' },
   },
 };
