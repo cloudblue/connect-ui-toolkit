@@ -1,18 +1,45 @@
+import * as icons from '@cloudblueconnect/material-svg';
 import Button from '~widgets/button/widget.vue';
 import registerWidget from '~core/registerWidget';
 
 registerWidget('ui-button', Button);
 
-export const Component = {
+export const Base = {
+  name: 'Base component',
   render: (args) => ({
     setup() {
-      return { args };
+      const showAlert = () => alert('The button was clicked');
+      return { args, showAlert };
     },
-    template: `<ui-button disabled v-bind="args"></ui-button>`,
+    template: '<ui-button v-bind="args" @clicked="showAlert" />',
   }),
-
   args: {
-    text: 'Text',
+    mode: 'solid',
+    size: 'large',
+    label: 'Accept',
+    icon: 'googleCheckBaseline',
+    iconRight: '',
+    color: '#2C98F0',
+    progress: false,
+    lowerCase: false,
+    onlyIcon: false,
+    disabled: false,
+  },
+};
+
+export const Slotted = {
+  name: 'Using the default slot',
+  render: (args) => ({
+    setup() {
+      const showAlert = () => alert('The button was clicked');
+      return { args, showAlert };
+    },
+    template:
+      '<ui-button v-bind="args" @clicked="showAlert"><pre style="background-color:darkblue;color:lightcyan;font-style:italic;">Custom slot content</pre></ui-button>',
+  }),
+  args: {
+    ...Base.args,
+    label: '',
   },
 };
 
@@ -23,6 +50,25 @@ export default {
     layout: 'centered',
   },
   argTypes: {
-    text: 'text',
+    mode: { control: 'radio', options: ['solid', 'flat', 'outlined'] },
+    size: { control: 'radio', options: ['small', 'large'] },
+    label: 'text',
+    icon: {
+      options: Object.keys(icons),
+      control: {
+        type: 'select',
+      },
+    },
+    iconRight: {
+      options: Object.keys(icons),
+      control: {
+        type: 'select',
+      },
+    },
+    color: 'text',
+    progress: 'boolean',
+    lowerCase: 'boolean',
+    onlyIcon: 'boolean',
+    disabled: 'boolean',
   },
 };
