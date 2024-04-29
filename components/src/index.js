@@ -15,6 +15,9 @@ export { default as Table } from '~widgets/table/widget.vue';
 export { default as ComplexTable } from './widgets/complexTable/widget.vue';
 export { default as Button } from '~widgets/button/widget.vue';
 export { default as Menu } from '~widgets/menu/widget.vue';
+export { default as Textarea } from '~widgets/textarea/widget.vue';
+export { default as Alert } from '~widgets/alert/widget.vue';
+export { default as Radio } from '~widgets/radio/widget.vue';
 
 export { default as store } from '~core/store';
 export { default as bus } from '~core/eventBus';
