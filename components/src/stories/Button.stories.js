@@ -1,4 +1,3 @@
-import * as icons from '@cloudblueconnect/material-svg';
 import Button from '~widgets/button/widget.vue';
 import registerWidget from '~core/registerWidget';
 
@@ -53,18 +52,8 @@ export default {
     mode: { control: 'radio', options: ['solid', 'flat', 'outlined'] },
     size: { control: 'radio', options: ['small', 'large'] },
     label: 'text',
-    icon: {
-      options: Object.keys(icons),
-      control: {
-        type: 'select',
-      },
-    },
-    iconRight: {
-      options: Object.keys(icons),
-      control: {
-        type: 'select',
-      },
-    },
+    icon: 'text',
+    iconRight: 'text',
     color: 'text',
     progress: 'boolean',
     lowerCase: 'boolean',
