@@ -3,7 +3,13 @@
     class="text-field"
     :class="computedClasses"
   >
-    <label for="textfield">{{ label }}</label>
+    <label
+      v-if="label"
+      for="textfield"
+    >
+      {{ label }}
+      <span v-if="!required">(Optional)</span>
+    </label>
     <div
       class="text-field__wrapper"
       @click="setFocus"
@@ -90,7 +96,6 @@ const isFocused = ref(false);
 const computedClasses = computed(() => ({
   'text-field_focused': isFocused.value,
   'text-field_invalid': !isValid.value,
-  'text-field_required': props.required,
 }));
 
 const removeFocus = () => (isFocused.value = false);
@@ -129,14 +134,6 @@ watch(localValue, (newValue) => {
     font-weight 500;
     font-size: 14px;
     line-height: 1.4;
-  }
-
-  &_required label::after {
-    content: '*';
-    margin-left: 3px;
-    color: #FF0000;
-    text-decoration: none;
-    display: inline-block;
   }
 
   &__body {

@@ -7,7 +7,10 @@
       v-if="label"
       class="select-input__label"
     >
-      <p>{{ label }}</p>
+      <p>
+        {{ label }}
+        <span v-if="!required">(Optional)</span>
+      </p>
     </div>
     <ui-menu
       v-bind="menuProps"
@@ -133,7 +136,6 @@ const isFocused = ref(false);
 const computedClasses = computed(() => ({
   'select-input_focused': isFocused.value,
   'select-input_invalid': !isValid.value,
-  'select-input_required': props.required,
 }));
 
 const computedOptions = computed(() =>
@@ -162,14 +164,6 @@ const getDisplayText = (item) => {
 <style lang="stylus" scoped>
 .select-input {
   color: #212121;
-
-  &_required .select-input__label p::after {
-    content: '*';
-    margin-left: 3px;
-    color: #FF0000;
-    text-decoration: none;
-    display: inline-block;
-  }
 
   &__selected {
     height: 44px;
