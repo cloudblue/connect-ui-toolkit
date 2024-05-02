@@ -2,20 +2,13 @@
   <ui-menu :closeOnClickInside="false">
     <ui-button
       slot="trigger"
-      :disabled="filterableHeaders.length === 0"
-      backgroundColor="#fff"
-      color="#161616"
-      height="26px"
-      width="80px"
       class="filter-trigger"
-    >
-      <ui-icon
-        iconName="googleFilterListBaseline"
-        size="14"
-        color="#757575"
-      />
-      <span>Filter</span>
-    </ui-button>
+      :disabled="filterableHeaders.length === 0"
+      icon="googleFilterListBaseline"
+      label="filter"
+      mode="flat"
+      size="small"
+    />
 
     <div
       slot="content"
@@ -30,13 +23,10 @@
         <ui-textfield @input="(val) => filterInput(header.value, val)" />
       </div>
       <ui-button
-        height="26px"
-        width="80px"
+        label="Filter"
         class="filter-btn"
         @clicked="applyFilters"
-      >
-        <div class="btn-text">Filter</div>
-      </ui-button>
+      />
     </div>
   </ui-menu>
   <ui-table
@@ -49,26 +39,22 @@
     <ui-button
       :disabled="previousButtonDisabled"
       class="previous-button"
-      backgroundColor="#fff"
-      color="#161616"
-      height="26px"
-      width="80px"
+      mode="outlined"
+      label="Previous"
+      size="small"
+      lowerCase
       @clicked="previousClicked"
-    >
-      <div class="btn-text">Previous</div>
-    </ui-button>
+    />
     <div>{{ currentPage }} / {{ totalPages }}</div>
     <ui-button
       :disabled="nextButtonDisabled"
       class="next-button"
-      backgroundColor="#fff"
-      color="#161616"
-      height="26px"
-      width="56px"
+      mode="outlined"
+      label="Next"
+      size="small"
+      lowerCase
       @clicked="nextClicked"
-    >
-      <div class="btn-text">Next</div>
-    </ui-button>
+    />
   </div>
 </template>
 
@@ -151,13 +137,8 @@ watch(
 
 <style lang="stylus" scoped>
 .filter-trigger {
-  span {
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    font-size: 12px;
-    margin-left: 4px;
-  }
+  display: block;
+  margin-bottom: 8px;
 }
 
 .items-list {
@@ -185,23 +166,19 @@ watch(
     margin-left: auto;
   }
 }
+
 .buttons-container {
   display: flex;
   align-items: center;
   height: 48px;
+  font-size: 14px;
 
   .previous-button {
     margin-right: 16px;
-    border: 1px solid #e0e0e0;
   }
 
   .next-button {
     margin-left: 16px;
-    border: 1px solid #e0e0e0;
-  }
-
-  .btn-text {
-    text-transform: capitalize;
   }
 }
 </style>

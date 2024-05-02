@@ -13,8 +13,11 @@ export const Component = {
     template: `
       <ui-menu v-bind="args">
         <ui-button 
-          slot="trigger" 
-          text="open menu" 
+          slot="trigger"
+          iconRight="googleArrowDropDownBaseline"
+          label="open menu" 
+          mode="flat"
+          size="small"
         />
         <div style="padding:8px 16px; border:1px solid black;" slot="content">
           <p>Lorem ipsum dolor sit amet</p>

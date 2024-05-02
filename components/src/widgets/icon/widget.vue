@@ -50,6 +50,9 @@ const icon = computed(() => {
   color: #757575;
   height: 24px;
   width: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .icon svg {
   color: inherit;

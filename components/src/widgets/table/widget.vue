@@ -72,6 +72,7 @@ table {
       margin: 100px;
       padding: 100px;
       line-height: 50px;
+      font-size: 14px;
     }
   }
 
