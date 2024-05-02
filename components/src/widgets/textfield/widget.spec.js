@@ -9,10 +9,10 @@ describe('Textfield widget', () => {
       wrapper = mount(Textfield);
 
       expect(wrapper.get('.text-field').exists()).toBeTruthy();
-      expect(wrapper.get('.text-field label').text()).toEqual('');
       expect(wrapper.get('.text-field__input').exists()).toBeTruthy();
       expect(wrapper.get('.text-field__input').element.value).toEqual('');
       expect(wrapper.get('.text-field__input').attributes('placeholder')).toEqual('');
+      expect(wrapper.find('.text-field label').exists()).toBeFalsy();
       expect(wrapper.find('.text-field__suffix').exists()).toBeFalsy();
       expect(wrapper.find('.text-field_focused').exists()).toBeFalsy();
       expect(wrapper.find('.text-field__input_right').exists()).toBeFalsy();
@@ -29,7 +29,7 @@ describe('Textfield widget', () => {
       });
 
       expect(wrapper.get('.text-field').exists()).toBeTruthy();
-      expect(wrapper.get('.text-field label').text()).toEqual('My text input');
+      expect(wrapper.get('.text-field label').text()).toEqual('My text input (Optional)');
       expect(wrapper.get('.text-field__input').exists()).toBeTruthy();
       expect(wrapper.get('.text-field__input').element.value).toEqual('Foo');
       expect(wrapper.get('.text-field__input').attributes('placeholder')).toEqual(
@@ -48,6 +48,17 @@ describe('Textfield widget', () => {
       });
 
       expect(wrapper.get('.text-field__hint').text()).toEqual('Please fill this input');
+    });
+
+    it('does not render the "(Optional)" text in label if required is true', () => {
+      wrapper = mount(Textfield, {
+        props: {
+          label: 'My input',
+          required: true,
+        },
+      });
+
+      expect(wrapper.get('.text-field label').text()).toEqual('My input');
     });
   });
 

@@ -17,7 +17,7 @@ describe('Select', () => {
 
   describe('render', () => {
     it('renders the base component', () => {
-      expect(wrapper.get('.select-input__label').text()).toEqual('My select');
+      expect(wrapper.get('.select-input__label').text()).toEqual('My select (Optional)');
       expect(wrapper.get('.select-input__hint').text()).toEqual('Some random hint');
       expect(wrapper.get('.select-input__no-selection').text()).toEqual('—');
     });
@@ -29,6 +29,14 @@ describe('Select', () => {
       expect(menuOptions[0].text()).toEqual('foo');
       expect(menuOptions[1].text()).toEqual('bar');
       expect(menuOptions[2].text()).toEqual('baz');
+    });
+
+    it('does not render the "(Optional)" text in the label if required is true', async () => {
+      await wrapper.setProps({
+        required: true,
+      });
+
+      expect(wrapper.get('.select-input__label').text()).toEqual('My select');
     });
 
     it('renders a complex array of objects', async () => {
