@@ -47,6 +47,10 @@ export default {
   component: Button,
   parameters: {
     layout: 'centered',
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/iWvG1cSD2xzbGS2KAB1DgV/Connect-UI-Guides-%26-Specs?type=design&node-id=1-4009&mode=design&t=5CPLKuHbPQnKMEJh-0',
+    },
   },
   argTypes: {
     mode: { control: 'radio', options: ['solid', 'flat', 'outlined'] },

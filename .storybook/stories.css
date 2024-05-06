@@ -1,0 +1,17 @@
+.sb-all-icons {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sb-icon-wrapper {
+  width: calc(33% - 10px);
+  margin-bottom: 20px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+.sb-icon {
+  margin-right: 4px;
+}
