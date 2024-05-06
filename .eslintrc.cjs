@@ -36,7 +36,7 @@ module.exports = {
   },
 
   env: {
-    'vitest-globals': true,
+    'vitest-globals/env': true,
   },
 
   parserOptions: {

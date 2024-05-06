@@ -45,8 +45,8 @@ describe('TextArea component', () => {
     let rule2;
 
     beforeEach(async () => {
-      rule1 = jest.fn().mockReturnValue(true);
-      rule2 = jest.fn().mockReturnValue('This field is invalid');
+      rule1 = vi.fn().mockReturnValue(true);
+      rule2 = vi.fn().mockReturnValue('This field is invalid');
 
       wrapper = shallowMount(TextArea, {
         props: {
