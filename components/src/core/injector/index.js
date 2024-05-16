@@ -1,6 +1,6 @@
-import Core from './core/Core.js';
-import injectorFactory from './core/injectorFactory.js';
-import launch from './core/launcher.js';
+import Core from './core/Core';
+import injectorFactory from './core/injectorFactory';
+import launch from './core/launcher';
 
 export const injectorMixin = {
   methods: {
