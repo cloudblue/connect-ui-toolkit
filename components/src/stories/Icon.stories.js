@@ -51,7 +51,7 @@ export const Animated = {
       Object.keys(iconsAnimated)
         .map(
           (icon) =>
-            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="32"/> <span>${icon}</span></div>`,
+            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="24"/> <span>${icon}</span></div>`,
         )
         .join('') +
       '</div>',
@@ -75,7 +75,7 @@ export const Baseline = {
       Object.keys(iconsBaseline)
         .map(
           (icon) =>
-            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="32"/> <span>${icon}</span></div>`,
+            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="24"/> <span>${icon}</span></div>`,
         )
         .join('') +
       '</div>',
@@ -99,7 +99,7 @@ export const Outline = {
       Object.keys(iconsOutline)
         .map(
           (icon) =>
-            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="32"/> <span>${icon}</span></div>`,
+            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="24"/> <span>${icon}</span></div>`,
         )
         .join('') +
       '</div>',
@@ -123,7 +123,7 @@ export const Round = {
       Object.keys(iconsRound)
         .map(
           (icon) =>
-            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="32"/> <span>${icon}</span></div>`,
+            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="24"/> <span>${icon}</span></div>`,
         )
         .join('') +
       '</div>',
@@ -147,7 +147,7 @@ export const Sharp = {
       Object.keys(iconsSharp)
         .map(
           (icon) =>
-            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="32"/> <span>${icon}</span></div>`,
+            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="24"/> <span>${icon}</span></div>`,
         )
         .join('') +
       '</div>',
@@ -171,7 +171,7 @@ export const Twotone = {
       Object.keys(iconsTwotone)
         .map(
           (icon) =>
-            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="32"/> <span>${icon}</span></div>`,
+            `<div className="sb-icon-wrapper"><ui-icon className="sb-icon" iconName="${icon}" size="24"/> <span>${icon}</span></div>`,
         )
         .join('') +
       '</div>',
