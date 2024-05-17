@@ -17,6 +17,7 @@ module.exports = {
     'plugin:storybook/recommended',
     'prettier',
     '@vue/eslint-config-prettier/skip-formatting',
+    'plugin:vitest-globals/recommended',
   ],
 
   plugins: ['vue'],
@@ -34,21 +35,15 @@ module.exports = {
     'vue/attribute-hyphenation': ['error', 'never'],
   },
 
-  overrides: [
-    // Config for unit tests
-    {
-      files: ['*.spec.js'],
-      plugins: ['jest'],
-      extends: ['plugin:jest/recommended', 'plugin:jest-formatting/strict'],
-      env: {
-        jest: true,
-        'jest/globals': true,
-      },
-      globals: {
-        global: 'writable',
-      },
-    },
+  env: {
+    'vitest-globals/env': true,
+  },
 
+  parserOptions: {
+    ecmaVersion: 'latest',
+  },
+
+  overrides: [
     // Config for files that run in node env (config files, etc)
     {
       files: ['*.config.js', '.eslintrc.js'],

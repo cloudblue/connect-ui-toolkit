@@ -1,9 +1,9 @@
 /* eslint-env node */
 import { fileURLToPath } from 'node:url';
-import { readdirSync } from 'node:fs';
-import { resolve } from 'node:path';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import flattenHtmlPagesDirectoryPlugin from './flatten-html-pages-directory';
+import { flatten as flattenHtmlPagesDirectoryPlugin } from './flatten-html-pages-directory.js';
 
 const checkIfIsProduction = (mode) => {
   if (mode) return mode === 'production';
@@ -69,8 +69,8 @@ export const defineExtensionConfig =
           ...viteOptions.build?.rollupOptions,
 
           // Load all pages in {{srcDir}}/pages/{{pageName}}/index.html as entrypoints
-          input: readdirSync(resolve(srcDir, 'pages')).reduce((entryPoints, pageName) => {
-            entryPoints[pageName] = resolve(srcDir, 'pages/', pageName, 'index.html');
+          input: fs.readdirSync(path.resolve(srcDir, 'pages')).reduce((entryPoints, pageName) => {
+            entryPoints[pageName] = path.resolve(srcDir, 'pages/', pageName, 'index.html');
 
             return entryPoints;
           }, {}),

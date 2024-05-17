@@ -1,4 +1,4 @@
-import View from './widget';
+import View from './widget.vue';
 
 describe('View widget', () => {
   let context;
@@ -18,8 +18,8 @@ describe('View widget', () => {
     describe('#activeTab', () => {
       beforeEach(async () => {
         context = {
-          $nextTick: jest.fn().mockResolvedValue(true),
-          $injector: jest.fn(),
+          $nextTick: vi.fn().mockResolvedValue(true),
+          $injector: vi.fn(),
         };
 
         await View.watch.activeTab.call(context);

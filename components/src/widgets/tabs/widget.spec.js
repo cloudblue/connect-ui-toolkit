@@ -1,6 +1,6 @@
 import Tabs from './widget.vue';
 
-const customEventConstructorSpy = jest.fn();
+const customEventConstructorSpy = vi.fn();
 Object.defineProperty(global, 'CustomEvent', {
   writable: true,
   configurable: true,
@@ -20,7 +20,7 @@ describe('Tabs', () => {
       beforeEach(() => {
         context = {
           currentTab: 'foo',
-          $el: { dispatchEvent: jest.fn() },
+          $el: { dispatchEvent: vi.fn() },
         };
       });
 
@@ -84,7 +84,7 @@ describe('Tabs', () => {
         context = {
           currentTab: '',
           tabs: [{ value: 'foo' }, { value: 'bar' }],
-          open: jest.fn(),
+          open: vi.fn(),
         };
       });
 

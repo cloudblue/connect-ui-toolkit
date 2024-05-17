@@ -1,21 +1,36 @@
-import { readdirSync } from 'node:fs';
-import { resolve } from 'node:path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import { defineExtensionConfig } from './index';
 
-jest.mock('./flatten-html-pages-directory', () => 'flattenHtmlPagesDirectoryPluginStub');
-
-jest.mock('node:url', () => ({
-  fileURLToPath: jest.fn().mockReturnValue('urlFileUrlToPathStub'),
+vi.mock('./flatten-html-pages-directory', () => ({
+  flatten: 'flattenHtmlPagesDirectoryPluginStub',
 }));
 
-jest.mock('node:fs', () => ({
-  readdirSync: jest.fn().mockReturnValue(['fsReaddirSyncStub']),
-}));
+vi.mock('node:url', () => {
+  return {
+    default: {
+      fileURLToPath: vi.fn().mockReturnValue('urlFileUrlToPathStub'),
+    },
+  };
+});
 
-jest.mock('node:path', () => ({
-  resolve: jest.fn().mockReturnValue('pathResolveStub'),
-}));
+vi.mock('node:fs', () => {
+  return {
+    default: {
+      readdirSync: vi.fn().mockReturnValue(['fsReaddirSyncStub']),
+    },
+  };
+});
+
+vi.mock('node:path', () => {
+  return {
+    default: {
+      resolve: vi.fn().mockReturnValue('pathResolveStub'),
+    },
+    resolve: vi.fn().mockReturnValue('pathResolveStub'),
+  };
+});
 
 describe('#defineExtensionConfig function', () => {
   let result;
@@ -227,9 +242,9 @@ describe('#defineExtensionConfig function', () => {
 
     result = defineExtensionConfig(config)({ mode: 'production' });
 
-    expect(resolve).toHaveBeenCalledWith('/my/source/dir', 'pages');
-    expect(readdirSync).toHaveBeenCalledWith('pathResolveStub');
-    expect(resolve).toHaveBeenCalledWith(
+    expect(path.resolve).toHaveBeenCalledWith('/my/source/dir', 'pages');
+    expect(fs.readdirSync).toHaveBeenCalledWith('pathResolveStub');
+    expect(path.resolve).toHaveBeenCalledWith(
       '/my/source/dir',
       'pages/',
       'fsReaddirSyncStub',

@@ -8,6 +8,10 @@ export default {
   component: cCard,
   parameters: {
     layout: 'centered',
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/iWvG1cSD2xzbGS2KAB1DgV/Connect-UI-Guides-%26-Specs?node-id=1%3A5688&t=a9arRvCkF2acPp5E-1',
+    },
   },
 };
 

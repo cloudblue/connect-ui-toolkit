@@ -24,7 +24,7 @@ describe('Core', () => {
       [{ test: 123 }, null],
       [null, { test: 123 }],
     ])('should do nothing while $state is %j and data is %j', (state, data) => {
-      global.Object.keys = jest.fn(Object.keys);
+      global.Object.keys = vi.fn(Object.keys);
       core.state = state;
       core.assign(data);
 
@@ -53,7 +53,7 @@ describe('Core', () => {
       };
 
       core.watchers = {
-        test: [jest.fn()],
+        test: [vi.fn()],
       };
 
       core.assign({
@@ -71,7 +71,7 @@ describe('Core', () => {
       };
 
       core.watchers = {
-        '*': [jest.fn()],
+        '*': [vi.fn()],
       };
 
       core.assign({

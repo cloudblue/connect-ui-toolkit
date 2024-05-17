@@ -11,7 +11,7 @@ describe('validation composables', () => {
 
     beforeEach(() => {
       model = ref('');
-      rule = jest.fn().mockReturnValue(true);
+      rule = vi.fn().mockReturnValue(true);
       rules = [rule];
     });
 
