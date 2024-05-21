@@ -30,7 +30,7 @@ jobs:
       - name: Check formatting with Prettier
         run: npm run format:check
       - name: Testing
-        run: npm test
+        run: npm run test
   sonar:
     name: Sonar Testing
     needs: [test]
@@ -45,7 +45,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Testing
-        run: npm test
+        run: npm run test:coverage
       - uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
