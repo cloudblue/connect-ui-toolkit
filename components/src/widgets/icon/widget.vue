@@ -9,7 +9,8 @@
 
 <script setup>
 import { defineOptions, computed } from 'vue';
-import * as icons from '@cloudblueconnect/material-svg';
+import * as iconsAnimated from '@cloudblueconnect/material-svg/animated';
+import * as iconsBaseline from '@cloudblueconnect/material-svg/baseline';
 defineOptions({
   name: 'Icon',
 });
@@ -40,8 +41,12 @@ const styles = computed(() => {
   };
 });
 
+const icons = computed(() => {
+  return { ...iconsBaseline, ...iconsAnimated };
+});
+
 const icon = computed(() => {
-  return icons[props.iconName];
+  return icons.value[props.iconName];
 });
 </script>
 
