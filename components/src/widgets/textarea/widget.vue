@@ -19,8 +19,8 @@
       v-model="localValue"
       class="textarea-field__input"
       :class="{
-        'textarea-field__no-resize': autoGrow,
-        'textarea-field__no-border': noBorder,
+        'textarea-field__input_no-resize': autoGrow,
+        'textarea-field__input_no-border': noBorder,
       }"
       :placeholder="placeholder"
       :readonly="props.readonly"
@@ -29,10 +29,16 @@
       @input.stop
     ></textarea>
     <div
-      v-if="!isValid"
-      class="textarea-field__error-message"
+      v-if="hint || !isValid"
+      class="textarea-field__hint"
     >
-      <p>{{ errorMessagesString }}</p>
+      <p
+        v-if="!isValid"
+        class="textarea-field__error-message"
+      >
+        {{ errorMessagesString }}
+      </p>
+      <p v-else>{{ hint }}</p>
     </div>
   </div>
 </template>
@@ -65,6 +71,10 @@ const props = defineProps({
     default: false,
   },
   placeholder: {
+    type: String,
+    default: '',
+  },
+  hint: {
     type: String,
     default: '',
   },
@@ -141,7 +151,7 @@ watch(localValue, async (newValue) => {
   color: base-text-color;
 
   &_optional label::after {
-    content: '(optional)';
+    content: '(Optional)';
     display: inline-block;
     margin-left: 3px;
     color: #212121;
@@ -149,20 +159,22 @@ watch(localValue, async (newValue) => {
   }
 
   &__input {
+    box-sizing: border-box;
     width: 100%;
     background-color: #FBFBFB;
     border: 1px solid #D8D8D8;
     border-radius: 2px;
     padding: 11px;
-  }
+    resize: vertical;
 
-  &__no-resize {
-    resize: none;
-  }
+    &_no-resize {
+      resize: none;
+    }
 
-  &__no-border {
-    border: none;
-    outline: none;
+    &_no-border {
+      border: none;
+      outline: none;
+    }
   }
 
   &__label {
@@ -178,15 +190,19 @@ watch(localValue, async (newValue) => {
     outline: 1px solid #4797f2;
   }
 
-  &__error-message {
+  &__hint {
     margin-top: 4px;
 
     p {
-      color: #FF6A6A;
+      color: #707070;
       font-size: 12px;
       font-weight: 400;
       line-height: 1.3;
       margin: 0;
+    }
+
+    .textarea-field__error-message {
+      color: #FF6A6A;
     }
   }
 }
