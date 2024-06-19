@@ -30,7 +30,8 @@ describe('TextArea component', () => {
 
       expect(wrapper.get('textarea').attributes()).toEqual(
         expect.objectContaining({
-          class: 'textarea-field__input textarea-field__no-resize textarea-field__no-border',
+          class:
+            'textarea-field__input textarea-field__input_no-resize textarea-field__input_no-border',
           name: 'textarea',
           placeholder: 'placeholder',
           rows: '4',
