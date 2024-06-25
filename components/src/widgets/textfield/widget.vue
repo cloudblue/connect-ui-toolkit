@@ -2,6 +2,7 @@
   <div
     class="text-field"
     :class="computedClasses"
+    @click="setFocus"
   >
     <label
       v-if="label"
@@ -12,7 +13,6 @@
     </label>
     <div
       class="text-field__wrapper"
-      @click="setFocus"
       @focusout="removeFocus"
     >
       <div class="text-field__body">
@@ -24,6 +24,7 @@
           :placeholder="placeholder"
           name="textfield"
           type="text"
+          @focus="setFocus"
           @input.stop
         />
         <span

@@ -8,7 +8,7 @@
     <label
       v-if="label"
       class="textarea-field__label"
-      :for="textarea"
+      for="textarea"
     >
       <slot name="label">
         <span>{{ props.label }}</span>
@@ -18,14 +18,12 @@
       ref="txtarea"
       v-model="localValue"
       class="textarea-field__input"
-      :class="{
-        'textarea-field__input_no-resize': autoGrow,
-        'textarea-field__input_no-border': noBorder,
-      }"
+      :class="inputClasses"
       :placeholder="placeholder"
       :readonly="props.readonly"
       :rows="rows"
       name="textarea"
+      @focus="setFocus"
       @input.stop
     ></textarea>
     <div
@@ -86,6 +84,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  monospace: {
+    type: Boolean,
+    default: false,
+  },
   rules: {
     type: Array,
     default: () => [],
@@ -123,6 +125,12 @@ const computedClasses = computed(() => ({
   'textarea-field_focused': isFocused.value,
   'textarea-field_invalid': !isValid.value,
   'textarea-field_optional': !props.required,
+}));
+
+const inputClasses = computed(() => ({
+  'textarea-field__input_no-resize': props.autoGrow,
+  'textarea-field__input_no-border': props.noBorder,
+  'textarea-field__input_monospace': props.monospace,
 }));
 
 onMounted(() => {
@@ -166,6 +174,7 @@ watch(localValue, async (newValue) => {
     border-radius: 2px;
     padding: 11px;
     resize: vertical;
+    font-family: inherit;
 
     &_no-resize {
       resize: none;
@@ -174,6 +183,10 @@ watch(localValue, async (newValue) => {
     &_no-border {
       border: none;
       outline: none;
+    }
+
+    &_monospace {
+      font-family: monospace;
     }
   }
 
