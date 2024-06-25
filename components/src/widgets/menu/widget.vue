@@ -91,7 +91,7 @@ onUnmounted(() => {
 
 .menu-content {
   position: absolute;
-  top: 0;
+  top: 2px;
   width: max-content;
 
   &_align-right {
