@@ -26,10 +26,9 @@
           <span
             v-else
             class="select-input__no-selection"
-          >
-            —
-          </span>
+          ></span>
         </slot>
+        <slot name="search-input"></slot>
         <ui-icon
           iconName="googleArrowDropDownBaseline"
           color="#666666"
@@ -50,6 +49,12 @@
         >
           <span>{{ getDisplayText(option) }}</span>
         </div>
+        <span
+          v-if="computedOptionsAreEmpty"
+          class="select-input__option select-input__empty-option"
+        >
+          <span>{{ noDataText }}</span>
+        </span>
       </div>
     </ui-menu>
     <div
@@ -125,6 +130,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  noDataText: {
+    type: String,
+    default: 'Nothing was found',
+  },
 });
 
 const emit = defineEmits(['valueChange']);
@@ -132,6 +141,7 @@ const emit = defineEmits(['valueChange']);
 const { isValid, errorMessagesString } = useFieldValidation(model, props.rules);
 
 const isFocused = ref(false);
+const selectedOption = ref(null);
 
 const computedClasses = computed(() => ({
   'select-input_focused': isFocused.value,
@@ -145,11 +155,10 @@ const computedOptions = computed(() =>
   }),
 );
 
-const selectedOption = computed(() =>
-  computedOptions.value.find((option) => option[props.propValue] === model.value),
-);
+const computedOptionsAreEmpty = computed(() => computedOptions.value.length === 0);
 
 const setSelected = (option) => {
+  selectedOption.value = option;
   const value = option[props.propValue];
   model.value = value;
   emit('valueChange', value);
@@ -164,6 +173,7 @@ const getDisplayText = (item) => {
 <style lang="stylus" scoped>
 .select-input {
   color: #212121;
+  font-size: 14px;
 
   &__selected {
     height: 44px;
@@ -184,9 +194,6 @@ const getDisplayText = (item) => {
 
     .select-input_invalid & {
       border-color: #FF6A6A;
-    }
-
-    .select-input_focused.select-input_invalid & {
       outline: 1px solid #FF6A6A;
     }
   }
@@ -195,7 +202,7 @@ const getDisplayText = (item) => {
     position: relative;
     overflow: hidden auto;
     z-index: 1;
-    padding: 16px 0;
+    padding: 8px 0;
     border: 1px solid #d8d8d8;
     border-radius: 2px;
     background-color: #fbfbfb;
@@ -214,6 +221,10 @@ const getDisplayText = (item) => {
       color: #2c98f0;
       background-color: #2C98F027;
     }
+  }
+
+  &__empty-option {
+    color: #BDBDBD;
   }
 
   &__hint {

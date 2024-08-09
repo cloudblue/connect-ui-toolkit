@@ -19,7 +19,7 @@ describe('Select', () => {
     it('renders the base component', () => {
       expect(wrapper.get('.select-input__label').text()).toEqual('My select (Optional)');
       expect(wrapper.get('.select-input__hint').text()).toEqual('Some random hint');
-      expect(wrapper.get('.select-input__no-selection').text()).toEqual('—');
+      expect(wrapper.get('.select-input__no-selection').text()).toEqual('');
     });
 
     it('renders a simple array of text elements', () => {
