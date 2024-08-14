@@ -24,6 +24,7 @@
           :placeholder="placeholder"
           name="textfield"
           type="text"
+          :autocomplete="browserAutocomplete ? 'on' : 'off'"
           @focus="setFocus"
           @input.stop
         />
@@ -83,6 +84,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  noBorders: {
+    type: Boolean,
+    default: false,
+  },
+  browserAutocomplete: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const emit = defineEmits(['input']);
@@ -97,6 +106,7 @@ const isFocused = ref(false);
 const computedClasses = computed(() => ({
   'text-field_focused': isFocused.value,
   'text-field_invalid': !isValid.value,
+  'text-field_no-borders': props.noBorders,
 }));
 
 const removeFocus = () => (isFocused.value = false);
@@ -170,9 +180,15 @@ watch(localValue, (newValue) => {
     .text-field_focused.text-field_invalid & {
       outline: 1px solid #FF6A6A;
     }
+
+    .text-field_no-borders & {
+      border: unset !important;
+      outline: unset !important;
+    }
   }
 
   &__input {
+    max-width: 100%;
     flex-grow: 1;
     outline: none;
     border-style: none;

@@ -19,6 +19,7 @@ export { default as Textarea } from '~widgets/textarea/widget.vue';
 export { default as Alert } from '~widgets/alert/widget.vue';
 export { default as Radio } from '~widgets/radio/widget.vue';
 export { default as Dialog } from '~widgets/dialog/widget.vue';
+export { default as Autocomplete } from '~widgets/autocomplete/widget.vue';
 
 export { default as store } from '~core/store';
 export { default as bus } from '~core/eventBus';
