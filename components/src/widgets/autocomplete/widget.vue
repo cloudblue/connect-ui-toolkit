@@ -9,11 +9,14 @@
       :propValue="propValue"
       :rules="rules"
       :hint="hint"
+      :optionTextFn="optionTextFn"
+      :menuProps="menuProps"
       @value-change="updateSelected"
     >
       <div
         slot="search-input"
         class="autocomplete__search"
+        :class="{ 'cancel-left-padding': !selected }"
       >
         <ui-textfield
           :value="userInput"
@@ -65,10 +68,25 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  optionTextFn: {
+    type: Function,
+    default: null,
+  },
+  menuProps: {
+    type: Object,
+    default: () => ({
+      fullWidth: true,
+    }),
+  },
 });
 
+const emit = defineEmits(['valueChange']);
+
 let userInput = ref('');
-let selected = ref('');
+let selected = defineModel({
+  type: String,
+  required: true,
+});
 
 const getOptionText = (option) => (typeof option === 'object' ? option[props.propText] : option);
 
@@ -89,6 +107,7 @@ const onUserInput = (e) => {
 const updateSelected = (e) => {
   selected.value = e.detail[0];
   userInput.value = '';
+  emit('valueChange', selected.value);
 };
 </script>
 
@@ -97,9 +116,6 @@ const updateSelected = (e) => {
 
   &__search {
     color: inherit;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     line-height: 20px;
     font-size: 14px;
     border: 1px solid transparent;
@@ -111,7 +127,11 @@ const updateSelected = (e) => {
     width: 0;
     max-width: 100%;
     flex-grow: 1;
-    z-index: 1;
+  }
+
+  // there is too much padding coming from select + textfield
+  .cancel-left-padding {
+    margin-left: -11px;
   }
 }
 </style>

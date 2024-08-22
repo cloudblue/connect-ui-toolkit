@@ -73,7 +73,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import Menu from '~widgets/menu/widget.vue';
 import Icon from '~widgets/icon/widget.vue';
 import { useFieldValidation } from '~composables/validation';
@@ -168,6 +168,16 @@ const getDisplayText = (item) => {
   if (props.optionTextFn) return props.optionTextFn(item);
   return item[props.propText];
 };
+
+watch(
+  model,
+  (newValue) => {
+    selectedOption.value = computedOptions.value.find(
+      (option) => option[props.propValue] === newValue,
+    );
+  },
+  { immediate: true },
+);
 </script>
 
 <style lang="stylus" scoped>

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import Select from './widget.vue';
+import { nextTick } from 'vue';
 
 describe('Select', () => {
   let wrapper;
@@ -152,6 +153,31 @@ describe('Select', () => {
 
         expect(wrapper.classes()).not.toContain('select-input_focused');
       });
+    });
+  });
+
+  describe('watch', () => {
+    beforeEach(() => {
+      wrapper = mount(Select, {
+        props: {
+          modelValue: '1',
+          options: [
+            { id: '1', value: 'Option 1' },
+            { id: '2', value: 'Option 2' },
+          ],
+          propValue: 'id',
+        },
+      });
+    });
+
+    it('should update selectedOption when model changes', async () => {
+      // Initial check
+      expect(wrapper.vm.selectedOption).toEqual({ id: '1', value: 'Option 1' });
+
+      await wrapper.setProps({ modelValue: '2' });
+      await nextTick();
+
+      expect(wrapper.vm.selectedOption).toEqual({ id: '2', value: 'Option 2' });
     });
   });
 });
