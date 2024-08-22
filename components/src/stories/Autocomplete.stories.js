@@ -53,6 +53,24 @@ export const Validation = {
   },
 };
 
+export const ExtraProps = {
+  name: 'Customized options text',
+  render: Basic.render,
+  args: {
+    ...Basic.args,
+    label: 'This implementation uses the "optionTextFn" and "menuProps"',
+    options: [
+      { value: 'AR', label: 'Argentina' },
+      { value: 'AD', label: 'Andorra' },
+      { value: 'PL', label: 'Poland' },
+    ],
+    propValue: 'value',
+    propText: 'label',
+    optionTextFn: (item) => `${item.label} (${item.value})`,
+    menuProps: { fullWidth: false },
+  },
+};
+
 export default {
   title: 'Components/Autocomplete',
   component: Autocomplete,
