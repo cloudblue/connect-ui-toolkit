@@ -5,6 +5,7 @@ export default defineConfig({
   build: {
     emptyOutDir: false,
     lib: {
+      formats: ['es'],
       entry: {
         'fastApi/adapter': resolve(__dirname, 'api/fastApi/adapter.js'),
         'fastApi/vue-composable': resolve(__dirname, 'api/fastApi/vue-composable.js'),
