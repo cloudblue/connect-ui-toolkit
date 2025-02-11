@@ -42,6 +42,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['opened', 'closed']);
@@ -56,6 +60,8 @@ const alignmentClass = computed(() =>
 const fullWidthClass = computed(() => (props.fullWidth ? 'menu-content_full-width' : ''));
 
 const toggle = () => {
+  if (props.disabled) return;
+
   showMenu.value = !showMenu.value;
   emit(showMenu.value ? 'opened' : 'closed');
 };
