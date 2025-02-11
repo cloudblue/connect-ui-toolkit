@@ -1,6 +1,6 @@
 {
   "name": "@cloudblueconnect/connect-ui-toolkit",
-  "version": "34.4.0",
+  "version": "34.4.1",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
