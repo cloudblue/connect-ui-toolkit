@@ -22,11 +22,8 @@ export const Component = {
     },
     template: `
     <ui-card v-bind="args" style="width: 400px">
-      <div slot="default">
+      <div>
         {{ args.content }}
-      </div>
-      <div slot="actions">
-        <button>Action!</button>
       </div>
     </ui-card>`,
   }),
@@ -34,6 +31,30 @@ export const Component = {
   args: {
     title: 'Card Title',
     subtitle: 'Card Subtitle',
+    content: 'Card Content',
+  },
+};
+
+export const ComponentWithAllSlots = {
+  render: (args) => ({
+    setup() {
+      return { args };
+    },
+    template: `
+      <ui-card v-bind="args" style="width: 400px">
+        <div>
+          {{ args.content }}
+        </div>
+        <a slot="title" style="" href="#">Custom title, link</a>
+        <p slot="subtitle">My <span style="font-weight:bold">custom</span> subtitle :)</p>
+        <div slot="actions">
+          <button>Action!</button>
+        </div>
+      </ui-card>`,
+  }),
+
+  args: {
+    title: 'Card title',
     content: 'Card Content',
   },
 };
