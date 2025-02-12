@@ -21,10 +21,11 @@
           v-model="localValue"
           class="text-field__input"
           :class="{ 'text-field__input_right': suffix }"
+          :autocomplete="browserAutocomplete ? 'on' : 'off'"
+          :disabled="disabled"
           :placeholder="placeholder"
           name="textfield"
           type="text"
-          :autocomplete="browserAutocomplete ? 'on' : 'off'"
           @focus="setFocus"
           @input.stop
         />
@@ -92,6 +93,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['input']);
@@ -107,10 +112,13 @@ const computedClasses = computed(() => ({
   'text-field_focused': isFocused.value,
   'text-field_invalid': !isValid.value,
   'text-field_no-borders': props.noBorders,
+  'text-field_disabled': props.disabled,
 }));
 
 const removeFocus = () => (isFocused.value = false);
 const setFocus = () => {
+  if (props.disabled) return;
+
   isFocused.value = true;
   inputEl.value.focus();
 };

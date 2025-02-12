@@ -2,18 +2,16 @@
   <div class="c-card">
     <div class="c-card__header">
       <div class="c-card__title-container">
-        <p
-          v-if="title"
-          class="c-card__title"
-        >
-          {{ title }}
-        </p>
-        <p
-          v-if="subtitle"
-          class="c-card__subtitle"
-        >
-          {{ subtitle }}
-        </p>
+        <div class="c-card__title">
+          <slot name="title">
+            <p v-if="title">{{ title }}</p>
+          </slot>
+        </div>
+        <div class="c-card__subtitle">
+          <slot name="subtitle">
+            <p v-if="subtitle">{{ subtitle }}</p>
+          </slot>
+        </div>
       </div>
       <div class="c-card__actions">
         <slot name="actions" />
@@ -53,26 +51,38 @@ export default {
   text-decoration: inherit;
   color: inherit;
 
-  &__header{
+  &__header {
     display: flex;
-    margin-bottom: 26px;
+    margin-bottom: 24px;
     align-items: start;
     flex-grow: 1;
     justify-content: space-between;
   }
 
   &__title {
-    line-height: 25px;
-    font-size: 20px;
+    line-height: 24px;
+    font-size: 18px;
+    font-weight: 500;
     margin: 0;
+
+    p,
+    & ::slotted(p) {
+      margin: 0;
+    }
   }
 
   &__subtitle {
+    margin-top: 8px;
     font-size: 14px;
+    font-weight: 400;
     line-height: 20px;
     color: #707070;
-    margin: 0;
     white-space: pre-wrap;
+
+    p,
+    & ::slotted(p) {
+      margin: 0;
+    }
   }
 
   &__title-container {

@@ -19,13 +19,14 @@
       v-model="localValue"
       class="textarea-field__input"
       :class="inputClasses"
+      :disabled="disabled"
       :placeholder="placeholder"
       :readonly="props.readonly"
       :rows="rows"
       name="textarea"
       @focus="setFocus"
       @input.stop
-    ></textarea>
+    />
     <div
       v-if="hint || !isValid"
       class="textarea-field__hint"
@@ -92,6 +93,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const localValue = ref('');
@@ -117,6 +122,8 @@ const removeFocus = () => {
 };
 
 const setFocus = () => {
+  if (props.disabled) return;
+
   txtarea.value.focus();
   isFocused.value = true;
 };
@@ -125,12 +132,14 @@ const computedClasses = computed(() => ({
   'textarea-field_focused': isFocused.value,
   'textarea-field_invalid': !isValid.value,
   'textarea-field_optional': !props.required,
+  'textarea-field_disabled': props.disabled,
 }));
 
 const inputClasses = computed(() => ({
   'textarea-field__input_no-resize': props.autoGrow,
   'textarea-field__input_no-border': props.noBorder,
   'textarea-field__input_monospace': props.monospace,
+  'textarea-field__input_disabled': props.disabled,
 }));
 
 onMounted(() => {
@@ -187,6 +196,13 @@ watch(localValue, async (newValue) => {
 
     &_monospace {
       font-family: monospace;
+    }
+
+    &[disabled],
+    :disabled,
+    &_disabled {
+      border-style: dashed;
+      cursor: default;
     }
   }
 

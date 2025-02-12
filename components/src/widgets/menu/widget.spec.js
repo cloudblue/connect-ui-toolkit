@@ -19,6 +19,15 @@ describe('Menu component', () => {
 
         expect(wrapper.vm.showMenu).toBe(false);
       });
+
+      it('does not toggle menu if disabled is true', async () => {
+        const wrapper = mount(Menu);
+        wrapper.vm.showMenu = true;
+        await wrapper.setProps({ disabled: true });
+        wrapper.vm.toggle(wrapper.vm.showMenu);
+
+        expect(wrapper.vm.showMenu).toBe(true);
+      });
     });
 
     describe('#handleClickOutside', () => {

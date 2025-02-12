@@ -40,6 +40,16 @@ describe('Select', () => {
       expect(wrapper.get('.select-input__label').text()).toEqual('My select');
     });
 
+    it('adds the disabled class if disabled is true', async () => {
+      await wrapper.setProps({
+        disabled: true,
+      });
+
+      expect(wrapper.get('.select-input__selected').classes()).toContain(
+        'select-input__selected_disabled',
+      );
+    });
+
     it('renders a complex array of objects', async () => {
       await wrapper.setProps({
         options: [

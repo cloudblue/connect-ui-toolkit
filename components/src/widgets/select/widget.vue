@@ -14,12 +14,14 @@
     </div>
     <ui-menu
       v-bind="menuProps"
+      :disabled="disabled"
       @opened="isFocused = true"
       @closed="isFocused = false"
     >
       <div
         slot="trigger"
         class="select-input__selected"
+        :class="{ 'select-input__selected_disabled': disabled }"
       >
         <slot name="selected">
           <span v-if="model">{{ getDisplayText(selectedOption) }}</span>
@@ -134,6 +136,10 @@ const props = defineProps({
     type: String,
     default: 'Nothing was found',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['valueChange']);
@@ -205,6 +211,12 @@ watch(
     .select-input_invalid & {
       border-color: #FF6A6A;
       outline: 1px solid #FF6A6A;
+    }
+
+    &_disabled {
+      border-style: dashed;
+      cursor: default;
+      color: #BDBDBD;
     }
   }
 

@@ -60,6 +60,14 @@ describe('Textfield widget', () => {
 
       expect(wrapper.get('.text-field label').text()).toEqual('My input');
     });
+
+    it('adds the disabled class if disabled is true', () => {
+      wrapper = mount(Textfield, {
+        props: { disabled: true },
+      });
+
+      expect(wrapper.get('.text-field').classes()).toContain('text-field_disabled');
+    });
   });
 
   describe('validation', () => {
